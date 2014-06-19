@@ -28,7 +28,7 @@ import org.timepedia.exporter.client.Exportable;
  */
 @Export("LayersModel")
 @ExportPackage("gm")
-public class JsLayersModelImpl implements Exportable, JsLayersModel {
+public class JsLayersModelImpl implements JsLayersModel, Exportable {
 
 	private LayersModel layersModel;
 
@@ -56,6 +56,7 @@ public class JsLayersModelImpl implements Exportable, JsLayersModel {
 /*		if (layer instanceof FeaturesSupported) {
 			return new VectorLayer((FeaturesSupported) layer);
 		}*/
+
 		return new JsLayerImpl(layer);
 	}
 

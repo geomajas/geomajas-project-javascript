@@ -23,7 +23,7 @@ import org.timepedia.exporter.client.Exportable;
  * @since 1.0.0
  */
 @Export("Layer")
-@ExportPackage("gm")
+@ExportPackage("gm.layer")
 public class JsLayerImpl implements JsLayer, Exportable {
 
 	protected Layer layer;
@@ -48,6 +48,21 @@ public class JsLayerImpl implements JsLayer, Exportable {
 	@Override
 	public String getServerLayerId() {
 		return layer.getId();
+	}
+
+	@Override
+	public String getTitle() {
+		return layer.getTitle();
+	}
+
+	@Override
+	public void setMarkedAsVisible(boolean markedAsVisible) {
+		layer.setMarkedAsVisible(markedAsVisible);
+	}
+
+	@Override
+	public boolean isMarkedAsVisible() {
+		return layer.isMarkedAsVisible();
 	}
 
 }
