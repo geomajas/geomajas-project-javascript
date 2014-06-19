@@ -39,14 +39,14 @@
 
 		function zoomIn() {
 			var factor = document.getElementById("zoomFactor").value;
-			var scale = map.getViewPort().getScale();
-			map.getViewPort().applyScale(scale * parseFloat(factor));
+			var resolution = map.getViewPort().getResolution();
+			map.getViewPort().applyResolution(resolution / parseFloat(factor));
 		}	
 
 		function zoomOut() {
 			var factor = document.getElementById("zoomFactor").value;
-			var scale = map.getViewPort().getScale();
-			map.getViewPort().applyScale(scale / parseFloat(factor));			
+            var resolution = map.getViewPort().getResolution();
+			map.getViewPort().applyResolution(resolution * parseFloat(factor));
 		}		
 
 		function displayBounds() {
