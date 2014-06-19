@@ -20,7 +20,9 @@
 	<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
 
 	<script type="text/javascript">
+
 		var map;
+		var layer;
 
 		function onGeomajasLoad() {
 			map = new gm.Map("js-map-element");
@@ -28,23 +30,22 @@
 		}
 
 		function createException() {
+
 			var log = document.getElementById("log");
 
-			log.innerHTML += "Feature could not be found.";
+			try {
 
-			var layer = map.getLayersModel().getLayer("clientLayerCountries");
+				layer = map.getLayersModel().getLayer("clientLayerCountriesThatDoesNotExist");
+				/*layer = map.getLayersModel().getLayer("clientLayerCountries");*/
+				log.innerHTML += "LayerId: " + layer.getId() + "</br>";
 
-			log.innerHTML = layer.getId();
+			}
+			catch(err) {
 
-/*			var service = map.getFeatureSearchService();
+				log.innerHTML += "Requested layer does not exist!</br>";
 
-			service.searchById(layer, ["id-of-a-feature-that-does-not-exist"], function(featureHolder){
-				if (featureHolder == null) {
-					log.innerHTML += "Feature could not be found.";
-				} else {
-					log.innerHTML += "ID = " + id + "<br>Label: " + featureHolder.getFeatures()[0].getLabel();
-				}
-			});*/
+			}
+
 		}
 
 		function cleanup(){
@@ -71,8 +72,10 @@
 					<h2>Catch Server Exceptions</h2>
 
 					<h4>Create server exception</h4>
-					In this example we let the server execute a faulty operation just to be able to catch the
+
+					In this example we are requesting a layer that does not exist just to be able to catch the
 					exception in JavaScript. This exception is then logged in the HTML page.<br>
+
 					<button onclick="createException()">Execute!</button>
 					<button onclick="cleanup()">Cleanup</button>
 					<div id=log><h4>The exception will be logged here:</h4></div>

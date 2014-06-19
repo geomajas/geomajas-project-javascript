@@ -24,7 +24,7 @@ import org.timepedia.exporter.client.Exportable;
  * @see org.geomajas.gwt2.client.map.layer.Layer
  */
 @Export("Layer")
-@ExportPackage("gm")
+@ExportPackage("gm.layer")
 public class JsLayerImpl implements JsLayer, Exportable {
 
 	protected Layer layer;
