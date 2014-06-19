@@ -47,4 +47,12 @@ public interface JsMapPresenter extends Exportable {
 	 */
 	JsEventBus getEventBus();
 
+	/**
+	 * Apply a new mouse cursor when hovering above the map.
+	 *
+	 * @param cursor
+	 *            The new cursor to apply.
+	 */
+	void setCursor(String cursor);
+
 }

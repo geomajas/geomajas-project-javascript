@@ -109,6 +109,11 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		return eventBus;
 	}
 
+	@Override
+	public void setCursor(String cursor) {
+		mapPresenter.setCursor(cursor);
+	}
+
 	// ------------------------------------------------------------------------
 	// Other public methods:
 	// ------------------------------------------------------------------------

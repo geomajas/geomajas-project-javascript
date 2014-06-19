@@ -23,7 +23,8 @@
 			var map;
 
 			function onGeomajasLoad() {
-				map = Geomajas().createMap("app", "mapMain", "js-map-element");
+				map = new gm.Map("js-map-element");
+				gm.ServerExtension.initializeMap(map, "app", "mapMain");
 			}
 		</script>
 	</head>
@@ -43,7 +44,7 @@
 					</td>
 					<td valign="top">
 						<h2>Change the cursor on the map</h2>
-						This example shows how to change the default cursor when hovering the map. This feature is 
+						This example shows how to change the default cursor when hovering the map. This feature is
 						often used when writing custom map controllers.
 
 						<h4>Using default cursors</h4>
@@ -51,7 +52,7 @@
 						<button onclick="map.setCursor('crosshair')">Crosshair</button>
 
 						<h4>Using custom cursors</h4>
-						<button onclick="map.setCursor('images/metal-cursor.cur')">Image</button>
+						<button onclick="map.setCursor('url(images/metal-cursor.cur), auto')">Image</button>
 					</td>
 				</tr>
 			</table>
