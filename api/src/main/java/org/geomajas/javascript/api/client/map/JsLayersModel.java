@@ -20,6 +20,7 @@ import org.timepedia.exporter.client.Exportable;
  *
  * @author David Debuck
  * @since 1.0.0
+ * @see  org.geomajas.gwt2.client.map.layer.LayersModel
  */
 @Api(allMethods = true)
 @Export
@@ -32,5 +33,21 @@ public interface JsLayersModel extends Exportable {
 	 * @return JsLayer or null when the layer is not found.
 	 */
 	JsLayer getLayer(String layerId);
+
+	/**
+	 * Return the total number of layers within this map.
+	 *
+	 * @return The layer count.
+	 */
+	int getLayerCount();
+
+	/**
+	 * Return the layer at a certain index. If the index can't be found, null is returned.
+	 * In {@link org.geomajas.gwt2.client.map.layer.LayersModel}, this method is called getLayer(int index).
+	 *
+	 * @param index The specified index.
+	 * @return Returns the layer, or null if the index can't be found.
+	 */
+	JsLayer getLayerAtIndex(int index);
 
 }

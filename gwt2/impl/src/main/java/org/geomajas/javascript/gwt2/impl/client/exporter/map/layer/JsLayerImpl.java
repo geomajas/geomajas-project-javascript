@@ -21,6 +21,7 @@ import org.timepedia.exporter.client.Exportable;
  *
  * @author David Debuck
  * @since 1.0.0
+ * @see org.geomajas.gwt2.client.map.layer.Layer
  */
 @Export("Layer")
 @ExportPackage("gm")
@@ -28,6 +29,9 @@ public class JsLayerImpl implements JsLayer, Exportable {
 
 	protected Layer layer;
 
+	/**
+	 * No-arguments constructor. If this is removed, we get errors from the GWT exporter...
+	 */
 	public JsLayerImpl() {
 	}
 
@@ -48,6 +52,36 @@ public class JsLayerImpl implements JsLayer, Exportable {
 	@Override
 	public String getServerLayerId() {
 		return layer.getId();
+	}
+
+	@Override
+	public String getTitle() {
+		return layer.getTitle();
+	}
+
+	@Override
+	public void setMarkedAsVisible(boolean markedAsVisible) {
+		layer.setMarkedAsVisible(markedAsVisible);
+	}
+
+	@Override
+	public boolean isMarkedAsVisible() {
+		return layer.isMarkedAsVisible();
+	}
+
+	@Override
+	public void refresh() {
+		layer.refresh();
+	}
+
+	@Override
+	public void setOpacity(double opacity) {
+		layer.setOpacity(opacity);
+	}
+
+	@Override
+	public double getOpacity() {
+		return layer.getOpacity();
 	}
 
 }
