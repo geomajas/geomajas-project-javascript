@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+  ~
+  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+  ~
+  ~ The program is available in open source according to the GNU Affero
+  ~ General Public License. All contributions in this program are covered
+  ~ by the Geomajas Contributors License Agreement. For full licensing
+  ~ details, see LICENSE.txt in the project root.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.geomajas.project</groupId>
+		<artifactId>geomajas-project-javascript-all</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>geomajas-project-javascript-gwt2-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Geomajas Project JavaScript GWT2 - Parent</name>
+	<description>Geomajas Project JavaScript GWT2 - Parent</description>
+
+	<modules>
+		<module>impl</module>
+		<module>server-extension-impl</module>
+		<module>example</module>
+	</modules>
+
+</project>
