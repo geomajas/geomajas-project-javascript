@@ -20,28 +20,30 @@
 	<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
 
 	<script type="text/javascript">
+
 		var map;
 		var handlerRegistration1;
 		var handlerRegistration2;
 
 		function onGeomajasLoad() {
-			// Display the map:
-			map = Geomajas().createMap("app", "mapMain", "js-map-element");
+
+			map = new gm.Map("js-map-element");
+			gm.ServerExtension.initializeMap(map, "app", "mapMain");
 
 			// Also add "busy" event handlers:
 			addBusyHandlers();
 			displayBusyState(false);
 		}
-		
+
 		function addBusyHandlers() {
 			// Let's play it safe and remove the old handlers before installing new ones:
 			removeBusyHandlers();
 
 			// Add both handlers, keeping the registrations:
-			handlerRegistration1 = Geomajas().addDispatchStartedHandler(function(event){
+			handlerRegistration1 = gm.ServerExtension.addDispatchStartedHandler(function(event){
 				displayBusyState(true);
 			});
-			handlerRegistration2 = Geomajas().addDispatchStoppedHandler(function(event){
+			handlerRegistration2 = gm.ServerExtension.addDispatchStoppedHandler(function(event){
 				displayBusyState(false);
 			});
 		}
@@ -89,17 +91,17 @@
 				<td valign="top">
 					<h2>Catching map busy events</h2>
 					<p>
-						Actually, Geomajas provides events that indicate client-server communication status. A map can 
+						Actually, Geomajas provides events that indicate client-server communication status. A map can
 						be considered "busy" when it is talking to the server (usually requesting data or tiles).
 					</p>
 					<p>
-						Currently the map is: 
+						Currently the map is:
 						<span id="busy-element" style="color:#FFFFFF; font-weight:bold; padding: 2px 5px;"></span>
 					</p>
-					
+
 					<h4>Automatic events catching</h4>
 					Try navigating around the map. When the map is searching for new data, it should become busy.
-					
+
 					<h4>Adding and removing handlers</h4>
 					Remove the "busy" handlers: <button onclick="removeBusyHandlers()">Remove handlers</button><br>
 					Add the "busy" handlers: <button onclick="addBusyHandlers()">Add handlers</button><br>

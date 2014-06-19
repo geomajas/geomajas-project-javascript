@@ -10,6 +10,8 @@
  */
 package org.geomajas.javascript.gwt2.impl.client.exporter.map;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import org.geomajas.annotation.Api;
 import org.geomajas.gwt2.client.GeomajasImpl;
 import org.geomajas.gwt2.client.map.MapConfiguration;
@@ -18,13 +20,12 @@ import org.geomajas.javascript.api.client.map.JsLayersModel;
 import org.geomajas.javascript.api.client.map.JsMapConfiguration;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsViewPort;
+import org.geomajas.javascript.api.client.map.event.JsEventBus;
+import org.geomajas.javascript.gwt2.impl.client.exporter.map.event.JsEventBusImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
-
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.user.client.ui.HTMLPanel;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.MapPresenter}.
@@ -43,6 +44,8 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private JsLayersModel layersModel;
 
+	private JsEventBus eventBus;
+
 	/**
 	 * No-arguments constructor. If this is removed, we get errors from the GWT exporter...
 	 */
@@ -59,6 +62,7 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 	public JsMapPresenterImpl(String elementId) {
 		createParent(elementId);
 		mapPresenter = GeomajasImpl.getInstance().createMapPresenter();
+		eventBus = new JsEventBusImpl(this);
 		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
 		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
 		mapPresenter.setSize(getParentWidth(), getParentHeight());
@@ -98,6 +102,11 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 	@Override
 	public JsLayersModel getLayersModel() {
 		return layersModel;
+	}
+
+	@Override
+	public JsEventBus getEventBus() {
+		return eventBus;
 	}
 
 	// ------------------------------------------------------------------------

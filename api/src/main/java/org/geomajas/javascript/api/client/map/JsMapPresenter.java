@@ -11,6 +11,7 @@
 package org.geomajas.javascript.api.client.map;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.javascript.api.client.map.event.JsEventBus;
 import org.timepedia.exporter.client.Exportable;
 
 /**
@@ -38,5 +39,12 @@ public interface JsMapPresenter extends Exportable {
 	 * @return The layers model.
 	 */
 	JsLayersModel getLayersModel();
+
+	/**
+	 * Get the event bus that handles all event handlers and event firing for this map.
+	 *
+	 * @return The event bus that manages all event related to this map.
+	 */
+	JsEventBus getEventBus();
 
 }
