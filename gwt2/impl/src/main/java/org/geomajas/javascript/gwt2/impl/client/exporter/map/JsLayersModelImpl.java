@@ -59,4 +59,14 @@ public class JsLayersModelImpl implements Exportable, JsLayersModel {
 		return new JsLayerImpl(layer);
 	}
 
+	@Override
+	public int getLayerCount() {
+		return layersModel.getLayerCount();
+	}
+
+	@Override
+	public JsLayer getLayerAtIndex(int index) {
+		return new JsLayerImpl(layersModel.getLayer(index));
+	}
+
 }

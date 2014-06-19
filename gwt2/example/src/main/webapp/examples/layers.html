@@ -23,29 +23,48 @@
 		var map;
 
 		function onGeomajasLoad() {
-			map = Geomajas().createMap("app", "mapMain", "js-map-element");
+            map = new gm.Map("js-map-element");
+            gm.ServerExtension.initializeMap(map, "app", "mapMain");
+            // must be done when the map has been initialized:
+            //refreshCountriesOpacityLabel();
 		}
 
 		function getLayers() {
 			var text = "";
 			for (var i=0; i < map.getLayersModel().getLayerCount(); i++) {
-				var layer = map.getLayersModel().getLayerAt(i);
+				var layer = map.getLayersModel().getLayerAtIndex(i);
 				text += layer.getTitle() + "\n";
 			}
 			document.getElementById("layersList").value = text;
 		}
 
 		function toggleVisibility(index) {
-			var layer = map.getLayersModel().getLayerAt(index);
+			var layer = map.getLayersModel().getLayerAtIndex(index);
 			var visible = eval(layer.isMarkedAsVisible().toString()); // Boolean -> boolean conversion
 			layer.setMarkedAsVisible(!visible);
 		}
 
-		function toggleLabels(index) {
-			var layer = map.getLayersModel().getLayerAt(index);
-			var labeled = eval(layer.isLabeled().toString()); // Boolean -> boolean conversion
-			layer.setLabeled(!labeled);
+		function increaseCountriesLayerOpacity() {
+			var layer = map.getLayersModel().getLayerAtIndex(1);
+			var opacity = layer.getOpacity() + 0.2;
+            // rounding
+            opacity = Math.round(opacity * 100) / 100
+			layer.setOpacity(Math.min(opacity, 1));
+            refreshCountriesOpacityLabel();
 		}
+
+        function decreaseCountriesLayerOpacity() {
+            var layer = map.getLayersModel().getLayerAtIndex(1);
+            var opacity = layer.getOpacity() - 0.2;
+            // rounding
+            opacity = Math.round(opacity * 100) / 100
+            layer.setOpacity(Math.max(opacity, 0));
+            refreshCountriesOpacityLabel();
+        }
+
+        function refreshCountriesOpacityLabel() {
+            document.getElementById("countriesOpacityLabel").innerHTML = map.getLayersModel().getLayerAtIndex(1).getOpacity();
+        }
 
 		function refreshLayer(layerName) {
 			var layer = map.getLayersModel().getLayer(layerName);
@@ -78,8 +97,11 @@
 					Toggle the visibility for OSM layer: <button onclick="toggleVisibility(0)">Toggle</button><br>
 					Toggle the visibility for Countries layer: <button onclick="toggleVisibility(1)">Toggle</button>
 
-					<h4>Toggle labels</h4>
-					Toggle the visibility for Countries layer: <button onclick="toggleLabels(1)">Toggle</button>
+					<h4>Change Opacity</h4>
+                    Change the opacity for Countries layer:<br>
+                    <button onclick="increaseCountriesLayerOpacity()">More</button>
+                    <button onclick="decreaseCountriesLayerOpacity()">Less</button>
+                    Current opacity: <label id="countriesOpacityLabel"></label>
 
 					<h4>Refresh layer</h4>
 					Refresh OSM layer: <button onclick="refreshLayer('clientLayerOsm')">Refresh</button><br>
