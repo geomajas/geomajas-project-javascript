@@ -24,7 +24,8 @@
 	
 			function onGeomajasLoad() {
 				// Display the map:
-				map = Geomajas().createMap("app", "mapMain", "js-map-element");
+                map = new gm.Map("js-map-element");
+                gm.ServerExtension.initializeMap(map, "app", "mapMain");
 
 				// At this time, Geomajas is loaded, but this particular map has only just sent out a request for it's
 				// configuration; we don't have any layers yet. Therefore we must wait for the right time to display
@@ -38,7 +39,7 @@
 				var log = document.getElementById("log");
 				log.innerHTML = "";
 				for (var i = 0; i < map.getLayersModel().getLayerCount(); i++) {
-					var layer = map.getLayersModel().getLayerAt(i);
+					var layer = map.getLayersModel().getLayerAtIndex(i);
 					log.innerHTML += "Layer " + i + ": " + layer.getTitle() + "<br>";
 				}
 			}
