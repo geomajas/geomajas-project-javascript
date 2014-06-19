@@ -15,7 +15,7 @@ import org.timepedia.exporter.client.Exportable;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.MapPresenter}.
- * 
+ *
  * @author Jan De Moerloose
  * @since 1.0.0
  */
@@ -26,9 +26,17 @@ public interface JsMapPresenter extends Exportable {
 	 * Returns the {@link ViewPort} associated with this map. The view port regulates zooming and panning around the
 	 * map, but also presents transformation methods for transforming vector objects between the different render
 	 * spaces.
-	 * 
+	 *
 	 * @return Returns the view port.
 	 */
 	JsViewPort getViewPort();
+
+	/**
+	 * Returns the layers model for this presenter. This model is the central layer handler for the map, with methods
+	 * for getting layers, moving them up and down, adding or removing layers, ..
+	 *
+	 * @return The layers model.
+	 */
+	JsLayersModel getLayersModel();
 
 }

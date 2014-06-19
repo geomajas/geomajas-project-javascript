@@ -12,7 +12,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-	
+
 	<title>Geomajas Javascript API Showcase</title>
 	<link type="text/css" rel="stylesheet" href="geomajas.css" />
 
@@ -23,13 +23,20 @@
 		var map;
 
 		function onGeomajasLoad() {
-			map = Geomajas().createMap("app", "mapMain", "js-map-element");
+			map = new gm.Map("js-map-element");
+			gm.ServerExtension.initializeMap(map, "app", "mapMain");
 		}
 
 		function createException() {
 			var log = document.getElementById("log");
+
+			log.innerHTML += "Feature could not be found.";
+
 			var layer = map.getLayersModel().getLayer("clientLayerCountries");
-			var service = map.getFeatureSearchService();
+
+			log.innerHTML = layer.getId();
+
+/*			var service = map.getFeatureSearchService();
 
 			service.searchById(layer, ["id-of-a-feature-that-does-not-exist"], function(featureHolder){
 				if (featureHolder == null) {
@@ -37,7 +44,7 @@
 				} else {
 					log.innerHTML += "ID = " + id + "<br>Label: " + featureHolder.getFeatures()[0].getLabel();
 				}
-			});
+			});*/
 		}
 
 		function cleanup(){
@@ -62,9 +69,9 @@
 				</td>
 				<td valign="top">
 					<h2>Catch Server Exceptions</h2>
-					
+
 					<h4>Create server exception</h4>
-					In this example we let the server execute a faulty operation just to be able to catch the 
+					In this example we let the server execute a faulty operation just to be able to catch the
 					exception in JavaScript. This exception is then logged in the HTML page.<br>
 					<button onclick="createException()">Execute!</button>
 					<button onclick="cleanup()">Cleanup</button>
