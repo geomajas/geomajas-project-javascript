@@ -32,14 +32,6 @@ public interface JsLayer extends Exportable {
 	String getId();
 
 	/**
-	 * Return this layer's server ID. Multiple client side layer (connected with a map) can point to a single data
-	 * source on the back-end. This returns the actual layer name as used on the server.
-	 *
-	 * @return id of the server layer
-	 */
-	String getServerLayerId();
-
-	/**
 	 * Return the layer's title. The difference between the ID and the title, is that the ID is used behind the screens,
 	 * while the title is the visible name to the user.
 	 *

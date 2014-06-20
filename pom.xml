@@ -79,6 +79,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
+				<artifactId>geomajas-project-javascript-server-extension-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-javascript-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -102,6 +107,20 @@
 				<groupId>org.timepedia.exporter</groupId>
 				<artifactId>gwtexporter</artifactId>
 				<version>${gwt-exporter-version}</version>
+			</dependency>
+
+			 <!-- test dependencies-->
+
+			<dependency>
+				<groupId>com.google.gwt.gwtmockito</groupId>
+				<artifactId>gwtmockito</artifactId>
+				<version>1.1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.9.5</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

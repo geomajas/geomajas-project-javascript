@@ -50,11 +50,6 @@ public class JsLayerImpl implements JsLayer, Exportable {
 	}
 
 	@Override
-	public String getServerLayerId() {
-		return layer.getId();
-	}
-
-	@Override
 	public String getTitle() {
 		return layer.getTitle();
 	}
