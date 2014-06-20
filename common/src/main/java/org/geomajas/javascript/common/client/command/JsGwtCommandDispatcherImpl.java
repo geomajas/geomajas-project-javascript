@@ -8,44 +8,34 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
-package org.geomajas.javascript.gwt2.impl.client;
+package org.geomajas.javascript.common.client.command;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.command.event.DispatchStartedEvent;
+import org.geomajas.gwt.client.command.event.DispatchStartedHandler;
 import org.geomajas.gwt.client.command.event.DispatchStoppedEvent;
-import org.geomajas.gwt2.client.GeomajasServerExtension;
-import org.geomajas.javascript.api.client.map.event.DispatchStoppedHandler;
-import org.geomajas.javascript.api.client.map.event.JsHandlerRegistration;
-import org.geomajas.javascript.gwt2.impl.client.exporter.map.JsMapPresenterImpl;
+import org.geomajas.gwt.client.command.event.DispatchStoppedHandler;
+import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
+import org.geomajas.javascript.common.client.command.event.JsDispatchStartedEvent;
+import org.geomajas.javascript.common.client.command.event.JsDispatchStartedHandler;
+import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedEvent;
+import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.ExportStaticMethod;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * Exports {@link GeomajasServerExtension}.
+ * Exports {@link GwtCommandDispatcher}.
  *
  * @author Jan De Moerloose
  */
-@Export("ServerExtension")
+@Export("GwtCommandDispatcher")
 @ExportPackage("gm")
-public final class JsGeomajasServerExtension implements Exportable {
+public final class JsGwtCommandDispatcherImpl implements Exportable {
 
-	private JsGeomajasServerExtension() {
-	}
-
-	/**
-	 * Initialize this map with the given server ids.
-	 *
-	 * @param mapPresenter the map.
-	 * @param applicationId the application id.
-	 * @param mapId the map id.
-	 */
-	@ExportStaticMethod("initializeMap")
-	public static void initializeMap(JsMapPresenterImpl mapPresenter, String applicationId, String mapId) {
-		GeomajasServerExtension.getInstance().initializeMap(mapPresenter.getMapPresenter(),
-				applicationId, mapId);
+	private JsGwtCommandDispatcherImpl() {
 	}
 
 	/**
@@ -56,13 +46,12 @@ public final class JsGeomajasServerExtension implements Exportable {
 	 * @return The registration for the handler. Using this object the handler can be removed again.
 	 */
 	@ExportStaticMethod("addDispatchStartedHandler")
-	public static JsHandlerRegistration addDispatchStartedHandler(final org.geomajas.javascript.api.client.map.event
-			.DispatchStartedHandler handler) {
+	public static JsHandlerRegistration addDispatchStartedHandler(final JsDispatchStartedHandler handler) {
 		HandlerRegistration registration = GwtCommandDispatcher.getInstance().addDispatchStartedHandler(
-				new org.geomajas.gwt.client.command.event.DispatchStartedHandler() {
+				new DispatchStartedHandler() {
 
 					public void onDispatchStarted(DispatchStartedEvent event) {
-						handler.onDispatchStarted(new org.geomajas.javascript.api.client.map.event.DispatchStartedEvent());
+						handler.onDispatchStarted(new JsDispatchStartedEvent());
 					}
 				});
 		return new JsHandlerRegistration(new HandlerRegistration[] { registration });
@@ -76,12 +65,12 @@ public final class JsGeomajasServerExtension implements Exportable {
 	 * @return The registration for the handler. Using this object the handler can be removed again.
 	 */
 	@ExportStaticMethod("addDispatchStoppedHandler")
-	public static JsHandlerRegistration addDispatchStoppedHandler(final DispatchStoppedHandler handler) {
+	public static JsHandlerRegistration addDispatchStoppedHandler(final JsDispatchStoppedHandler handler) {
 		HandlerRegistration registration = GwtCommandDispatcher.getInstance().addDispatchStoppedHandler(
-				new org.geomajas.gwt.client.command.event.DispatchStoppedHandler() {
+				new DispatchStoppedHandler() {
 
 					public void onDispatchStopped(DispatchStoppedEvent event) {
-						handler.onDispatchStopped(new org.geomajas.javascript.api.client.map.event.DispatchStoppedEvent());
+						handler.onDispatchStopped(new JsDispatchStoppedEvent());
 					}
 				});
 		return new JsHandlerRegistration(new HandlerRegistration[] { registration });

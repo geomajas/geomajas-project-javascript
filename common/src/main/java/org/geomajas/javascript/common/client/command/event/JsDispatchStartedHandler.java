@@ -9,17 +9,18 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.geomajas.javascript.api.client.map.event;
+package org.geomajas.javascript.common.client.command.event;
 
 import org.geomajas.annotation.Api;
 import org.geomajas.annotation.UserImplemented;
+import org.geomajas.javascript.api.client.event.JsHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * Handler for catching events that indicate a layer configuration has been loaded into the
- * {@link org.geomajas.plugin.jsapi.map.LayersModel}.
+ * JavaScript exportable handler for catching events thrown when the command dispatcher starts issuing commands to the
+ * server.
  *
  * @author Pieter De Graef
  * @since 1.0.0
@@ -28,13 +29,13 @@ import org.timepedia.exporter.client.Exportable;
 @ExportClosure
 @Api(allMethods = true)
 @UserImplemented
-public interface JsLayersModelChangedHandler extends JsHandler, Exportable {
+public interface JsDispatchStartedHandler extends JsHandler, Exportable {
 
 	/**
-	 * Called when a new layer configuration has been loaded into the {@link org.geomajas.plugin.jsapi.map.LayersModel}.
+	 * Executed when the command dispatch has started dispatching commands to the server.
 	 *
 	 * @param event
-	 *            {@link JsLayersModelChangedEvent}
+	 *            The dispatch start event.
 	 */
-	void onLayersModelChanged(JsLayersModelChangedEvent event);
+	void onDispatchStarted(JsDispatchStartedEvent event);
 }

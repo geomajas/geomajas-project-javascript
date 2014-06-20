@@ -12,6 +12,7 @@
 
 <module rename-to="emptyApp">
     <inherits name="org.geomajas.javascript.gwt2.impl.JavascriptServerExtensionImpl"/>
+    <inherits name="org.geomajas.javascript.common.JavascriptCommon"/>
 
 	<!-- add required languages
 	<extend-property name="locale" values="nl"/>

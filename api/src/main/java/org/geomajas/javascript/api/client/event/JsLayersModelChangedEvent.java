@@ -9,10 +9,10 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.geomajas.javascript.api.client.map.event;
+package org.geomajas.javascript.api.client.event;
 
 import org.geomajas.annotation.Api;
-import org.geomajas.javascript.api.client.map.JsLayersModel;
+import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;

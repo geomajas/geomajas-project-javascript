@@ -9,7 +9,7 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.geomajas.javascript.api.client.map.event;
+package org.geomajas.javascript.api.client.event;
 
 import org.geomajas.annotation.Api;
 import org.geomajas.annotation.UserImplemented;
@@ -18,8 +18,8 @@ import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * JavaScript exportable handler for catching events thrown when the command dispatcher stops issuing commands to the
- * server - when the response has returned.
+ * Handler for catching events that indicate a layer configuration has been loaded into the
+ * {@link org.geomajas.plugin.jsapi.map.LayersModel}.
  *
  * @author Pieter De Graef
  * @since 1.0.0
@@ -28,13 +28,13 @@ import org.timepedia.exporter.client.Exportable;
 @ExportClosure
 @Api(allMethods = true)
 @UserImplemented
-public interface DispatchStoppedHandler extends JsHandler, Exportable {
+public interface JsLayersModelChangedHandler extends JsHandler, Exportable {
 
 	/**
-	 * Executed when the command dispatch has stopped dispatching commands to the server.
+	 * Called when a new layer configuration has been loaded into the {@link org.geomajas.plugin.jsapi.map.LayersModel}.
 	 *
 	 * @param event
-	 *            The dispatch stop event.
+	 *            {@link JsLayersModelChangedEvent}
 	 */
-	void onDispatchStopped(DispatchStoppedEvent event);
+	void onLayersModelChanged(JsLayersModelChangedEvent event);
 }

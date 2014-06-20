@@ -9,28 +9,21 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.geomajas.javascript.api.client.map.event;
+package org.geomajas.javascript.api.client.event;
 
 import org.geomajas.annotation.Api;
 import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * JsEventBus interface.
+ * Base definition of all event handlers to be exported to JavaScript.
  *
- * @author David Debuck
+ * @author Pieter De Graef
  * @since 1.0.0
  */
-@Api(allMethods = true)
 @Export
-public interface JsEventBus extends Exportable {
-
-	/**
-	 * Register a handler to the eventbus.
-	 *
-	 * @param handler JsLayersModelChangedHandle
-	 * @return JsHandlerRegistration
-	 */
-	JsHandlerRegistration addLayersModelChangedHandler(JsLayersModelChangedHandler handler);
-
+@ExportPackage("gm.event")
+@Api(allMethods = true)
+public interface JsHandler extends Exportable {
 }

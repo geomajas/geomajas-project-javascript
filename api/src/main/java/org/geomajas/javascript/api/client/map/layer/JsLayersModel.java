@@ -8,19 +8,17 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
-package org.geomajas.javascript.api.client.map;
+package org.geomajas.javascript.api.client.map.layer;
 
 import org.geomajas.annotation.Api;
-import org.geomajas.javascript.api.client.map.layer.JsLayer;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * JsLayersModel interface.
+ * Exports {@link org.geomajas.gwt2.client.map.LayersModel}.
  *
  * @author David Debuck
  * @since 1.0.0
- * @see  org.geomajas.gwt2.client.map.layer.LayersModel
  */
 @Api(allMethods = true)
 @Export
