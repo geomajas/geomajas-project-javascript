@@ -33,6 +33,10 @@
 			<artifactId>geomajas-project-javascript-gwt2-impl</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-javascript-server-extension-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<scope>provided</scope>
@@ -93,6 +97,11 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt.gwtmockito</groupId>
+			<artifactId>gwtmockito</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

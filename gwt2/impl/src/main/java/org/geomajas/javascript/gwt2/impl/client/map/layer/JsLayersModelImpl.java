@@ -15,6 +15,7 @@ import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.gwt2.client.map.layer.LayersModel;
 import org.geomajas.javascript.api.client.map.layer.JsLayer;
 import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
+import org.geomajas.javascript.gwt2.impl.client.JsGwtImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
@@ -51,12 +52,7 @@ public class JsLayersModelImpl implements JsLayersModel, Exportable {
 	 * @return Returns the layer, or null if it could not be found.
 	 */
 	public JsLayer getLayer(String layerId) {
-		Layer layer = layersModel.getLayer(layerId);
-/*		if (layer instanceof FeaturesSupported) {
-			return new VectorLayer((FeaturesSupported) layer);
-		}*/
-
-		return new JsLayerImpl(layer);
+		return createJsLayer(layersModel.getLayer(layerId));
 	}
 
 	@Override
@@ -66,7 +62,16 @@ public class JsLayersModelImpl implements JsLayersModel, Exportable {
 
 	@Override
 	public JsLayer getLayerAtIndex(int index) {
-		return new JsLayerImpl(layersModel.getLayer(index));
+		return createJsLayer(layersModel.getLayer(index));
+	}
+
+	/**
+	 * Factory method for creating the correct {@link JsLayer} instances.
+	 * @param layer layer
+	 * @return jsLayer created based on the layer
+	 */
+	private JsLayer createJsLayer(Layer layer) {
+		return JsGwtImpl.getInstance().getJsLayerFactoryRegistry().createJsLayer(layer);
 	}
 
 }
