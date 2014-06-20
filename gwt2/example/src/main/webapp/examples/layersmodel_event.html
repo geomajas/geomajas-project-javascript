@@ -23,26 +23,46 @@
 			var map;
 	
 			function onGeomajasLoad() {
-				// Display the map:
+			    // do nothing
+			}
+
+			function createMap() {
+                // clear the parent tag
+                document.getElementById("js-map-element").innerHTML = "";
+
+                // Create the map:
                 map = new gm.Map("js-map-element");
+                // register handlers
+                map.getEventBus().addLayersModelChangedHandler(function(event) {
+                    displayLayers();
+                });
+                map.getEventBus().addMapInitializationHandler(function(event) {
+                    displayMapInitialization();
+                });
+			}
+
+			function initializeMap() {
                 gm.ServerExtension.initializeMap(map, "app", "mapMain");
-
-				// At this time, Geomajas is loaded, but this particular map has only just sent out a request for it's
-				// configuration; we don't have any layers yet. Therefore we must wait for the right time to display
-				// the list of layers: when the layer configuration has been loaded into the map.
-				map.getEventBus().addLayersModelChangedHandler(function(event) {
-					displayLayers();
-				});
 			}
 
-			function displayLayers() {
+			function clearLogging() {
+                document.getElementById("log").innerHTML = "";
+			}
+
+            function displayLayers() {
 				var log = document.getElementById("log");
-				log.innerHTML = "";
-				for (var i = 0; i < map.getLayersModel().getLayerCount(); i++) {
-					var layer = map.getLayersModel().getLayerAtIndex(i);
-					log.innerHTML += "Layer " + i + ": " + layer.getTitle() + "<br>";
-				}
+                log.innerHTML += "Event LayersModelChanged fired. Currently " +
+                        map.getLayersModel().getLayerCount() + " layers<br>";
 			}
+
+            function displayMapInitialization() {
+                var log = document.getElementById("log");
+                log.innerHTML += "Event MapInitialization fired<br>";
+            }
+
+            function refreshLayer(index) {
+                map.getLayersModel().getLayerAtIndex(index).refresh();
+            }
 		</script>
 	</head>
 
@@ -60,17 +80,22 @@
 						</div>
 					</td>
 					<td valign="top">
-						<h2>Using LayersModel Changed Events</h2>
-						<p>
-							In this example, a map is created when Geomajas loads. At that time, a request is sent to
-							the server to ask for the maps configuration. Only when the configuration is successfully
-							loaded, are all layers available. This is when a LayersModelChangedEvent is fired.
-						</p>
-						<p>
-							In this example we use this event to display the list of layers in below:
-						</p>
+						<h2>Basic map and layer events</h2>
 
-						<h4>List of layers:</h4>
+						<p>
+							When the Geomajas map is initialized, the map is build in a number of steps.
+                            E.g. a request is sent to the server to ask for the map's configuration.
+                            The layers are added one by one to the map. Each time a LayersModelChangedEvent is fired.
+                            When the map has been completely initialized, a MapInitializationEvent will be fired.
+						</p>
+                        <div>
+                        <button onclick="createMap()">Create map</button>
+                        <button onclick="initializeMap()">Initialize map</button><br>
+                        <button onclick="refreshLayer(0)">Refresh background (osm)</button>
+                        <button onclick="refreshLayer(1)">Refresh front layer (countries)</button><br>
+
+						<h4>Event logging:</h4>
+                        <button onclick="clearLogging()">Clear logging</button><br>
 						<div id="log"></div>
 					</td>
 				</tr>

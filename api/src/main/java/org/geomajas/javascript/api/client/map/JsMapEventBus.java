@@ -12,6 +12,7 @@
 package org.geomajas.javascript.api.client.map;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.javascript.api.client.event.JsMapInitializationHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
@@ -34,5 +35,13 @@ public interface JsMapEventBus extends Exportable {
 	 * @return JsHandlerRegistration
 	 */
 	JsHandlerRegistration addLayersModelChangedHandler(JsLayersModelChangedHandler handler);
+
+	/**
+	 * Add a map initialization handler.
+	 *
+	 * @param handler the handler
+	 * @return the handler registration
+	 */
+	JsHandlerRegistration addMapInitializationHandler(JsMapInitializationHandler handler);
 
 }

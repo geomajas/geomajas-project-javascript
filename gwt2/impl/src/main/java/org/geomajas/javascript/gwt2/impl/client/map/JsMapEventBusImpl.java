@@ -16,6 +16,10 @@ import org.geomajas.annotation.Api;
 import org.geomajas.gwt2.client.event.LayerAddedEvent;
 import org.geomajas.gwt2.client.event.LayerRemovedEvent;
 import org.geomajas.gwt2.client.event.MapCompositionHandler;
+import org.geomajas.gwt2.client.event.MapInitializationEvent;
+import org.geomajas.gwt2.client.event.MapInitializationHandler;
+import org.geomajas.javascript.api.client.event.JsMapInitializationEvent;
+import org.geomajas.javascript.api.client.event.JsMapInitializationHandler;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsMapEventBus;
 import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
@@ -37,7 +41,7 @@ import org.timepedia.exporter.client.Exportable;
 @Api(allMethods = true)
 public class JsMapEventBusImpl implements JsMapEventBus, Exportable {
 
-	private JsMapPresenter map;
+	private JsMapPresenter mapPresenter;
 
 	/** No-args constructor for GWT. */
 	public JsMapEventBusImpl() {
@@ -45,25 +49,37 @@ public class JsMapEventBusImpl implements JsMapEventBus, Exportable {
 
 	/**
 	 * Construct event bus for specific map.
-	 * @param map JsMapPresenter
+	 * @param mapPresenter JsMapPresenter
 	 */
-	public JsMapEventBusImpl(JsMapPresenter map) {
-		this.map = map;
+	public JsMapEventBusImpl(JsMapPresenter mapPresenter) {
+		this.mapPresenter = mapPresenter;
 	}
 
 	@Override
 	public JsHandlerRegistration addLayersModelChangedHandler(final JsLayersModelChangedHandler handler) {
-		HandlerRegistration registration = ((JsMapPresenterImpl) map).getMapPresenter().getEventBus()
+		HandlerRegistration registration = ((JsMapPresenterImpl) mapPresenter).getMapPresenter().getEventBus()
 				.addMapCompositionHandler(new MapCompositionHandler() {
 
 					@Override
 					public void onLayerRemoved(LayerRemovedEvent event) {
-						handler.onLayersModelChanged(new JsLayersModelChangedEvent(map.getLayersModel()));
+						handler.onLayersModelChanged(new JsLayersModelChangedEvent(mapPresenter.getLayersModel()));
 					}
 
 					@Override
 					public void onLayerAdded(LayerAddedEvent event) {
-						handler.onLayersModelChanged(new JsLayersModelChangedEvent(map.getLayersModel()));
+						handler.onLayersModelChanged(new JsLayersModelChangedEvent(mapPresenter.getLayersModel()));
+					}
+				});
+		return new JsHandlerRegistration(new HandlerRegistration[] { registration });
+	}
+
+	@Override
+	public JsHandlerRegistration addMapInitializationHandler(final JsMapInitializationHandler handler) {
+		HandlerRegistration registration = ((JsMapPresenterImpl) mapPresenter).getMapPresenter().getEventBus().
+				addMapInitializationHandler(new MapInitializationHandler() {
+					@Override
+					public void onMapInitialized(MapInitializationEvent event) {
+						handler.onMapInitialized(new JsMapInitializationEvent(mapPresenter));
 					}
 				});
 		return new JsHandlerRegistration(new HandlerRegistration[] { registration });
