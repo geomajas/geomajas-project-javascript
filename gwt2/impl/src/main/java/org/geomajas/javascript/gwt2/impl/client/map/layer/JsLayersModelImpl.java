@@ -8,14 +8,13 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
-package org.geomajas.javascript.gwt2.impl.client.exporter.map;
+package org.geomajas.javascript.gwt2.impl.client.map.layer;
 
 import org.geomajas.annotation.Api;
 import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.gwt2.client.map.layer.LayersModel;
-import org.geomajas.javascript.api.client.map.JsLayersModel;
 import org.geomajas.javascript.api.client.map.layer.JsLayer;
-import org.geomajas.javascript.gwt2.impl.client.exporter.map.layer.JsLayerImpl;
+import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;

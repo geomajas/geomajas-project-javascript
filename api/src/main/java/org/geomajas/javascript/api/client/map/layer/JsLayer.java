@@ -15,7 +15,7 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * JsLayer interface.
+ * Exports {@link org.geomajas.gwt2.client.map.Layer}.
  *
  * @author David Debuck
  * @since 1.0.0

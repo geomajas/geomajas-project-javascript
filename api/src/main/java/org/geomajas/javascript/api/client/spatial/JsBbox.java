@@ -11,6 +11,7 @@
 package org.geomajas.javascript.api.client.spatial;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.geometry.Bbox;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
 import org.timepedia.exporter.client.ExportOverlay;
@@ -38,8 +39,8 @@ public class JsBbox implements ExportOverlay<org.geomajas.geometry.Bbox>, Export
 	 * @return bbox with requested origin and dimensions
 	 */
 	@ExportConstructor
-	public static org.geomajas.geometry.Bbox constructor(double x, double y, double width, double height) {
-		return new org.geomajas.geometry.Bbox(x, y, width, height);
+	public static Bbox constructor(double x, double y, double width, double height) {
+		return new Bbox(x, y, width, height);
 	}
 
 	/**

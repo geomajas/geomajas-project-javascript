@@ -11,6 +11,7 @@
 package org.geomajas.javascript.api.client.spatial;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.geometry.Coordinate;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
 import org.timepedia.exporter.client.ExportOverlay;
@@ -36,8 +37,8 @@ public class JsCoordinate implements ExportOverlay<org.geomajas.geometry.Coordin
 	 * @return coordinate
 	 */
 	@ExportConstructor
-	public static org.geomajas.geometry.Coordinate constructor(double x, double y) {
-		return new org.geomajas.geometry.Coordinate(x, y);
+	public static Coordinate constructor(double x, double y) {
+		return new Coordinate(x, y);
 	}
 
 	@Override

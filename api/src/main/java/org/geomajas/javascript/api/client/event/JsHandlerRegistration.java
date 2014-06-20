@@ -9,7 +9,7 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.geomajas.javascript.api.client.map.event;
+package org.geomajas.javascript.api.client.event;
 
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import org.geomajas.annotation.Api;

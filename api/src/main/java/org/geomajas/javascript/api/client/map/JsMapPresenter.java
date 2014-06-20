@@ -11,7 +11,7 @@
 package org.geomajas.javascript.api.client.map;
 
 import org.geomajas.annotation.Api;
-import org.geomajas.javascript.api.client.map.event.JsEventBus;
+import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
 import org.timepedia.exporter.client.Exportable;
 
 /**
@@ -45,7 +45,7 @@ public interface JsMapPresenter extends Exportable {
 	 *
 	 * @return The event bus that manages all event related to this map.
 	 */
-	JsEventBus getEventBus();
+	JsMapEventBus getEventBus();
 
 	/**
 	 * Apply a new mouse cursor when hovering above the map.

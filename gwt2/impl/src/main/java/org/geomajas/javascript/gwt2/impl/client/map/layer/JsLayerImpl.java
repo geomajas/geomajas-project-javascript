@@ -8,7 +8,7 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
-package org.geomajas.javascript.gwt2.impl.client.exporter.map.layer;
+package org.geomajas.javascript.gwt2.impl.client.map.layer;
 
 import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.javascript.api.client.map.layer.JsLayer;

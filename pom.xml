@@ -51,6 +51,7 @@
 		<module>api</module>
 		<module>server-extension-api</module>
 		<module>gwt2</module>
+		<module>common</module>
 		<!--  <module>plugin</module> <module>gwt2</module> -->
 	</modules>
 
@@ -74,6 +75,11 @@
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-javascript-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas.project</groupId>
+				<artifactId>geomajas-project-javascript-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

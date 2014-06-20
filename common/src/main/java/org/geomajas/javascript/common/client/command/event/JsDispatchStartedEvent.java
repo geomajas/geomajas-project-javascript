@@ -9,15 +9,16 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.geomajas.javascript.api.client.map.event;
+package org.geomajas.javascript.common.client.command.event;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.javascript.api.client.event.JsEvent;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * This event is thrown when the command dispatcher stops dispatching - when the response has returned.
+ * This event is thrown when the command dispatcher starts dispatching.
  *
  * @author Pieter De Graef
  * @since 1.0.0
@@ -25,19 +26,19 @@ import org.timepedia.exporter.client.Exportable;
 @Api(allMethods = true)
 @Export
 @ExportPackage("gm.event")
-public class DispatchStoppedEvent extends JsEvent<DispatchStoppedHandler> implements Exportable {
+public class JsDispatchStartedEvent extends JsEvent<JsDispatchStartedHandler> implements Exportable {
 
 	/** No-arguments constructor. */
-	public DispatchStoppedEvent() {
+	public JsDispatchStartedEvent() {
 	}
 
 	@Override
-	protected void dispatch(DispatchStoppedHandler handler) {
-		handler.onDispatchStopped(this);
+	public Class<JsDispatchStartedHandler> getType() {
+		return JsDispatchStartedHandler.class;
 	}
 
 	@Override
-	public Class<DispatchStoppedHandler> getType() {
-		return DispatchStoppedHandler.class;
+	protected void dispatch(JsDispatchStartedHandler handler) {
+		handler.onDispatchStarted(this);
 	}
 }
