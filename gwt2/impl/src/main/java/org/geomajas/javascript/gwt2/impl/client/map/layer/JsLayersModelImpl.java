@@ -11,6 +11,7 @@
 package org.geomajas.javascript.gwt2.impl.client.map.layer;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.gwt2.client.map.layer.FeaturesSupported;
 import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.gwt2.client.map.layer.LayersModel;
 import org.geomajas.javascript.api.client.map.layer.JsLayer;
@@ -51,12 +52,14 @@ public class JsLayersModelImpl implements JsLayersModel, Exportable {
 	 * @return Returns the layer, or null if it could not be found.
 	 */
 	public JsLayer getLayer(String layerId) {
-		Layer layer = layersModel.getLayer(layerId);
-/*		if (layer instanceof FeaturesSupported) {
-			return new VectorLayer((FeaturesSupported) layer);
-		}*/
 
-		return new JsLayerImpl(layer);
+		Layer layer = layersModel.getLayer(layerId);
+		if (layer instanceof FeaturesSupported) {
+			return new JsVectorLayer((FeaturesSupported) layer);
+		} else {
+			return new JsLayerImpl(layer);
+		}
+
 	}
 
 	@Override

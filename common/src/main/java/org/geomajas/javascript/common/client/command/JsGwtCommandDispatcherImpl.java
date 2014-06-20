@@ -17,10 +17,14 @@ import org.geomajas.gwt.client.command.event.DispatchStartedHandler;
 import org.geomajas.gwt.client.command.event.DispatchStoppedEvent;
 import org.geomajas.gwt.client.command.event.DispatchStoppedHandler;
 import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
+import org.geomajas.javascript.api.client.spatial.JsBboxService;
+import org.geomajas.javascript.api.client.spatial.JsGeometryService;
 import org.geomajas.javascript.common.client.command.event.JsDispatchStartedEvent;
 import org.geomajas.javascript.common.client.command.event.JsDispatchStartedHandler;
 import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedEvent;
 import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedHandler;
+import org.geomajas.javascript.common.client.map.spatial.JsBboxServiceImpl;
+import org.geomajas.javascript.common.client.map.spatial.JsGeometryServiceImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.ExportStaticMethod;
@@ -74,6 +78,26 @@ public final class JsGwtCommandDispatcherImpl implements Exportable {
 					}
 				});
 		return new JsHandlerRegistration(new HandlerRegistration[] { registration });
+	}
+
+	/**
+	 * Get a service for geometry manipulation.
+	 *
+	 * @return A service for geometry manipulation.
+	 */
+	@ExportStaticMethod("getGeometryService")
+	public static JsGeometryService getGeometryService() {
+		return new JsGeometryServiceImpl();
+	}
+
+	/**
+	 * Get a service for bounding box manipulation.
+	 *
+	 * @return A service for bounding box manipulation.
+	 */
+	@ExportStaticMethod("getBboxService")
+	public static JsBboxService getBboxService() {
+		return new JsBboxServiceImpl();
 	}
 
 }

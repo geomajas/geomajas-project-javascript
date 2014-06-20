@@ -26,20 +26,34 @@
 			var bboxService;
 
 			function onGeomajasLoad() {
-				// Initialize required services:
-				map = Geomajas().createMap("app", "mapMain", "js-map-element");
-				geometryService = Geomajas().getGeometryService();
-				bboxService = Geomajas().getBboxService();
+
+				map = new gm.Map("js-map-element");
+				gm.ServerExtension.initializeMap(map, "app", "mapMain");
+
+				geometryService =  gm.GwtCommandDispatcher.getGeometryService();
+				bboxService = gm.GwtCommandDispatcher.getBboxService();
+
+				console.log(geometryService);
+
+				/////////////////
+
+				var test = geometryService.toGeometry('LINESTRING (30 10, 10 30, 40 40)');
+
+				console.log(test.getCoordinates());
+
+				/////////////////
 
 				// Apply the selection controller:
-				var mapController = Geomajas().createMapController(map, "SelectionMode");
-				map.setMapController(mapController);
+				//var mapController = Geomajas().createMapController(map, "SelectionMode");
+				//map.setMapController(mapController);
 			}
 
 			function zoomToSelection() {
 				// Get all selected features:
 				var layer = map.getLayersModel().getLayer("clientLayerCountries");
 				var features = layer.getSelectedFeatures();
+
+				console.log(features);
 
 				// Calculate the union of the bounds of all selected geometries:
 				var bounds = null;
@@ -83,8 +97,8 @@
 						<h2>Zoom to selection</h2>
 
 						<h4>Zoom to the current selection</h4>
-						This example demonstrates how to zoom to the current selection. By default, the "Selection" 
-						controller has been activated on the map instead of the navigation controller. Use it to select 
+						This example demonstrates how to zoom to the current selection. By default, the "Selection"
+						controller has been activated on the map instead of the navigation controller. Use it to select
 						certain features, and than zoom to your selection.<br>
 						<button onclick="zoomToSelection()">Zoom to the current selection</button>
 
