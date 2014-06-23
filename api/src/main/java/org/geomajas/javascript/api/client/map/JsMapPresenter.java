@@ -11,6 +11,7 @@
 package org.geomajas.javascript.api.client.map;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.javascript.api.client.map.controller.JsMapController;
 import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
 import org.timepedia.exporter.client.Exportable;
 
@@ -24,7 +25,7 @@ import org.timepedia.exporter.client.Exportable;
 public interface JsMapPresenter extends Exportable {
 
 	/**
-	 * Returns the {@link ViewPort} associated with this map. The view port regulates zooming and panning around the
+	 * Returns the {@link JsViewPort} associated with this map. The view port regulates zooming and panning around the
 	 * map, but also presents transformation methods for transforming vector objects between the different render
 	 * spaces.
 	 *
@@ -54,5 +55,32 @@ public interface JsMapPresenter extends Exportable {
 	 *            The new cursor to apply.
 	 */
 	void setCursor(String cursor);
+
+	/**
+	 * Couples this map to an existing HTML element (div or span).
+	 *
+	 * @param id
+	 *            id of the element
+	 */
+	void setHtmlElementId(String id);
+
+	/**
+	 * Get the id of the HTML element this map is coupled with.
+	 *
+	 * @return element id
+	 */
+	String getHtmlElementId();
+
+	/**
+	 * Apply a new {@link JsMapController} on the map. This controller will handle all mouse-events that are global for
+	 * the map. Only one controller can be set at any given time. When a controller is active on the map, using this
+	 * method, any fall-back controller is automatically disabled.
+	 *
+	 * @param controller
+	 *            The new {@link JsMapController} object. If null is passed, then the active controller is again
+	 *            disabled.
+	 *            At that time the fall-back controller is again activated.
+	 */
+	void setMapController(JsMapController controller);
 
 }

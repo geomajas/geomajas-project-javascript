@@ -19,11 +19,15 @@
 
 	<artifactId>geomajas-project-javascript-gwt2-impl</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<name>Geomajas Project JavaScript GWT2 - Implementation</name>
 	<description>Geomajas Project JavaScript GWT2 - Implementation</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-gwt2-server-extension</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-client-gwt2-impl</artifactId>
@@ -117,7 +121,7 @@
 					<name>m2e.version</name>
 				</property>
 			</activation>
-		</profile>	
+		</profile>
 	</profiles>
 </project>
 
