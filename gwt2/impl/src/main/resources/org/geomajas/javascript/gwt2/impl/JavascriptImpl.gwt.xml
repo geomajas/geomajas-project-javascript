@@ -13,8 +13,8 @@
 <module>
     <inherits name="org.geomajas.gwt2.GeomajasClientImpl" />
   	<inherits name="org.geomajas.javascript.api.JavascriptApi" />
-<!--
-	<inherits name="com.google.gwt.logging.Logging"/>
+
+<!--	<inherits name="com.google.gwt.logging.Logging"/>
 
 	<set-property name="gwt.logging.logLevel" value="INFO"/>
 	<set-property name="gwt.logging.enabled" value="TRUE"/>
