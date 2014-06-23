@@ -13,6 +13,8 @@ package org.geomajas.javascript.gwt2.impl.client;
 
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayerFactoryRegistry;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayerFactoryRegistryImpl;
+import org.geomajas.javascript.gwt2.impl.client.util.JsGwtUtil;
+import org.geomajas.javascript.gwt2.impl.client.util.JsGwtUtilImpl;
 
 /**
  * Start class for Javascript Gwt2 implementation.
@@ -24,6 +26,7 @@ public final class JsGwtImpl {
 	private static JsGwtImpl instance = new JsGwtImpl();
 
 	private JsLayerFactoryRegistry jsLayerFactoryRegistry;
+	private JsGwtUtil jsGwtUtil;
 
 	private JsGwtImpl() {
 	}
@@ -41,5 +44,16 @@ public final class JsGwtImpl {
 
 	public void setJsLayerFactoryRegistry(JsLayerFactoryRegistry jsLayerFactoryRegistry) {
 		this.jsLayerFactoryRegistry = jsLayerFactoryRegistry;
+	}
+
+	public JsGwtUtil getJsGwtUtil() {
+		if (jsGwtUtil == null) {
+			jsGwtUtil = JsGwtUtilImpl.getInstance();
+		}
+		return jsGwtUtil;
+	}
+
+	public void setJsGwtUtil(JsGwtUtil jsGwtUtil) {
+		this.jsGwtUtil = jsGwtUtil;
 	}
 }

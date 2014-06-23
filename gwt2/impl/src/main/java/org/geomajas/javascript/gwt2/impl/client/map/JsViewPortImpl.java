@@ -13,8 +13,8 @@ package org.geomajas.javascript.gwt2.impl.client.map;
 import org.geomajas.geometry.Bbox;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt2.client.map.ViewPort;
-import org.geomajas.gwt2.client.map.ViewPortTransformationService;
 import org.geomajas.javascript.api.client.map.JsViewPort;
+import org.geomajas.javascript.api.client.map.JsViewPortTransformationService;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
@@ -78,8 +78,8 @@ public class JsViewPortImpl implements JsViewPort, Exportable {
 	}
 
 	@Override
-	public ViewPortTransformationService getTransformationService() {
-		return viewPort.getTransformationService();
+	public JsViewPortTransformationService getTransformationService() {
+		return new JsViewPortTransformationServiceImpl(viewPort.getTransformationService());
 	}
 
 

@@ -33,20 +33,8 @@
 				geometryService =  gm.GwtCommandDispatcher.getGeometryService();
 				bboxService = gm.GwtCommandDispatcher.getBboxService();
 
-				//console.log(geometryService);
-
-				/////////////////
-
-				//var test = geometryService.toGeometry('LINESTRING (30 10, 10 30, 40 40)');
-
-				//console.log(test.getCoordinates());
-
-				/////////////////
-
-				// Apply the selection controller:
-				var mapController = gm.GwtCommandDispatcher.createMapController(map, "SelectionMode");
-
-				console.log(mapController);
+				// Apply the select single feature controller:
+				var mapController = gm.MapControllerFactory.createMapController(map, "featureSelectionSingle");
 
 				map.setMapController(mapController);
 			}

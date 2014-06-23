@@ -23,11 +23,12 @@
 		var map;
 
 		function onGeomajasLoad() {
-			map = Geomajas().createMap("app", "mapMain", "js-map-element");
+            map = new gm.Map("js-map-element");
+            gm.ServerExtension.initializeMap(map, "app", "mapMain");
 		}
 
 		function applyMapController(id) {
-			var mapController = Geomajas().createMapController(map, id);
+			var mapController = gm.MapControllerFactory.createMapController(map, id);
 			map.setMapController(mapController);
 		}
 	</script>
@@ -50,13 +51,11 @@
 					<h2>Map Controllers</h2>
 					
 					<h4>Use default map controllers</h4>
-					Activate a controller on the map (only one can be active at a time):
-					<button onclick="applyMapController('PanMode')">Navigation</button><br>
-					<button onclick="applyMapController('MeasureDistanceMode')">Measure distances</button><br>
-					<button onclick="applyMapController('FeatureInfoMode')">Feature Info</button><br>
-					<button onclick="applyMapController('SelectionMode')">Selection (multiple features)</button><br>
-					<button onclick="applyMapController('SingleSelectionMode')">Selection (single feature)</button><br>
-					<button onclick="applyMapController('EditMode')">Editing</button>
+					Activate a controller on the map (only one can be active at a time). By default, the navigation controller is active.<br>
+					<button onclick="applyMapController('navigation')">Navigation</button><br>
+					<button onclick="applyMapController('zoomToRectangle')">ZoomToRectangle</button><br>
+					<button onclick="applyMapController('featureSelectionDrag')">Selection (multiple features)</button><br>
+					<button onclick="applyMapController('featureSelectionSingle')">Selection (single feature)</button><br>
 				</td>
 			</tr>
 		</table>
