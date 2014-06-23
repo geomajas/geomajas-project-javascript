@@ -13,11 +13,12 @@ package org.geomajas.javascript.api.client.map;
 import org.geomajas.annotation.Api;
 import org.geomajas.geometry.Bbox;
 import org.geomajas.geometry.Coordinate;
+import org.geomajas.gwt2.client.map.ViewPortTransformationService;
 import org.timepedia.exporter.client.Exportable;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.ViewPort}.
- * 
+ *
  * @author Jan De Moerloose
  * @since 1.0.0
  */
@@ -26,7 +27,7 @@ public interface JsViewPort extends Exportable {
 
 	/**
 	 * Get the current center position expressed in world space.
-	 * 
+	 *
 	 * @return The current center position expressed in world space.
 	 */
 	Coordinate getPosition();
@@ -38,14 +39,14 @@ public interface JsViewPort extends Exportable {
 
 	/**
 	 * Return the currently visible bounds on the map. These bounds are expressed in the CRS of the map.
-	 * 
+	 *
 	 * @return Returns the maps bounding box.
 	 */
 	Bbox getBounds();
 
 	/**
 	 * Re-centers the map to a new position.
-	 * 
+	 *
 	 * @param coordinate
 	 *            the new center position
 	 */
@@ -68,7 +69,7 @@ public interface JsViewPort extends Exportable {
 	 * Also this function will almost certainly change the scale on the map, so if there have been resolutions defined,
 	 * it will snap to them.
 	 * </p>
-	 * 
+	 *
 	 * @param bounds
 	 *            A bounding box in world coordinates that determines the view from now on.
 	 */
@@ -77,9 +78,15 @@ public interface JsViewPort extends Exportable {
 	/**
 	 * Get the maximum zooming extent that is allowed on this view port. These bounds are determined by the map
 	 * configuration.
-	 * 
+	 *
 	 * @return The maximum zooming extent that is allowed on this view port.
 	 */
 	Bbox getMaximumBounds();
+
+	/**
+	 *
+	 * @return
+	 */
+	ViewPortTransformationService getTransformationService();
 
 }

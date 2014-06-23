@@ -33,19 +33,22 @@
 				geometryService =  gm.GwtCommandDispatcher.getGeometryService();
 				bboxService = gm.GwtCommandDispatcher.getBboxService();
 
-				console.log(geometryService);
+				//console.log(geometryService);
 
 				/////////////////
 
-				var test = geometryService.toGeometry('LINESTRING (30 10, 10 30, 40 40)');
+				//var test = geometryService.toGeometry('LINESTRING (30 10, 10 30, 40 40)');
 
-				console.log(test.getCoordinates());
+				//console.log(test.getCoordinates());
 
 				/////////////////
 
 				// Apply the selection controller:
-				//var mapController = Geomajas().createMapController(map, "SelectionMode");
-				//map.setMapController(mapController);
+				var mapController = gm.GwtCommandDispatcher.createMapController(map, "SelectionMode");
+
+				console.log(mapController);
+
+				map.setMapController(mapController);
 			}
 
 			function zoomToSelection() {

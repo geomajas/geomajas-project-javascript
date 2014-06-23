@@ -50,6 +50,10 @@
 			<artifactId>geomajas-client-common-gwt-command</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-javascript-gwt2-server-extension-impl</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>

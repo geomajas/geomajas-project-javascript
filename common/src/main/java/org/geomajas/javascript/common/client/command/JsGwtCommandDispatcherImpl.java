@@ -16,7 +16,10 @@ import org.geomajas.gwt.client.command.event.DispatchStartedEvent;
 import org.geomajas.gwt.client.command.event.DispatchStartedHandler;
 import org.geomajas.gwt.client.command.event.DispatchStoppedEvent;
 import org.geomajas.gwt.client.command.event.DispatchStoppedHandler;
+import org.geomajas.gwt2.client.controller.FeatureSelectionController;
 import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
+import org.geomajas.javascript.api.client.map.JsMapPresenter;
+import org.geomajas.javascript.api.client.map.controller.JsMapController;
 import org.geomajas.javascript.api.client.spatial.JsBboxService;
 import org.geomajas.javascript.api.client.spatial.JsGeometryService;
 import org.geomajas.javascript.common.client.command.event.JsDispatchStartedEvent;
@@ -98,6 +101,24 @@ public final class JsGwtCommandDispatcherImpl implements Exportable {
 	@ExportStaticMethod("getBboxService")
 	public static JsBboxService getBboxService() {
 		return new JsBboxServiceImpl();
+	}
+
+	/**
+	 * Create a known controller for the map. Different implementations may 'know' different controllers, so it's best
+	 * to check with the implementing class.
+	 *
+	 * @param map
+	 *            The onto which the controller should be applied.
+	 * @param controllerId
+	 *            The unique ID for the map controller (implementation specific).
+	 * @return The map controller, or null if it could not be found.
+	 */
+	@ExportStaticMethod("createMapController")
+	public static JsMapController createMapController(JsMapPresenter map, String controllerId) {
+
+		return  new JsMapController(map, new FeatureSelectionController(
+				FeatureSelectionController.SelectionMethod.SINGLE_SELECTION));
+
 	}
 
 }
