@@ -72,12 +72,14 @@ public interface JsMapPresenter extends Exportable {
 	String getHtmlElementId();
 
 	/**
-	 * Apply a new {@link JsMapController} on the map. This controller will handle all mouse-events that are global for
+	 * Apply a new {@link org.geomajas.javascript.api.client.map.controller.JsMapController} on the map.
+	 * This controller will handle all mouse-events that are global for
 	 * the map. Only one controller can be set at any given time. When a controller is active on the map, using this
 	 * method, any fall-back controller is automatically disabled.
 	 *
 	 * @param controller
-	 *            The new {@link JsMapController} object. If null is passed, then the active controller is again
+	 *            The new {@link org.geomajas.javascript.api.client.map.controller.JsMapController} object.
+	 *            If null is passed, then the active controller is again
 	 *            disabled.
 	 *            At that time the fall-back controller is again activated.
 	 */

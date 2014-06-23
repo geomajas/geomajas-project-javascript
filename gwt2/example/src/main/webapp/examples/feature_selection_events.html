@@ -24,10 +24,11 @@
 			var registration = null;
 
 			function onGeomajasLoad() {
-				map = Geomajas().createMap("app", "mapMain", "js-map-element");
+                map = new gm.Map("js-map-element");
+                gm.ServerExtension.initializeMap(map, "app", "mapMain");
 
 				// Apply the selection controller:
-				var mapController = Geomajas().createMapController(map, "SelectionMode");
+				var mapController = gm.MapControllerFactory.createMapController(map, "featureSelectionSingle");
 				map.setMapController(mapController);
 
 				// Add the feature selection handlers when Geomajas loads:

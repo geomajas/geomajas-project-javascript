@@ -16,11 +16,7 @@ import org.geomajas.gwt.client.command.event.DispatchStartedEvent;
 import org.geomajas.gwt.client.command.event.DispatchStartedHandler;
 import org.geomajas.gwt.client.command.event.DispatchStoppedEvent;
 import org.geomajas.gwt.client.command.event.DispatchStoppedHandler;
-import org.geomajas.gwt2.client.controller.FeatureSelectionController;
-import org.geomajas.gwt2.client.controller.NavigationController;
 import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
-import org.geomajas.javascript.api.client.map.JsExportableFunction;
-import org.geomajas.javascript.api.client.map.controller.JsMapController;
 import org.geomajas.javascript.api.client.spatial.JsBboxService;
 import org.geomajas.javascript.api.client.spatial.JsGeometryService;
 import org.geomajas.javascript.common.client.command.event.JsDispatchStartedEvent;
@@ -29,7 +25,6 @@ import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedEven
 import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedHandler;
 import org.geomajas.javascript.common.client.map.spatial.JsBboxServiceImpl;
 import org.geomajas.javascript.common.client.map.spatial.JsGeometryServiceImpl;
-import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.ExportStaticMethod;
@@ -104,44 +99,4 @@ public final class JsGwtCommandDispatcherImpl implements Exportable {
 	public static JsBboxService getBboxService() {
 		return new JsBboxServiceImpl();
 	}
-
-	/**
-	 * Create a known controller for the map. Different implementations may 'know' different controllers, so it's best
-	 * to check with the implementing class.
-	 *
-	 * @param map
-	 *            The onto which the controller should be applied.
-	 * @param controllerId
-	 *            The unique ID for the map controller (implementation specific).
-	 * @return The map controller, or null if it could not be found.
-	 */
-	@ExportStaticMethod("createMapController")
-	public static JsMapController createMapController(final JsMapPresenterImpl map, String controllerId) {
-
-		final NavigationController controller = new FeatureSelectionController(
-				FeatureSelectionController.SelectionMethod.SINGLE_SELECTION
-		);
-
-		JsMapController mapController = new JsMapController(
-				map,
-				controller
-		);
-
-		mapController.setActivationHandler(new JsExportableFunction() {
-
-			public void execute() {
-				controller.onActivate(map.getMapPresenter());
-			}
-		});
-		mapController.setDeactivationHandler(new JsExportableFunction() {
-
-			public void execute() {
-				controller.onDeactivate(map.getMapPresenter());
-			}
-		});
-
-		return mapController;
-
-	}
-
 }

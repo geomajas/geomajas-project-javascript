@@ -13,7 +13,6 @@ package org.geomajas.javascript.api.client.map;
 import org.geomajas.annotation.Api;
 import org.geomajas.geometry.Bbox;
 import org.geomajas.geometry.Coordinate;
-import org.geomajas.gwt2.client.map.ViewPortTransformationService;
 import org.timepedia.exporter.client.Exportable;
 
 /**
@@ -87,6 +86,6 @@ public interface JsViewPort extends Exportable {
 	 *
 	 * @return
 	 */
-	ViewPortTransformationService getTransformationService();
+	JsViewPortTransformationService getTransformationService();
 
 }
