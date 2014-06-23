@@ -21,27 +21,31 @@
 
 		<script type="text/javascript">
 			var map;
+            var osmLayer;
+            var osmId = 'clientLayerOsm';
+            var countriesLayer;
+            var countriesId = 'clientLayerCountries';
 	
 			function onGeomajasLoad() {
 			    // do nothing
 			}
 
-			function createMap() {
+			function createAndInitializeMap() {
                 // clear the parent tag
                 document.getElementById("js-map-element").innerHTML = "";
 
                 // Create the map:
                 map = new gm.Map("js-map-element");
                 // register handlers
-                map.getEventBus().addLayersModelChangedHandler(function(event) {
-                    displayLayers();
+                map.getEventBus().addLayerAddedHandler(function(event) {
+                    displayLayerAddedEvent(event);
+                });
+                map.getEventBus().addLayerRemovedHandler(function(event) {
+                    displayLayerRemovedEvent(event);
                 });
                 map.getEventBus().addMapInitializationHandler(function(event) {
-                    displayMapInitialization();
+                    displayMapInitialization(event);
                 });
-			}
-
-			function initializeMap() {
                 gm.ServerExtension.initializeMap(map, "app", "mapMain");
 			}
 
@@ -49,19 +53,46 @@
                 document.getElementById("log").innerHTML = "";
 			}
 
-            function displayLayers() {
-				var log = document.getElementById("log");
-                log.innerHTML += "Event LayersModelChanged fired. Currently " +
-                        map.getLayersModel().getLayerCount() + " layers<br>";
-			}
-
-            function displayMapInitialization() {
+            function displayLayerAddedEvent(event) {
                 var log = document.getElementById("log");
-                log.innerHTML += "Event MapInitialization fired<br>";
+                log.innerHTML += "LayerAddedEvent fired. Added layer: " + event.getAddedLayer().getTitle() +
+                        ". Currently " +
+                        map.getLayersModel().getLayerCount() + " layers<br>";
             }
 
-            function refreshLayer(index) {
-                map.getLayersModel().getLayerAtIndex(index).refresh();
+            function displayLayerRemovedEvent(event) {
+                var log = document.getElementById("log");
+                log.innerHTML += "LayerRemovedEvent fired. Removed layer: " + event.getRemovedLayer().getTitle() +
+                        ". Currently " + map.getLayersModel().getLayerCount() + " layers<br>";
+            }
+
+            function displayMapInitialization(event) {
+                var log = document.getElementById("log");
+                log.innerHTML += "Event MapInitialization fired<br>";
+                osmLayer = map.getLayersModel().getLayer(osmId);
+                countriesLayer = map.getLayersModel().getLayer(countriesId);
+            }
+
+            function toggleAddRemove(layer) {
+                var layerId = layer.getId();
+                var layerIndex = map.getLayersModel().getLayerPosition(layer);
+                if (layerIndex < 0) {
+                    // layer not in layersModel => add
+                    map.getLayersModel().addLayer(layer);
+                    if (layerId == osmId) {
+                        document.getElementById("osmButtonSpan").innerHTML = 'Remove';
+                    } else if (layerId == countriesId) {
+                        document.getElementById("countriesButtonSpan").innerHTML = 'Remove';
+                    }
+                } else {
+                    // layer in layersModel => remove
+                    map.getLayersModel().removeLayer(layerId);
+                    if (layerId == osmId) {
+                        document.getElementById("osmButtonSpan").innerHTML = 'Add';
+                    } else if (layerId == countriesId) {
+                        document.getElementById("countriesButtonSpan").innerHTML = 'Add';
+                    }
+                }
             }
 		</script>
 	</head>
@@ -85,17 +116,15 @@
 						<p>
 							When the Geomajas map is initialized, the map is build in a number of steps.
                             E.g. a request is sent to the server to ask for the map's configuration.
-                            The layers are added one by one to the map. Each time a LayersModelChangedEvent is fired.
-                            When the map has been completely initialized, a MapInitializationEvent will be fired.
+                            The layers are added one by one to the map.<br>
+                            This example shows the events that are fired and how to listen to these events.
+                            First, create and initialize the map; the remove or add the layers.
 						</p>
-                        <div>
-                        <button onclick="createMap()">Create map</button>
-                        <button onclick="initializeMap()">Initialize map</button><br>
-                        <button onclick="refreshLayer(0)">Refresh background (osm)</button>
-                        <button onclick="refreshLayer(1)">Refresh front layer (countries)</button><br>
+                        <button onclick="createAndInitializeMap()">Create And Initialize Map</button><br>
+                        <button onclick="toggleAddRemove(osmLayer)"><span id="osmButtonSpan">Remove</span> Osm layer</button>
+                        <button onclick="toggleAddRemove(countriesLayer)"><span id="countriesButtonSpan">Remove</span> countries layer</button>
 
-						<h4>Event logging:</h4>
-                        <button onclick="clearLogging()">Clear logging</button><br>
+						<h4>Event logging <button onclick="clearLogging()">Clear logging</button></h4>
 						<div id="log"></div>
 					</td>
 				</tr>
