@@ -39,6 +39,10 @@
 			<artifactId>geomajas-client-common-gwt</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-gwt2-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.timepedia.exporter</groupId>
 			<artifactId>gwtexporter</artifactId>
 		</dependency>
