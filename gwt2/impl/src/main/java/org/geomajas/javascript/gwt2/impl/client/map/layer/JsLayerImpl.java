@@ -15,6 +15,7 @@ import org.geomajas.javascript.api.client.map.layer.JsLayer;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
+import org.timepedia.exporter.client.NoExport;
 
 /**
  * JsLayer interface implementation.
@@ -79,4 +80,8 @@ public class JsLayerImpl implements JsLayer, Exportable {
 		return layer.getOpacity();
 	}
 
+	@NoExport
+	public Layer asLayer() {
+		return layer;
+	}
 }

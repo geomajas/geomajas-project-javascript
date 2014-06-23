@@ -12,16 +12,18 @@
 package org.geomajas.javascript.api.client.map;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.javascript.api.client.event.JsLayerAddedHandler;
+import org.geomajas.javascript.api.client.event.JsLayerRemovedHandler;
 import org.geomajas.javascript.api.client.event.JsMapInitializationHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
-import org.geomajas.javascript.api.client.event.JsLayersModelChangedHandler;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.MapEventBus}.
  *
  * @author David Debuck
+ * @author Jan Venstermans
  * @since 1.0.0
  */
 @Api(allMethods = true)
@@ -29,12 +31,20 @@ import org.geomajas.javascript.api.client.event.JsLayersModelChangedHandler;
 public interface JsMapEventBus extends Exportable {
 
 	/**
-	 * Register a handler to the eventbus.
+	 * Register a {@link JsLayerAddedHandler} to the eventbus.
 	 *
-	 * @param handler JsLayersModelChangedHandle
+	 * @param handler JsLayerAddedHandler
 	 * @return JsHandlerRegistration
 	 */
-	JsHandlerRegistration addLayersModelChangedHandler(JsLayersModelChangedHandler handler);
+	JsHandlerRegistration addLayerAddedHandler(JsLayerAddedHandler handler);
+
+	/**
+	 * Register a {@link JsLayerAddedHandler} to the eventbus.
+	 *
+	 * @param handler JsLayerAddedHandler
+	 * @return JsHandlerRegistration
+	 */
+	JsHandlerRegistration addLayerRemovedHandler(JsLayerRemovedHandler handler);
 
 	/**
 	 * Add a map initialization handler.

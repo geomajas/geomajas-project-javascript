@@ -66,6 +66,21 @@ public class JsLayersModelImpl implements JsLayersModel, Exportable {
 		return createJsLayer(layersModel.getLayer(index));
 	}
 
+	@Override
+	public boolean addLayer(JsLayer layer) {
+		return layersModel.addLayer(((JsLayerImpl) layer).asLayer());
+	}
+
+	@Override
+	public boolean removeLayer(String id) {
+		return layersModel.removeLayer(id);
+	}
+
+	@Override
+	public int getLayerPosition(JsLayer layer) {
+		return layersModel.getLayerPosition(((JsLayerImpl) layer).asLayer());
+	}
+
 	/**
 	 * Factory method for creating the correct {@link JsLayer} instances.
 	 * @param layer layer

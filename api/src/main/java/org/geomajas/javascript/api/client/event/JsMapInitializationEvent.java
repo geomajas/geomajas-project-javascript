@@ -30,6 +30,10 @@ public class JsMapInitializationEvent extends JsEvent<JsMapInitializationHandler
 
 	private JsMapPresenter mapPresenter;
 
+	/**
+	 * Default constructor.
+	 * @param mapPresenter
+	 */
 	public JsMapInitializationEvent(JsMapPresenter mapPresenter) {
 		this.mapPresenter = mapPresenter;
 	}
@@ -44,6 +48,10 @@ public class JsMapInitializationEvent extends JsEvent<JsMapInitializationHandler
 		return JsMapInitializationHandler.class;
 	}
 
+	/**
+	 * Get the {@link JsMapPresenter} of the initialized map.
+	 * @return mapPresenter
+	 */
 	public JsMapPresenter getMapPresenter() {
 		return mapPresenter;
 	}

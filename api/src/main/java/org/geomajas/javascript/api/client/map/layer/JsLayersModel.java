@@ -48,4 +48,30 @@ public interface JsLayersModel extends Exportable {
 	 */
 	JsLayer getLayerAtIndex(int index);
 
+	/**
+	 * Add a new layer to the layers model. The new layer will be added at the back of the list (where the back of the
+	 * list is rendered on top).
+	 *
+	 * @param layer The layer to be added to the model.
+	 * @return True or false, indicating success or not.
+	 */
+	boolean addLayer(JsLayer layer);
+
+	/**
+	 * Remove a layer from this layers model. This will also remove the layer from the map.
+	 *
+	 * @param id The layers unique identifier within this map.
+	 * @return True or false, indicating success or not.
+	 */
+	boolean removeLayer(String id);
+
+	/**
+	 * Get the position of a certain layer in this map model.
+	 *
+	 * @param layer The layer to return the position for.
+	 * @return Returns the position of the layer in the map. This position determines layer order. If the layer was not
+	 * found, than -1 is returned.
+	 */
+	int getLayerPosition(JsLayer layer);
+
 }

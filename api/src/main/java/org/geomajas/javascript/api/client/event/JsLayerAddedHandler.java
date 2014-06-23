@@ -18,23 +18,24 @@ import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * Handler for catching events that indicate a layer configuration has been loaded into the
- * {@link org.geomajas.plugin.jsapi.map.LayersModel}.
+ * Handler for catching event that indicate a layer configuration has been loaded into
+ * and added to the {@link org.geomajas.plugin.jsapi.map.LayersModel}.
+ * Extends part of {@link org.geomajas.gwt2.client.event.MapCompositionHandler}.
  *
- * @author Pieter De Graef
+ * @author Jan Venstermans
  * @since 1.0.0
  */
 @Export
 @ExportClosure
 @Api(allMethods = true)
 @UserImplemented
-public interface JsLayersModelChangedHandler extends JsHandler, Exportable {
+public interface JsLayerAddedHandler extends JsHandler, Exportable {
 
 	/**
-	 * Called when a new layer configuration has been loaded into the {@link org.geomajas.plugin.jsapi.map.LayersModel}.
+	 * Called when a new layer has been added to the map model.
 	 *
 	 * @param event
-	 *            {@link JsLayersModelChangedEvent}
+	 *            The event.
 	 */
-	void onLayersModelChanged(JsLayersModelChangedEvent event);
+	void onLayerAdded(JsLayerAddedEvent event);
 }
