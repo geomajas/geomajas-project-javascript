@@ -18,10 +18,8 @@ import org.geomajas.gwt.client.command.event.DispatchStoppedEvent;
 import org.geomajas.gwt.client.command.event.DispatchStoppedHandler;
 import org.geomajas.gwt2.client.controller.FeatureSelectionController;
 import org.geomajas.gwt2.client.controller.NavigationController;
-import org.geomajas.gwt2.client.map.MapPresenter;
 import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
 import org.geomajas.javascript.api.client.map.JsExportableFunction;
-import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.controller.JsMapController;
 import org.geomajas.javascript.api.client.spatial.JsBboxService;
 import org.geomajas.javascript.api.client.spatial.JsGeometryService;
@@ -31,6 +29,7 @@ import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedEven
 import org.geomajas.javascript.common.client.command.event.JsDispatchStoppedHandler;
 import org.geomajas.javascript.common.client.map.spatial.JsBboxServiceImpl;
 import org.geomajas.javascript.common.client.map.spatial.JsGeometryServiceImpl;
+import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.ExportStaticMethod;
@@ -117,10 +116,7 @@ public final class JsGwtCommandDispatcherImpl implements Exportable {
 	 * @return The map controller, or null if it could not be found.
 	 */
 	@ExportStaticMethod("createMapController")
-	public static JsMapController createMapController(final JsMapPresenter map, String controllerId) {
-/*
-		return  new JsMapController(map, new FeatureSelectionController(
-				FeatureSelectionController.SelectionMethod.SINGLE_SELECTION));*/
+	public static JsMapController createMapController(final JsMapPresenterImpl map, String controllerId) {
 
 		final NavigationController controller = new FeatureSelectionController(
 				FeatureSelectionController.SelectionMethod.SINGLE_SELECTION
@@ -134,13 +130,13 @@ public final class JsGwtCommandDispatcherImpl implements Exportable {
 		mapController.setActivationHandler(new JsExportableFunction() {
 
 			public void execute() {
-				controller.onActivate((MapPresenter) map);
+				controller.onActivate(map.getMapPresenter());
 			}
 		});
 		mapController.setDeactivationHandler(new JsExportableFunction() {
 
 			public void execute() {
-				controller.onDeactivate((MapPresenter) map);
+				controller.onDeactivate(map.getMapPresenter());
 			}
 		});
 
