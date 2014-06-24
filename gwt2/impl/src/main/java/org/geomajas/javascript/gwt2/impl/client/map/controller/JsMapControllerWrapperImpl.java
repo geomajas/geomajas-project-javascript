@@ -54,6 +54,10 @@ public class JsMapControllerWrapperImpl extends JsMapControllerImpl {
 	// Constructors:
 	// ------------------------------------------------------------------------
 
+	/* default constructor necessary for exporter */
+	public JsMapControllerWrapperImpl() {
+	}
+
 	public JsMapControllerWrapperImpl(final MapController mapController) {
 		if (mapController != null) {
 			this.mapController = mapController;
