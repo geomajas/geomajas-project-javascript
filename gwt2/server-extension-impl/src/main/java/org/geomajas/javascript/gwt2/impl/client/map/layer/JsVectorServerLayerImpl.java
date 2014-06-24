@@ -15,7 +15,6 @@ import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.gwt2.client.map.layer.VectorServerLayer;
 import org.geomajas.javascript.api.client.map.feature.JsFeature;
 import org.geomajas.javascript.api.client.map.layer.JsVectorServerLayer;
-import org.geomajas.javascript.client.map.layer.JsVectorServerLayer;
 import org.geomajas.javascript.gwt2.impl.client.map.feature.JsFeatureImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
