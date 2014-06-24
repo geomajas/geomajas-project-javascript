@@ -28,7 +28,7 @@
                 gm.ServerExtension.initializeMap(map, "app", "mapMain");
 
 				// Apply the selection controller:
-				var mapController = gm.MapControllerFactory.createMapController(map, "featureSelectionSingle");
+				var mapController = gm.MapControllerFactory.createMapController("featureSelectionSingle");
 				map.setMapController(mapController);
 
 				// Add the feature selection handlers when Geomajas loads:

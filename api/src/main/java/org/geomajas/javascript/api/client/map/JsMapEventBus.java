@@ -12,12 +12,14 @@
 package org.geomajas.javascript.api.client.map;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.javascript.api.client.event.JsFeatureDeselectedHandler;
+import org.geomajas.javascript.api.client.event.JsFeatureSelectedHandler;
+import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
 import org.geomajas.javascript.api.client.event.JsLayerAddedHandler;
 import org.geomajas.javascript.api.client.event.JsLayerRemovedHandler;
 import org.geomajas.javascript.api.client.event.JsMapInitializationHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
-import org.geomajas.javascript.api.client.event.JsHandlerRegistration;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.MapEventBus}.
@@ -53,5 +55,15 @@ public interface JsMapEventBus extends Exportable {
 	 * @return the handler registration
 	 */
 	JsHandlerRegistration addMapInitializationHandler(JsMapInitializationHandler handler);
+
+	/**
+	 * Add a feature selection handler.
+	 *
+	 * @param selectedHandler
+	 * @param deselectedHandler
+	 * @return JsHandlerRegistration
+	 */
+	JsHandlerRegistration addFeatureSelectionHandler(JsFeatureSelectedHandler selectedHandler,
+	                                                 JsFeatureDeselectedHandler deselectedHandler);
 
 }
