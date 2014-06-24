@@ -62,14 +62,14 @@ public interface JsMapPresenter extends Exportable {
 	 * @param id
 	 *            id of the element
 	 */
-	void setHtmlElementId(String id);
+	void setParentHtmlElementId(String id);
 
 	/**
 	 * Get the id of the HTML element this map is coupled with.
 	 *
 	 * @return element id
 	 */
-	String getHtmlElementId();
+	String getParentHtmlElementId();
 
 	/**
 	 * Apply a new {@link org.geomajas.javascript.api.client.map.controller.JsMapController} on the map.

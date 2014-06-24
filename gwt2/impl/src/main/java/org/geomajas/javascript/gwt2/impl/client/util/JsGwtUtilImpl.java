@@ -15,17 +15,22 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.HumanInputEvent;
 import com.google.gwt.event.dom.client.MouseEvent;
 import com.google.gwt.event.dom.client.TouchEvent;
-import com.google.gwt.user.client.DOM;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt.client.map.RenderSpace;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsRenderSpace;
+import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportPackage;
+import org.timepedia.exporter.client.ExportStaticMethod;
 
 /**
  * Default implementation of {@link JsGwtUtil}.
  *
  * @author Jan Venstermans
  */
+@Export("GwtUtil")
+@ExportPackage("gm.util")
 public final class JsGwtUtilImpl implements JsGwtUtil {
 
 	private static JsGwtUtil instance = new JsGwtUtilImpl();
@@ -33,6 +38,7 @@ public final class JsGwtUtilImpl implements JsGwtUtil {
 	private JsGwtUtilImpl() {
 	}
 
+	@ExportStaticMethod("instance")
 	public static JsGwtUtil getInstance() {
 		return instance;
 	}
@@ -47,17 +53,18 @@ public final class JsGwtUtilImpl implements JsGwtUtil {
 	 */
 	@Override
 	public Coordinate getLocation(JsMapPresenter mapPresenter, HumanInputEvent<?> event, JsRenderSpace renderSpace) {
-		Element el = DOM.getElementById(mapPresenter.getHtmlElementId()).getFirstChildElement();
+		Element mapElement = ((JsMapPresenterImpl) mapPresenter).getMapAsWidget().asWidget().getElement();
 		Coordinate location = null;
 		if (event instanceof MouseEvent) {
 			MouseEvent<?> mEvent = (MouseEvent<?>) event;
-			event.setRelativeElement(el);
+			event.setRelativeElement(mapElement);
 			location = new Coordinate(mEvent.getX(), mEvent.getY());
 		} else if (event instanceof TouchEvent) {
 			TouchEvent<?> tEvent = (TouchEvent<?>) event;
 			if (tEvent.getTouches().length() > 0) {
-				location = new Coordinate(tEvent.getTouches().get(0).getRelativeX(el), tEvent.getTouches().get(0)
-						.getRelativeY(el));
+				location = new Coordinate(tEvent.getTouches().get(0).getRelativeX(mapElement),
+						tEvent.getTouches().get(0)
+						.getRelativeY(mapElement));
 			}
 		}
 		if (location == null) {

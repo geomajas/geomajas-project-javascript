@@ -11,21 +11,12 @@
 
 package org.geomajas.javascript.gwt2.impl.client.map.controller;
 
-import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.HumanInputEvent;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.TouchEndEvent;
-import com.google.gwt.event.dom.client.TouchStartEvent;
 import org.geomajas.annotation.Api;
-import org.geomajas.gwt.client.controller.AbstractController;
-import org.geomajas.gwt.client.controller.Controller;
-import org.geomajas.gwt2.client.controller.MapController;
+import org.geomajas.geometry.Coordinate;
 import org.geomajas.javascript.api.client.JsExportableFunction;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
+import org.geomajas.javascript.api.client.map.JsRenderSpace;
 import org.geomajas.javascript.api.client.map.controller.JsDoubleClickHandler;
 import org.geomajas.javascript.api.client.map.controller.JsDownHandler;
 import org.geomajas.javascript.api.client.map.controller.JsDragHandler;
@@ -34,11 +25,10 @@ import org.geomajas.javascript.api.client.map.controller.JsMouseMoveHandler;
 import org.geomajas.javascript.api.client.map.controller.JsMouseOutHandler;
 import org.geomajas.javascript.api.client.map.controller.JsMouseOverHandler;
 import org.geomajas.javascript.api.client.map.controller.JsUpHandler;
-import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
+import org.geomajas.javascript.gwt2.impl.client.JsGwtImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
-import org.timepedia.exporter.client.NoExport;
 
 //import org.geomajas.javascript.api.client.map.layer.JsExportableFunction;
 
@@ -53,8 +43,6 @@ import org.timepedia.exporter.client.NoExport;
 @Export("MapController")
 @ExportPackage("gm.controller")
 public class JsMapControllerImpl implements JsMapController, Exportable {
-
-	private MapController mapController;
 
 	private JsMapPresenter map;
 
@@ -83,119 +71,51 @@ public class JsMapControllerImpl implements JsMapController, Exportable {
 	public JsMapControllerImpl() {
 	}
 
-	public JsMapControllerImpl(JsMapPresenter map, final MapController mapController) {
-		this.map = map;
-		this.mapController = mapController;
-		rewireMouseHandlers();
-	}
-
-	/**
-	 * Rewire the mouse handlers of the {@link org.geomajas.javascript.api.client.map.controller.JsMapController}
-	 * to the wrapped {@link Controller}.
-	 */
-	private void rewireMouseHandlers() {
-		mouseMoveHandler = new JsMouseMoveHandler() {
-
-			public void onMouseMove(MouseMoveEvent event) {
-				mapController.onMouseMove(event);
-			}
-		};
-		mouseOutHandler = new JsMouseOutHandler() {
-
-			public void onMouseOut(MouseOutEvent event) {
-				mapController.onMouseOut(event);
-			}
-		};
-		mouseOverHandler = new JsMouseOverHandler() {
-
-			public void onMouseOver(MouseOverEvent event) {
-				mapController.onMouseOver(event);
-			}
-		};
-		downHandler = new JsDownHandler() {
-
-			public void onDown(HumanInputEvent<?> event) {
-				if (event instanceof MouseDownEvent) {
-					mapController.onMouseDown((MouseDownEvent) event);
-				} else if (event instanceof TouchStartEvent) {
-					mapController.onTouchStart((TouchStartEvent) event);
-				}
-			}
-		};
-		upHandler = new JsUpHandler() {
-
-			public void onUp(HumanInputEvent<?> event) {
-				if (event instanceof MouseUpEvent) {
-					mapController.onMouseUp((MouseUpEvent) event);
-				} else if (event instanceof TouchEndEvent) {
-					mapController.onTouchEnd((TouchEndEvent) event);
-				}
-			}
-		};
-		dragHandler = new JsDragHandler() {
-
-			public void onDrag(HumanInputEvent<?> event) {
-				if (mapController instanceof AbstractController) {
-					((AbstractController) mapController).onDrag(event);
-				}
-			}
-		};
-		doubleClickHandler = new JsDoubleClickHandler() {
-
-			public void onDoubleClick(DoubleClickEvent event) {
-				mapController.onDoubleClick(event);
-			}
-		};
-		setActivationHandler(new JsExportableFunction() {
-			@Override
-			public void execute() {
-				mapController.onActivate(((JsMapPresenterImpl) map).getMapPresenter());
-			}
-		});
-		setDeactivationHandler(new JsExportableFunction() {
-			@Override
-			public void execute() {
-				mapController.onDeactivate(((JsMapPresenterImpl) map).getMapPresenter());
-			}
-		});
-	}
-
 	// ------------------------------------------------------------------------
 	// Registering mouse event handlers:
 	// ------------------------------------------------------------------------
 
+	@Override
 	public void setMouseMoveHandler(JsMouseMoveHandler mouseMoveHandler) {
 		this.mouseMoveHandler = mouseMoveHandler;
 	}
 
+	@Override
 	public void setMouseOutHandler(JsMouseOutHandler mouseOutHandler) {
 		this.mouseOutHandler = mouseOutHandler;
 	}
 
+	@Override
 	public void setMouseOverHandler(JsMouseOverHandler mouseOverHandler) {
 		this.mouseOverHandler = mouseOverHandler;
 	}
 
+	@Override
 	public void setDownHandler(JsDownHandler downHandler) {
 		this.downHandler = downHandler;
 	}
 
+	@Override
 	public void setUpHandler(JsUpHandler upHandler) {
 		this.upHandler = upHandler;
 	}
 
+	@Override
 	public void setDragHandler(JsDragHandler dragHandler) {
 		this.dragHandler = dragHandler;
 	}
 
+	@Override
 	public void setDoubleClickHandler(JsDoubleClickHandler doubleClickHandler) {
 		this.doubleClickHandler = doubleClickHandler;
 	}
 
+	@Override
 	public void setActivationHandler(JsExportableFunction activationHandler) {
 		this.activationHandler = activationHandler;
 	}
 
+	@Override
 	public void setDeactivationHandler(JsExportableFunction deactivationHandler) {
 		this.deactivationHandler = deactivationHandler;
 	}
@@ -204,34 +124,42 @@ public class JsMapControllerImpl implements JsMapController, Exportable {
 	// Extra public methods:
 	// ------------------------------------------------------------------------
 
+	@Override
 	public JsMouseMoveHandler getMouseMoveHandler() {
 		return mouseMoveHandler;
 	}
 
+	@Override
 	public JsMouseOutHandler getMouseOutHandler() {
 		return mouseOutHandler;
 	}
 
+	@Override
 	public JsMouseOverHandler getMouseOverHandler() {
 		return mouseOverHandler;
 	}
 
+	@Override
 	public JsDownHandler getDownHandler() {
 		return downHandler;
 	}
 
+	@Override
 	public JsUpHandler getUpHandler() {
 		return upHandler;
 	}
 
+	@Override
 	public JsDragHandler getDragHandler() {
 		return dragHandler;
 	}
 
+	@Override
 	public JsDoubleClickHandler getDoubleClickHandler() {
 		return doubleClickHandler;
 	}
 
+	@Override
 	public JsExportableFunction getActivationHandler() {
 		return activationHandler;
 	}
@@ -241,27 +169,24 @@ public class JsMapControllerImpl implements JsMapController, Exportable {
 	}
 
 	@Override
-	public JsMapPresenter getMap() {
-		return map;
-	}
-
-	@Override
-	public void setMap(JsMapPresenter map) {
-		this.map = map;
-	}
-
-	@NoExport
 	public JsMapPresenter getMapPresenter() {
 		return map;
 	}
 
-	@NoExport
+	@Override
 	public void setMapPresenter(JsMapPresenter map) {
 		this.map = map;
 	}
 
-	@NoExport
-	public Controller getMapController() {
-		return mapController;
+	/**
+	 * Default {#getLocation} call will consult the util method.
+	 *
+	 * @param event event containing location
+	 * @param renderSpace space of witch to get the location coordinates
+	 * @return coordinates of the location for the requested renderSpace.
+	 */
+	@Override
+	public Coordinate getLocation(HumanInputEvent<?> event, String renderSpace) {
+		return JsGwtImpl.getInstance().getJsGwtUtil().getLocation(map, event, JsRenderSpace.getType(renderSpace));
 	}
 }
