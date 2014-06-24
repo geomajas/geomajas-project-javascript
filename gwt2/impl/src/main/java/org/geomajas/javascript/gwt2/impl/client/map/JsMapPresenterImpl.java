@@ -58,13 +58,8 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private JsMapEventBus eventBus;
 
-<<<<<<< HEAD
-=======
-	private String htmlElementId;
-
 	private JsFeatureSearchService featureSearchService;
 
->>>>>>> Implemented Feature selection example
 	/**
 	 * No-arguments constructor. If this is removed, we get errors from the GWT exporter...
 	 */
