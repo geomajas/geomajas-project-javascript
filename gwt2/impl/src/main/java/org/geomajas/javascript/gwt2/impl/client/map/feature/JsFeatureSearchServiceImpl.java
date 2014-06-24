@@ -13,6 +13,8 @@ package org.geomajas.javascript.gwt2.impl.client.map.feature;
 
 import org.geomajas.command.dto.SearchFeatureRequest;
 import org.geomajas.geometry.Bbox;
+import org.geomajas.geometry.Geometry;
+import org.geomajas.geometry.service.GeometryService;
 import org.geomajas.gwt2.client.GeomajasServerExtension;
 import org.geomajas.gwt2.client.map.MapPresenter;
 import org.geomajas.gwt2.client.map.feature.Feature;
@@ -100,7 +102,8 @@ public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Expor
 							));
 
 						}
-					});
+					}
+			);
 
 		}
 	}
@@ -113,31 +116,45 @@ public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Expor
 	 * @param callback Call-back method executed on return (when features have been found).
 	 */
 	public void searchInBounds(final JsFeaturesSupported layer, Bbox bbox, final JsFeatureArrayCallback callback) {
-/*		Layer gwtLayer = mapPresenter.getLayersModel().getLayer(layer.getId());
-		if (gwtLayer != null && gwtLayer instanceof VectorServerLayer) {
-			final VectorServerLayer vLayer = (VectorServerLayer) gwtLayer;
-			String crs = mapPresenter.getViewPort().getCrs();
-			Geometry location = GeometryService.toPolygon(bbox);
-			GeomajasServerExtension
-					.getInstance()
-					.getServerFeatureService()
-					.search(mapPresenter, location, 0, QueryType.INTERSECTS, SearchLayerType.SEARCH_ALL_LAYERS, 0,
-							new FeatureMapFunction() {
 
-								@Override
-								public void execute(
-										Map<org.geomajas.gwt2.client.map.layer.FeaturesSupported,
-											List<org.geomajas.gwt2.client.map.feature.Feature>> featureMap) {
-									List<JsFeature> features = new ArrayList<JsFeature>();
-									for (org.geomajas.gwt2.client.map.feature.Feature feature : featureMap.get(
-											vLayer.getId())) {
-										features.add(new JsFeatureImpl(feature, layer));
-									}
-									callback.execute(new JsFeatureArrayCallback.JsFeatureArrayHolder(features
-											.toArray(new JsFeature[features
-													.size()])));
-								}
-							});
-		}*/
+		Layer gwtLayer = mapPresenter.getLayersModel().getLayer(layer.getId());
+
+		if (gwtLayer != null && gwtLayer instanceof VectorServerLayer) {
+
+			final VectorServerLayer vLayer = (VectorServerLayer) gwtLayer;
+
+			Geometry location = GeometryService.toPolygon(bbox);
+
+			String crs = mapPresenter.getViewPort().getCrs();
+
+			GeomajasServerExtension.getInstance().getServerFeatureService().search(
+					mapPresenter,
+					location,
+					0,
+					ServerFeatureService.QueryType.INTERSECTS,
+					ServerFeatureService.SearchLayerType.SEARCH_ALL_LAYERS,
+					0,
+					new FeatureMapFunction() {
+
+						@Override
+						public void execute(Map<FeaturesSupported, List<Feature>> featureMap) {
+
+							List<JsFeature> features = new ArrayList<JsFeature>();
+
+							for (Feature feature : featureMap.get(vLayer)) {
+
+								features.add(new JsFeatureImpl(feature, layer));
+
+							}
+
+							callback.execute(new JsFeatureArrayCallback.JsFeatureArrayHolder(
+									features.toArray(new JsFeature[features.size()])
+							));
+
+						}
+					});
+
+		}
+
 	}
 }
