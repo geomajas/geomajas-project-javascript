@@ -24,6 +24,15 @@ import org.geomajas.javascript.api.client.map.JsRenderSpace;
  */
 public interface JsGwtUtil {
 
+	/**
+	 * Returns the coordinate of a location in a {@link com.google.gwt.event.dom.client.HumanInputEvent},
+	 * transformed to the requested {@link org.geomajas.javascript.api.client.map.JsRenderSpace}.
+	 *
+	 * @param mapPresenter the map's presenter
+	 * @param event
+	 * @param renderSpace requested render space
+	 * @return location coordinates in the requested render space
+	 */
 	Coordinate getLocation(JsMapPresenter mapPresenter, HumanInputEvent<?> event, JsRenderSpace renderSpace);
 
 	RenderSpace toRenderSpace(JsRenderSpace renderSpace);

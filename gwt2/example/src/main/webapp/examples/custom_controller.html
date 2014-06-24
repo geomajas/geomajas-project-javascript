@@ -23,22 +23,23 @@
 		var map;
 
 		function onGeomajasLoad() {
-			map = Geomajas().createMap("app", "mapMain", "js-map-element");
+            map = new gm.Map("js-map-element");
+            gm.ServerExtension.initializeMap(map, "app", "mapMain");
 		}
 
 		function removeCustomController() {
-			map.setMapController(null);
+            map.setMapController(gm.MapControllerFactory.createMapController('navigation'));
 		}
 
 		function applyCustomController() {
 			// Create the new MapController:
-			var mapController = new org.geomajas.jsapi.controller.MapController();
+			var mapController = gm.MapControllerFactory.createMapController();
 
 			// Apply handlers for Mouse Events:
 			mapController.setMouseMoveHandler(function(event) {
-				var screenLocation = mapController.getLocation(event, "screen");
-				var worldLocation = mapController.getLocation(event, "world");
-				displayMouseLocation(screenLocation, worldLocation);
+                var screenLocation = mapController.getLocation(event, "screen");
+                var worldLocation = mapController.getLocation(event, "world");
+                displayMouseLocation(screenLocation, worldLocation);
 			});
 			mapController.setMouseOverHandler(function(event) {
 				// Do something usefull...
@@ -52,6 +53,12 @@
 			mapController.setUpHandler(function(event) {
 				// Do something usefull...
 			});
+            mapController.setDragHandler(function(event) {
+                // Do something usefull...
+            });
+            mapController.setDoubleClickHandler(function(event) {
+                // Do something usefull...
+            });
 
 			// Apply activation (for init) and deactivation (for cleanup) handlers:
 			mapController.setActivationHandler(function() {
@@ -94,11 +101,13 @@
 					<h2>Custom Map Controllers</h2>
 					<h4>Apply Custom Controller</h4>
 					This example shows how to create a custom controller and apply it on the map.<br>
+                    This custom controller shows the mouse position in both screen and world coordinates.<br>
 					<button onclick="applyCustomController()">Apply Custom Controller</button>
+
 					<div id="mouse-location" style="padding-left: 40px;color:#337428;"><b>Mouse location: ?</b></div>
 
 					<h4>Remove Custom Controller</h4>
-					To remove the custom controller and apply the default (navigation) controller again, click here:<br>
+					To remove the custom controller and apply the default (navigation) controller again:<br>
 					<button onclick="removeCustomController()">Remove Custom Controller</button>
 				</td>
 			</tr>

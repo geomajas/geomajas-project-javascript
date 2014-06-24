@@ -17,6 +17,7 @@ import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.IsWidget;
 import org.geomajas.annotation.Api;
 import org.geomajas.gwt2.client.GeomajasImpl;
 import org.geomajas.gwt2.client.controller.AbstractMapController;
@@ -49,11 +50,11 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private HTMLPanel parent;
 
+	private IsWidget mapAsWidget;
+
 	private JsLayersModel layersModel;
 
 	private JsMapEventBus eventBus;
-
-	private String htmlElementId;
 
 	/**
 	 * No-arguments constructor. If this is removed, we get errors from the GWT exporter...
@@ -69,13 +70,12 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 	 */
 	@Api
 	public JsMapPresenterImpl(String elementId) {
-		createParent(elementId);
 		mapPresenter = GeomajasImpl.getInstance().createMapPresenter();
+		setParentHtmlElementId(elementId);
 		eventBus = new JsMapEventBusImpl(this);
 		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
 		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
 		mapPresenter.setSize(getParentWidth(), getParentHeight());
-		parent.add(mapPresenter);
 	}
 
 	/**
@@ -125,26 +125,36 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	/**
 	 * Couples this map to an existing HTML element (div or span).
+	 * This element will become the parent of the map.
 	 *
-	 * @param id id of the element
+	 * @param elementId id of the parent element
 	 */
 	@Override
-	public void setHtmlElementId(String id) {
-		htmlElementId = id;
-		// Is there a better way ?
-		HTMLPanel div = HTMLPanel.wrap(Document.get().getElementById(id));
-		div.add(mapPresenter);
+	public void setParentHtmlElementId(String elementId) {
+		parent = HTMLPanel.wrap(Document.get().getElementById(elementId));
+		int i = parent.getWidgetCount();
+		parent.add(mapPresenter);
+		mapAsWidget = parent.getWidget(i);
 	}
 
 	@Override
-	public String getHtmlElementId() {
-		return htmlElementId;
+	public String getParentHtmlElementId() {
+		try {
+			return parent.getElement().getId();
+		} catch (Exception ex) {
+			// when there is no parent yet.
+			return null;
+		}
+	}
+
+	public IsWidget getMapAsWidget() {
+		return mapAsWidget;
 	}
 
 	@Override
 	public void setMapController(JsMapController controller) {
 		if (controller != null) {
-			controller.setMap(this);
+			controller.setMapPresenter(this);
 			mapPresenter.setMapController(new JsController(controller));
 		} else {
 			mapPresenter.setMapController(null);
@@ -162,6 +172,7 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	protected void createParent(String elementId) {
 		parent = HTMLPanel.wrap(Document.get().getElementById(elementId));
+		setParentHtmlElementId(elementId);
 	}
 
 	protected int getParentWidth() {
@@ -169,7 +180,7 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 	}
 
 	protected int getParentHeight() {
-		return parent.getElement().getClientWidth();
+		return parent.getElement().getClientHeight();
 	}
 
 	/**

@@ -11,7 +11,9 @@
 
 package org.geomajas.javascript.api.client.map.controller;
 
+import com.google.gwt.event.dom.client.HumanInputEvent;
 import org.geomajas.annotation.Api;
+import org.geomajas.geometry.Coordinate;
 import org.geomajas.javascript.api.client.JsExportableFunction;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.timepedia.exporter.client.Export;
@@ -76,8 +78,10 @@ public interface JsMapController extends Exportable {
 	JsExportableFunction getDeactivationHandler();
 
 	@NoExport
-	JsMapPresenter getMap();
+	JsMapPresenter getMapPresenter();
 
 	@NoExport
-	void setMap(JsMapPresenter map);
+	void setMapPresenter(JsMapPresenter map);
+
+	Coordinate getLocation(HumanInputEvent<?> event, String renderSpace);
 }

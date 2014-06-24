@@ -15,7 +15,6 @@ import org.geomajas.gwt2.client.controller.MapController;
 import org.geomajas.gwt2.client.controller.NavigationController;
 import org.geomajas.gwt2.client.controller.ZoomToRectangleController;
 import org.geomajas.javascript.api.client.map.controller.JsMapController;
-import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.ExportStaticMethod;
@@ -53,19 +52,21 @@ public final class JsMapControllerFactoryImpl implements Exportable {
 	private JsMapControllerFactoryImpl() {
 	}
 
+	@ExportStaticMethod("createMapController")
+	public static JsMapController createMapController() {
+		return createMapController(null);
+	}
 
 	/**
 	 * Create a known controller for the map. Different implementations may 'know' different controllers, so it's best
 	 * to check with the implementing class.
 	 *
-	 * @param map
-	 *            The onto which the controller should be applied.
 	 * @param controllerId
 	 *            The unique ID for the map controller (implementation specific).
 	 * @return The map controller, or null if it could not be found.
 	 */
 	@ExportStaticMethod("createMapController")
-	public static JsMapController createMapController(JsMapPresenterImpl map, String controllerId) {
+	public static JsMapController createMapController(String controllerId) {
 		ControllerKey controllerKey = null;
 		// convert controllerId to ControllerKey
 		for (ControllerKey key : ControllerKey.values()) {
@@ -102,8 +103,8 @@ public final class JsMapControllerFactoryImpl implements Exportable {
 			*/
 		}
 		if (controller != null) {
-			return new JsMapControllerImpl(map, controller);
+			return new JsMapControllerWrapperImpl(controller);
 		}
-		return null;
+		return new JsMapControllerImpl();
 	}
 }

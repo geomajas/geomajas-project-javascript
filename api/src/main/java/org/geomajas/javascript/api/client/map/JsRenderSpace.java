@@ -32,7 +32,7 @@ public enum  JsRenderSpace {
 	 * and width and height both equal to 1. Than this rectangle will cover the city of Los Angeles.
 	 * </p>
 	 */
-	WORLD,
+	WORLD("world"),
 
 	/**
 	 * <p>
@@ -41,24 +41,37 @@ public enum  JsRenderSpace {
 	 * immobile and are not affected by changes in the map view.
 	 * </p>
 	 */
-	SCREEN;
+	SCREEN("screen");
+
+	private String jsValue;
+
+
+	JsRenderSpace(String jsValue) {
+		this.jsValue = jsValue;
+	}
+
+	/**
+	 * Get the String representation, as can be referenced in javascript.
+	 * @return
+	 */
+	public String getJsValue() {
+		return jsValue;
+	}
 
 	/**
 	 * Returns String representation of the {@link JsRenderSpace}.
 	 * This string can be used in javascript files.
 	 *
-	 * @param renderSpace
-	 * @return
+	 * @param jsRenderSpaceValue
+	 * @return {@link JsRenderSpace} value linked to the String
 	 */
 	@ExportInstanceMethod
-	public static String getType(JsRenderSpace renderSpace) {
-		switch (renderSpace) {
-			case WORLD:
-				return "world";
-			case SCREEN:
-				return "screen";
-			default:
-				return "unknown";
+	public static JsRenderSpace getType(String jsRenderSpaceValue) {
+		for (JsRenderSpace jsRenderSpace : JsRenderSpace.values()) {
+			if (jsRenderSpace.getJsValue().equals(jsRenderSpaceValue)) {
+				return jsRenderSpace;
+			}
 		}
+		return null;
 	}
 }
