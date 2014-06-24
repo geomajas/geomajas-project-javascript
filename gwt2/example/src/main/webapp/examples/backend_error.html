@@ -35,14 +35,11 @@
 
 			try {
 
-				layer = map.getLayersModel().getLayer("clientLayerCountriesThatDoesNotExist");
-				/*layer = map.getLayersModel().getLayer("clientLayerCountries");*/
-				log.innerHTML += "LayerId: " + layer.getId() + "</br>";
+				layer = map.getLayersModel().getLayer("clientLayerFake");
 
-			}
-			catch(err) {
+			} catch(err) {
 
-				log.innerHTML += err + "</br>";
+				log.innerHTML += "clientLayerFake not found!</br>";
 
 			}
 
