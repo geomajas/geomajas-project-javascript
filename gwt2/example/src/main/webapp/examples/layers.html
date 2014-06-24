@@ -25,10 +25,9 @@
 		function onGeomajasLoad() {
             map = new gm.Map("js-map-element");
             gm.ServerExtension.initializeMap(map, "app", "mapMain");
-            // must be done when the map has been initialized:
-            /*map.getEventBus().addLayersModelChangedHandler(function(event) {
+            map.getEventBus().addMapInitializationHandler(function(event) {
                 refreshCountriesOpacityLabel();
-            });*/
+            });
 		}
 
 		function getLayers() {
