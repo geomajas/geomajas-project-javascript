@@ -10,11 +10,16 @@
  */
 package org.geomajas.javascript.gwt2.impl.client.map.layer;
 
+import org.geomajas.gwt2.client.map.feature.Feature;
 import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.gwt2.client.map.layer.VectorServerLayer;
+import org.geomajas.javascript.api.client.map.feature.JsFeature;
 import org.geomajas.javascript.client.map.layer.JsVectorServerLayer;
+import org.geomajas.javascript.gwt2.impl.client.map.feature.JsFeatureImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
+
+import java.util.Collection;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.layer.VectorServerLayer}.
@@ -39,5 +44,47 @@ public class JsVectorServerLayerImpl extends JsLayerImpl implements JsVectorServ
 
 	private VectorServerLayer getLayerAsVectorServerLayer() {
 		return (VectorServerLayer) layer;
+	}
+
+	@Override
+	public void setFilter(String filter) {
+		getLayerAsVectorServerLayer().setFilter(filter);
+	}
+
+	@Override
+	public String getFilter() {
+		return getLayerAsVectorServerLayer().getFilter();
+	}
+
+	@Override
+	public boolean isFeatureSelected(String featureId) {
+		return getLayerAsVectorServerLayer().isFeatureSelected(featureId);
+	}
+
+	@Override
+	public boolean selectFeature(JsFeature feature) {
+		return getLayerAsVectorServerLayer().selectFeature((Feature) feature);
+	}
+
+	@Override
+	public boolean deselectFeature(JsFeature feature) {
+		return getLayerAsVectorServerLayer().deselectFeature((Feature) feature);
+	}
+
+	@Override
+	public void clearSelectedFeatures() {
+		getLayerAsVectorServerLayer().clearSelectedFeatures();
+	}
+
+	@Override
+	public JsFeature[] getSelectedFeatures() {
+		Collection<Feature> selection = getLayerAsVectorServerLayer().getSelectedFeatures();
+		JsFeature[] features = new JsFeature[selection.size()];
+		int count = 0;
+		for (Feature feature : selection) {
+			features[count] = new JsFeatureImpl(feature, this);
+			count++;
+		}
+		return features;
 	}
 }
