@@ -120,7 +120,7 @@ public class JsMapEventBusImpl implements JsMapEventBus, Exportable {
 
 	@Override
 	public JsHandlerRegistration addFeatureSelectionHandler(final JsFeatureSelectedHandler selectedHandler,
-	                                                        final JsFeatureDeselectedHandler deselectedHandler) {
+															final JsFeatureDeselectedHandler deselectedHandler) {
 
 		HandlerRegistration registration = ((JsMapPresenterImpl) mapPresenter).getMapPresenter().getEventBus()
 				.addFeatureSelectionHandler(new FeatureSelectionHandler() {

@@ -64,6 +64,6 @@ public interface JsMapEventBus extends Exportable {
 	 * @return JsHandlerRegistration
 	 */
 	JsHandlerRegistration addFeatureSelectionHandler(JsFeatureSelectedHandler selectedHandler,
-	                                                 JsFeatureDeselectedHandler deselectedHandler);
+													 JsFeatureDeselectedHandler deselectedHandler);
 
 }
