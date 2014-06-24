@@ -12,6 +12,8 @@
 package org.geomajas.javascript.api.client.spatial;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.geometry.Bbox;
+import org.geomajas.geometry.Geometry;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
@@ -32,7 +34,7 @@ public interface JsGeometryService extends Exportable {
 	 *            The geometry for which to calculate the bounding box.
 	 * @return The outer bounds for the given geometry.
 	 */
-	org.geomajas.geometry.Bbox getBounds(org.geomajas.geometry.Geometry geometry);
+	Bbox getBounds(Geometry geometry);
 
 	/**
 	 * Format the given geometry object to Well Known Text representation.
@@ -41,7 +43,7 @@ public interface JsGeometryService extends Exportable {
 	 *            The geometry to format.
 	 * @return Get WKT representation of the given geometry, or null in case something went wrong.
 	 */
-	String toWkt(org.geomajas.geometry.Geometry geometry);
+	String toWkt(Geometry geometry);
 
 	/**
 	 * Parse the given Well Known Text string into a geometry.
@@ -50,7 +52,7 @@ public interface JsGeometryService extends Exportable {
 	 *            The WKT text.
 	 * @return The resulting geometry, or null in case something went wrong.
 	 */
-	org.geomajas.geometry.Geometry toGeometry(String wkt);
+	Geometry toGeometry(String wkt);
 
 	/**
 	 * This geometry is empty if there are no geometries/coordinates stored inside.
@@ -59,7 +61,7 @@ public interface JsGeometryService extends Exportable {
 	 *            The geometry to check.
 	 * @return true or false.
 	 */
-	boolean isEmpty(org.geomajas.geometry.Geometry geometry);
+	boolean isEmpty(Geometry geometry);
 
 	/**
 	 * Return the area of the geometry. If a polygon should contain a hole, the area of such a hole will be subtracted.
@@ -68,7 +70,7 @@ public interface JsGeometryService extends Exportable {
 	 *            The other geometry to calculate the area for.
 	 * @return The total area within this geometry.
 	 */
-	double getArea(org.geomajas.geometry.Geometry geometry);
+	double getArea(Geometry geometry);
 
 	/**
 	 * Return the length of the geometry. This adds up the length of all edges within the geometry.
@@ -77,7 +79,7 @@ public interface JsGeometryService extends Exportable {
 	 *            The other geometry to calculate the length for.
 	 * @return The total length of all edges of the given geometry.
 	 */
-	double getLength(org.geomajas.geometry.Geometry geometry);
+	double getLength(Geometry geometry);
 
 	/**
 	 * Return the total number of coordinates within the geometry. This add up all coordinates within the
@@ -87,6 +89,6 @@ public interface JsGeometryService extends Exportable {
 	 *            The geometry to calculate the total number of points for.
 	 * @return The total number of coordinates within this geometry.
 	 */
-	double getNumPoints(org.geomajas.geometry.Geometry geometry);
+	double getNumPoints(Geometry geometry);
 
 }

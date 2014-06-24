@@ -27,7 +27,7 @@ import org.timepedia.exporter.client.Exportable;
 @Export("Coordinate")
 @ExportPackage("gm")
 @Api
-public class JsCoordinate implements ExportOverlay<org.geomajas.geometry.Coordinate>, Exportable {
+public class JsCoordinate implements ExportOverlay<Coordinate>, Exportable {
 
 	/**
 	 * Constructor.
@@ -62,7 +62,7 @@ public class JsCoordinate implements ExportOverlay<org.geomajas.geometry.Coordin
 	 * @param c other coordinate
 	 * @return distance
 	 */
-	public double distance(org.geomajas.geometry.Coordinate c) {
+	public double distance(Coordinate c) {
 		return 0;
 	}
 

@@ -17,7 +17,7 @@
 	<bean class="org.geomajas.global.PluginInfo">
 		<property name="version">
 			<bean class="org.geomajas.global.PluginVersionInfo">
-				<property name="name" value="geomajas-project-javascript-api" />
+				<property name="name" value="geomajas-project-javascript-server-extension-api" />
 				<property name="version" value="${project.version}" />
 			</bean>
 		</property>

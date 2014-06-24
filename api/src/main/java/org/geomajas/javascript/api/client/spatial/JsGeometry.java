@@ -12,6 +12,7 @@ package org.geomajas.javascript.api.client.spatial;
 
 import org.geomajas.annotation.Api;
 import org.geomajas.geometry.Coordinate;
+import org.geomajas.geometry.Geometry;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
 import org.timepedia.exporter.client.ExportOverlay;
@@ -40,8 +41,8 @@ public class JsGeometry implements ExportOverlay<org.geomajas.geometry.Geometry>
 	 *            precision
 	 */
 	@ExportConstructor
-	public static org.geomajas.geometry.Geometry constructor(String geometryType, int srid, int precision) {
-		return new org.geomajas.geometry.Geometry(geometryType, srid, precision);
+	public static Geometry constructor(String geometryType, int srid, int precision) {
+		return new Geometry(geometryType, srid, precision);
 	}
 
 	// -------------------------------------------------------------------------
@@ -125,8 +126,8 @@ public class JsGeometry implements ExportOverlay<org.geomajas.geometry.Geometry>
 	 *
 	 * @return contained geometries
 	 */
-	public org.geomajas.geometry.Geometry[] getGeometries() {
-		return new org.geomajas.geometry.Geometry[] {};
+	public Geometry[] getGeometries() {
+		return new Geometry[] {};
 	}
 
 	/**
@@ -135,7 +136,7 @@ public class JsGeometry implements ExportOverlay<org.geomajas.geometry.Geometry>
 	 * @param geometries
 	 *            contained geometries
 	 */
-	public void setGeometries(org.geomajas.geometry.Geometry[] geometries) {
+	public void setGeometries(Geometry[] geometries) {
 	}
 
 }

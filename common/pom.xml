@@ -24,6 +24,7 @@
 	<description>Geomajas Project JavaScript - Common</description>
 
 	<dependencies>
+		<!-- GWT dependencies -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>

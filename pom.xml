@@ -9,13 +9,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-
 	<parent>
 		<groupId>org.geomajas</groupId>
 		<artifactId>geomajas-parent</artifactId>
 		<version>2.1.0</version>
 	</parent>
-
 
 	<groupId>org.geomajas.project</groupId>
 	<artifactId>geomajas-project-javascript-all</artifactId>
@@ -45,14 +43,23 @@
 			<name>Jan De Moerloose</name>
 			<email>jan.demoerloose@geosparc.com</email>
 		</developer>
+		<developer>
+			<id>janv</id>
+			<name>Jan Venstermans</name>
+			<email>jan.venstermans@dfc.be</email>
+		</developer>
+		<developer>
+			<id>davidd</id>
+			<name>David Debuck</name>
+			<email>david.debuck@dfc.be</email>
+		</developer>
 	</developers>
 
 	<modules>
 		<module>api</module>
 		<module>server-extension-api</module>
-		<module>gwt2</module>
 		<module>common</module>
-		<!--  <module>plugin</module> <module>gwt2</module> -->
+		<module>gwt2</module>
 	</modules>
 
 	<properties>
@@ -71,7 +78,7 @@
 				<type>pom</type>
 			</dependency>
 			
-			<!-- own dependencies -->
+			<!-- sub project dependencies -->
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-javascript-api</artifactId>
@@ -102,6 +109,8 @@
 				<artifactId>geomajas-project-javascript-gwt2-example</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- GWT dependencies -->
 			
 			<dependency>
 				<groupId>org.timepedia.exporter</groupId>

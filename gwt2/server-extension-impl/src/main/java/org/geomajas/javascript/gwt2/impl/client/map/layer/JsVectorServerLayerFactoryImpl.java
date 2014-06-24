@@ -12,10 +12,10 @@ package org.geomajas.javascript.gwt2.impl.client.map.layer;
 
 import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.gwt2.client.map.layer.VectorServerLayer;
-import org.geomajas.javascript.client.map.layer.JsVectorServerLayer;
+import org.geomajas.javascript.api.client.map.layer.JsVectorServerLayer;
 
 /**
- * Factory for creating a {@link org.geomajas.javascript.client.map.layer.JsVectorServerLayer}
+ * Factory for creating a {@link org.geomajas.javascript.api.client.map.layer.JsVectorServerLayer}
  * from a {@link VectorServerLayer}.
  *
  * @author Jan Venstermans

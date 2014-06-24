@@ -27,7 +27,7 @@ import org.timepedia.exporter.client.Exportable;
 @Export("Bbox")
 @ExportPackage("gm")
 @Api
-public class JsBbox implements ExportOverlay<org.geomajas.geometry.Bbox>, Exportable {
+public class JsBbox implements ExportOverlay<Bbox>, Exportable {
 
 	/**
 	 * Bbox constructor.
