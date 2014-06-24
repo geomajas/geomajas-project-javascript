@@ -36,10 +36,12 @@
 			try {
 
 				layer = map.getLayersModel().getLayer("clientLayerFake");
+				log.innerHTML += "LayerId: " + layer.getId() + "</br>";
 
-			} catch(err) {
+			}
+			catch(err) {
 
-				log.innerHTML += "clientLayerFake not found!</br>";
+				log.innerHTML += "ClientLayerFake not found!</br>";
 
 			}
 
