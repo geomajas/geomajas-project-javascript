@@ -82,5 +82,10 @@ public class JsViewPortImpl implements JsViewPort, Exportable {
 		return new JsViewPortTransformationServiceImpl(viewPort.getTransformationService());
 	}
 
+	@Override
+	public String getCrs() {
+		return viewPort.getCrs();
+	}
+
 
 }

@@ -64,7 +64,9 @@ public class JsVectorServerLayerImpl extends JsLayerImpl implements JsVectorServ
 
 	@Override
 	public boolean selectFeature(JsFeature feature) {
-		return getLayerAsVectorServerLayer().selectFeature((Feature) feature);
+		return getLayerAsVectorServerLayer().selectFeature(
+				JsFeatureImpl.toGwt(feature)
+		);
 	}
 
 	@Override

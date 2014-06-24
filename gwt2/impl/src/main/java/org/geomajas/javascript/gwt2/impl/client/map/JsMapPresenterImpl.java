@@ -28,7 +28,9 @@ import org.geomajas.javascript.api.client.map.JsMapEventBus;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsViewPort;
 import org.geomajas.javascript.api.client.map.controller.JsMapController;
+import org.geomajas.javascript.api.client.map.feature.JsFeatureSearchService;
 import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
+import org.geomajas.javascript.gwt2.impl.client.map.feature.JsFeatureSearchServiceImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayersModelImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
@@ -56,6 +58,13 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private JsMapEventBus eventBus;
 
+<<<<<<< HEAD
+=======
+	private String htmlElementId;
+
+	private JsFeatureSearchService featureSearchService;
+
+>>>>>>> Implemented Feature selection example
 	/**
 	 * No-arguments constructor. If this is removed, we get errors from the GWT exporter...
 	 */
@@ -75,6 +84,7 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		eventBus = new JsMapEventBusImpl(this);
 		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
 		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
+		featureSearchService = new JsFeatureSearchServiceImpl(mapPresenter);
 		mapPresenter.setSize(getParentWidth(), getParentHeight());
 	}
 
@@ -159,6 +169,11 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		} else {
 			mapPresenter.setMapController(null);
 		}
+	}
+
+	@Override
+	public JsFeatureSearchService getFeatureSearchService() {
+		return featureSearchService;
 	}
 
 	// ------------------------------------------------------------------------
