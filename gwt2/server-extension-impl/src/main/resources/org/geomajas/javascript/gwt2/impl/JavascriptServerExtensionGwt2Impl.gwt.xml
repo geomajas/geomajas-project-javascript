@@ -13,7 +13,7 @@
 <module>
     <inherits name="org.geomajas.gwt2.GeomajasClientServerExtension" />
   	<inherits name="org.geomajas.javascript.gwt2.impl.JavascriptImpl" />
-  	<inherits name="org.geomajas.javascript.JavascriptServerExtensionApi" />
+  	<inherits name="org.geomajas.javascript.api.JavascriptServerExtensionApi" />
   	<set-property name="export" value="yes"/>
 
 	<entry-point class="org.geomajas.javascript.gwt2.impl.client.JavascriptServerExtensionsEntryPoint"/>

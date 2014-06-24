@@ -8,7 +8,7 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
-package org.geomajas.javascript.client.map.layer;
+package org.geomajas.javascript.api.client.map.layer;
 
 import org.geomajas.annotation.Api;
 import org.geomajas.javascript.api.client.map.layer.JsFeaturesSupported;

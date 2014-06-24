@@ -24,6 +24,7 @@
 	<description>Geomajas Project JavaScript GWT2 - Implementation</description>
 
 	<dependencies>
+		<!-- Geomajas dependencies -->
 		<dependency>
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-client-gwt2-server-extension</artifactId>
@@ -36,6 +37,8 @@
 			<groupId>org.geomajas.project</groupId>
 			<artifactId>geomajas-project-javascript-api</artifactId>
 		</dependency>
+
+
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
@@ -50,6 +53,14 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
+
+		<!-- logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!--test dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -65,11 +76,6 @@
 			<artifactId>geomajas-testdata</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>

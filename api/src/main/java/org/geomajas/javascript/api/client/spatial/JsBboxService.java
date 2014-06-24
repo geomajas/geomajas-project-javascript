@@ -12,6 +12,7 @@
 package org.geomajas.javascript.api.client.spatial;
 
 import org.geomajas.annotation.Api;
+import org.geomajas.geometry.Bbox;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
@@ -34,5 +35,5 @@ public interface JsBboxService extends Exportable {
 	 *            The second bounding box.
 	 * @return The union of the two given bounding boxes.
 	 */
-	org.geomajas.geometry.Bbox union(org.geomajas.geometry.Bbox one, org.geomajas.geometry.Bbox two);
+	Bbox union(Bbox one, Bbox two);
 }

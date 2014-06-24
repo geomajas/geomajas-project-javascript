@@ -24,76 +24,21 @@
 	<description>Geomajas Project JavaScript Server Extension - API</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-client-gwt2-server-extension</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.geomajas.project</groupId>
-			<artifactId>geomajas-project-javascript-api</artifactId>
-		</dependency>
+		<!--GWT dependencies-->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-            <scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.timepedia.exporter</groupId>
 			<artifactId>gwtexporter</artifactId>
 		</dependency>
 
+		<!--Geomajas dependencies-->
 		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-impl</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-testdata</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-javascript-api</artifactId>
 		</dependency>
 	</dependencies>
 
