@@ -11,7 +11,6 @@
 package org.geomajas.javascript.api.client.map.layer;
 
 import org.geomajas.annotation.Api;
-import org.geomajas.javascript.api.client.map.layer.JsFeaturesSupported;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.layer.VectorServerLayer}.
