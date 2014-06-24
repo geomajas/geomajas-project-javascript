@@ -17,10 +17,10 @@ import org.geomajas.geometry.Geometry;
 import org.geomajas.geometry.service.GeometryService;
 import org.geomajas.gwt2.client.GeomajasServerExtension;
 import org.geomajas.gwt2.client.map.MapPresenter;
+import org.geomajas.gwt2.client.map.feature.Feature;
 import org.geomajas.gwt2.client.map.feature.FeatureMapFunction;
-import org.geomajas.gwt2.client.map.feature.ServerFeatureService.LogicalOperator;
-import org.geomajas.gwt2.client.map.feature.ServerFeatureService.QueryType;
-import org.geomajas.gwt2.client.map.feature.ServerFeatureService.SearchLayerType;
+import org.geomajas.gwt2.client.map.feature.ServerFeatureService;
+import org.geomajas.gwt2.client.map.layer.FeaturesSupported;
 import org.geomajas.gwt2.client.map.layer.Layer;
 import org.geomajas.gwt2.client.map.layer.VectorServerLayer;
 import org.geomajas.javascript.api.client.map.feature.JsFeature;
@@ -63,31 +63,48 @@ public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Expor
 	 * @param callback Call-back method executed on return (when the feature has been found).
 	 */
 	public void searchById(final JsFeaturesSupported layer, final String[] ids, final JsFeatureArrayCallback callback) {
+
 		Layer gwtLayer = mapPresenter.getLayersModel().getLayer(layer.getId());
+
 		if (gwtLayer != null && gwtLayer instanceof VectorServerLayer) {
+
 			final VectorServerLayer vLayer = (VectorServerLayer) gwtLayer;
+
 			SearchCriterion[] criteria = new SearchCriterion[ids.length];
+
 			for (int i = 0; i < ids.length; i++) {
 				criteria[i] = new SearchCriterion(SearchFeatureRequest.ID_ATTRIBUTE, "=", ids[i]);
 			}
+
 			String crs = mapPresenter.getViewPort().getCrs();
-			GeomajasServerExtension.getInstance().getServerFeatureService()
-					.search(crs, vLayer, criteria, LogicalOperator.OR, ids.length, new FeatureMapFunction() {
+
+			GeomajasServerExtension.getInstance().getServerFeatureService().search(
+					crs,
+					vLayer,
+					criteria,
+					ServerFeatureService.LogicalOperator.OR,
+					ids.length,
+					new FeatureMapFunction() {
 
 						@Override
-						public void execute(
-								Map<org.geomajas.gwt2.client.map.layer.FeaturesSupported,
-								List<org.geomajas.gwt2.client.map.feature.Feature>> featureMap) {
+						public void execute(Map<FeaturesSupported, List<Feature>> featureMap) {
+
 							List<JsFeature> features = new ArrayList<JsFeature>();
-							for (org.geomajas.gwt2.client.map.feature.Feature feature :
-									featureMap.get(vLayer.getId())) {
+
+							for (Feature feature : featureMap.get(vLayer)) {
+
 								features.add(new JsFeatureImpl(feature, layer));
+
 							}
-							callback.execute(new JsFeatureArrayCallback.JsFeatureArrayHolder(features.toArray(new
-									JsFeature[features.size()
-									])));
+
+							callback.execute(new JsFeatureArrayCallback.JsFeatureArrayHolder(
+									features.toArray(new JsFeature[features.size()])
+							));
+
 						}
-					});
+					}
+			);
+
 		}
 	}
 
@@ -99,31 +116,45 @@ public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Expor
 	 * @param callback Call-back method executed on return (when features have been found).
 	 */
 	public void searchInBounds(final JsFeaturesSupported layer, Bbox bbox, final JsFeatureArrayCallback callback) {
-		Layer gwtLayer = mapPresenter.getLayersModel().getLayer(layer.getId());
-		if (gwtLayer != null && gwtLayer instanceof VectorServerLayer) {
-			final VectorServerLayer vLayer = (VectorServerLayer) gwtLayer;
-			String crs = mapPresenter.getViewPort().getCrs();
-			Geometry location = GeometryService.toPolygon(bbox);
-			GeomajasServerExtension
-					.getInstance()
-					.getServerFeatureService()
-					.search(mapPresenter, location, 0, QueryType.INTERSECTS, SearchLayerType.SEARCH_ALL_LAYERS, 0,
-							new FeatureMapFunction() {
 
-								@Override
-								public void execute(
-										Map<org.geomajas.gwt2.client.map.layer.FeaturesSupported,
-											List<org.geomajas.gwt2.client.map.feature.Feature>> featureMap) {
-									List<JsFeature> features = new ArrayList<JsFeature>();
-									for (org.geomajas.gwt2.client.map.feature.Feature feature : featureMap.get(
-											vLayer.getId())) {
-										features.add(new JsFeatureImpl(feature, layer));
-									}
-									callback.execute(new JsFeatureArrayCallback.JsFeatureArrayHolder(features
-											.toArray(new JsFeature[features
-													.size()])));
-								}
-							});
+		Layer gwtLayer = mapPresenter.getLayersModel().getLayer(layer.getId());
+
+		if (gwtLayer != null && gwtLayer instanceof VectorServerLayer) {
+
+			final VectorServerLayer vLayer = (VectorServerLayer) gwtLayer;
+
+			Geometry location = GeometryService.toPolygon(bbox);
+
+			String crs = mapPresenter.getViewPort().getCrs();
+
+			GeomajasServerExtension.getInstance().getServerFeatureService().search(
+					mapPresenter,
+					location,
+					0,
+					ServerFeatureService.QueryType.INTERSECTS,
+					ServerFeatureService.SearchLayerType.SEARCH_ALL_LAYERS,
+					0,
+					new FeatureMapFunction() {
+
+						@Override
+						public void execute(Map<FeaturesSupported, List<Feature>> featureMap) {
+
+							List<JsFeature> features = new ArrayList<JsFeature>();
+
+							for (Feature feature : featureMap.get(vLayer)) {
+
+								features.add(new JsFeatureImpl(feature, layer));
+
+							}
+
+							callback.execute(new JsFeatureArrayCallback.JsFeatureArrayHolder(
+									features.toArray(new JsFeature[features.size()])
+							));
+
+						}
+					});
+
 		}
+
 	}
 }

@@ -23,7 +23,8 @@
 			var map;
 
 			function onGeomajasLoad() {
-				map = Geomajas().createMap("app", "mapMain", "js-map-element");
+				map = new gm.Map("js-map-element");
+				gm.ServerExtension.initializeMap(map, "app", "mapMain");
 			}
 
 			function selectFeature(id) {
