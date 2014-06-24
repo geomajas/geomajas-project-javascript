@@ -109,6 +109,11 @@
 				<artifactId>geomajas-project-javascript-gwt2-example</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.geomajas.project</groupId>
+				<artifactId>geomajas-project-javascrip-documentation</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<!-- GWT dependencies -->
 			
@@ -141,7 +146,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-				<!-- <module>documentation</module> -->
+				 <module>documentation</module>
 			</modules>
 		</profile>
 		<profile>
