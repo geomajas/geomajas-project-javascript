@@ -88,4 +88,11 @@ public interface JsViewPort extends Exportable {
 	 */
 	JsViewPortTransformationService getTransformationService();
 
+	/**
+	 * Get the Crs for the viewPort.
+	 *
+	 * @return String crs
+	 */
+	String getCrs();
+
 }
