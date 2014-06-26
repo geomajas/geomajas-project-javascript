@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+  ~
+  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+  ~
+  ~ The program is available in open source according to the GNU Affero
+  ~ General Public License. All contributions in this program are covered
+  ~ by the Geomajas Contributors License Agreement. For full licensing
+  ~ details, see LICENSE.txt in the project root.
+  -->
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<chapter id="chapter-howto">
+  <title>How-to Javascript Geomajas</title>
+
+	<para>After configuration, Geomajas javascript can create maps, layers, listens to map events, ...
+	When the web application is started up, the geomajas code will look for and call function "onGeomajasLoad".
+		This body of this function can be customized to perform certain actions. Often, it is useful to create and initialize the map(s) within this function.</para>
+
+	<programlisting>function onGeomajasLoad() {
+   // something can be done
+}</programlisting>
+
+  <section>
+    <title>Creating and initializing a map.</title>
+
+    <para>A map can be added to a div or span element on the page; this will be the parent element.
+		The parent element will need to have a distinctive id, that is passed to the map at construction.
+		This map can then be initialized, using predefined information.
+		Currently, initialization can only use server side configured applications and mapConfigurations.</para>
+	  <para>The following code will create a map under element with id "idOfParentElement",
+		  then initialize the map with the server side configurations "app" for application and "mapMain" for mapConfiguration.</para>
+
+    <programlisting>var map = new gm.Map("idOfParentElement");
+gm.ServerExtension.initializeMap(map, "app", "mapMain");</programlisting>
+  </section>
+
+	<section>
+		<title>Events from the map</title>
+
+		<para>A number of types of events are fired when the map is constructed or changed. It is possible
+		to register handlers to these events, to perform personalized code when they are fired. </para>
+		<para>The following code show registration for <code>MapInitialization</code> and <code>Layer events</code>.</para>
+
+		<programlisting>map.getEventBus().addLayerAddedHandler(function(event) {
+   // custom code; event contains the added layer
+   alert('layer added: ' + event.getAddedLayer().getTitle());
+});
+map.getEventBus().addLayerRemovedHandler(function(event) {
+   // custom code; event contains the removed layer
+   alert('layer removed: ' + event.getRemovedLayer().getTitle());
+});
+map.getEventBus().addMapInitializationHandler(function(event) {
+   // custom code
+   alert('map fully initialized');
+});</programlisting>
+	</section>
+
+	<section>
+		<title>LayersModel: Change layers</title>
+
+		<para>The layers of the map can be looked up via the map's <code>LayersModel</code>. The display of the layers on the map
+		can be changed, but they can also be added or removed form the map entirely.</para>
+		<para>The following code show some features of the <code>LayersModel</code>.</para>
+
+		<programlisting>var layersModel = map.getLayersModel();
+var layerCount = layersModel.getLayerCount();
+// a layer can be found via index or by string id
+var firstLayer = layersModel.getLayerAtIndex(0);
+var backgroundLayer = layersModel.getLayer('background'); // background layer configured as such
+// change the layers appearance
+firstLayer.setOpacity(0.5);
+backgroundLayer.setMarkedAsVisible(false);
+firstLayer.refresh();
+// add or remove layers from the layersModel
+layersModel.removeLayer(firstLayer);
+layersModel.addLayer(firstLayer);</programlisting>
+	</section>
+
+	<section>
+		<title>Map cursor</title>
+
+		<para>The map's cursor can be changed easily. Any css value of the cursor can be set. It is also possible to set a custom image.</para>
+
+		<programlisting>map.setCursor('default'); // set to default
+map.setCursor('crosshair'); // set cursor css value to crosshair
+map.setCursor('url(images/customImage.cur), auto'); // custom cursor image</programlisting>
+	</section>
+
+	<section>
+		<title>Map Controllers</title>
+
+		<para>The mouse events on a map can be processed by a <code>MapController</code>. Only one map controller can be active at the time.
+		The default map controller is the <code>NavigationController</code>, that enables panning and zooming.</para>
+		<para>The map controller can be set to one of the predefined controllers, via code below.</para>
+		<section>
+			<title>Predefined Map Controllers</title>
+
+		<programlisting>map.setMapController(gm.MapControllerFactory.createMapController(controllerKey));</programlisting>
+
+		<para>The string 'controllerKey' is a unique key for the predefined controller; supported keys can be found in <code>JsMapControllerFactoryImpl</code>.
+			Currently 'controllerKey' can take following values:</para>
+
+		<itemizedlist>
+			<listitem>
+				<para>
+					'navigation' for <code>NavigationController</code>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					'zoomToRectangle' for <code>ZoomToRectangleController</code>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					'featureSelectionDrag' for <code>FeatureSelectionController</code> with <code>SelectionMethod.CLICK_AND_DRAG</code>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					'featureSelectionSingle' for <code>FeatureSelectionController</code> with <code>SelectionMethod.SINGLE_SELECTION</code>
+				</para>
+			</listitem>
+		</itemizedlist>
+
+	</section>
+
+	<section>
+		<title>Custom Map Controller</title>
+
+		<para>The map's controller can also be set to a fully custom one. This controller can be created via the <code>MapControllerFactory</code>,
+		now without providing a controllerKey. The custom controller's handlers can then be set to perform requested actions.
+		Finally, set the custom controller to the map, in order to activate it.</para>
+
+		<programlisting>// Create the custom MapController:
+var customMapController = gm.MapControllerFactory.createMapController();
+
+// Apply handlers for Mouse Events:
+customMapController.setMouseMoveHandler(function(event) {
+   // custom code; event contains the location of the mouse; this can be retrieved in both screen and world coordinates:
+   var screenLocation = mapController.getLocation(event, "screen");
+   var worldLocation = mapController.getLocation(event, "world");
+   var screenLocationAsText = "Screen: " + screenLocation.getX() + ", " + screenLocation.getY();
+   var worldLocationAsText = "World: " + worldLocation.getX() + ", " + worldLocation.getY();
+   // then show location ...
+});
+// other mouse controllers setters:
+//setMouseOverHandler
+//setMouseOutHandler
+//setDownHandler
+//setUpHandler
+//setDragHandler
+//setDoubleClickHandler
+
+// Apply activation (for init) and deactivation (for cleanup) handlers:
+customMapController.setActivationHandler(function() {
+   // custom code
+   alert('Custom controller activated!')
+});
+customMapController.setDeactivationHandler(function() {
+   // custom code
+   alert('Custom controller deactivated!')
+});
+
+// Apply the MapController on the map:
+map.setMapController(customMapController);</programlisting>
+	</section>
+	</section>
+
+	<section>
+		<title>Features</title>
+
+		<para>Some vector layers contain a number of distinguishable object or features.
+			Their features can be selected individually. A number of methods are available to query/change the features.
+			Only layers that implement the <code>JsFeaturesSupported</code> interface will respond to these methods.</para>
+
+		<section>
+			<title>Feature search</title>
+			<para>The map's <code>FeatureSearchService</code> offers some methods to retrieve features.</para>
+
+			<programlisting>var service = map.getFeatureSearchService();
+// search for a single feature of a layer
+service.searchById(layer, [id], function(featureHolder){
+   // custom code; the featureHolder contains the features
+   var feature = featureHolder.getFeatures()[0];
+   alert("Feature found: " + feature.getLabel());
+});
+// search for all features of a layer within some bounds
+service.searchInBounds(layer, bounds, function(features) {
+   // custom code; the featureHolder contains the features
+   alert("Features found: " + featureHolder.getFeatures().size());
+});</programlisting>
+
+		</section>
+
+		<section>
+			<title>Feature selection</title>
+
+			<para>Features can be selected via the map by a user, when a <code>FeatureSelectionController</code> is set, see above.</para>
+
+			<para>Feature selection is possible in javascript code:</para>
+
+			<programlisting>var layer = ...; // layer with feature
+var feature = ...; // from the layer; retrieved from FeatureSearchService or from an event
+// is the feature selected or not?
+var selected = eval(layer.isFeatureSelected(feature.getId()).toString()); // Boolean to boolean conversion
+// select the specific feature
+layer.selectFeature(feature);
+// deselect the specific feature
+layer.deselectFeature(feature);</programlisting>
+
+			<para>When a feature is selected or deselected, events are fired on the map's event bus.
+			It is possible to register custom handlers for the <code>FeatureSelected</code> and <code>FeatureDeselected</code> events:</para>
+
+			<programlisting>// the addFeatureSelectionHandler takes two parameters
+var registration = map.getEventBus().addFeatureSelectionHandler(
+   // first parameter is a featureSelectedHandler
+   function(event) {
+      // custom code; event contains feature that was selected
+      var selectedFeature = event.getFeature();
+   },
+   // second parameter is a featureDeselectedHandler
+   function(event) {
+      // custom code; event contains feature that was deselected
+      var deselectedFeature = event.getFeature();
+   }
+);</programlisting>
+
+			<para>At any time, a layer's selected features can be found. They can also be deselected by one call:</para>
+
+			<programlisting>var features = layer.getSelectedFeatures(); // get selected features
+layer.clearSelectedFeatures(); // deselect all features</programlisting>
+		</section>
+	</section>
+
+</chapter>
