@@ -1,0 +1,99 @@
+<html>
+<!--
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+		<title>Geomajas Javascript API Showcase</title>
+		<link type="text/css" rel="stylesheet" href="geomajas.css" />
+
+		<script type="text/javascript" language="javascript">var isomorphicDir = "../emptyApp/sc/";</script>
+		<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
+
+		<script type="text/javascript">
+			var map;
+            var WMS_BASE_URL = "http://apps.geomajas.org/geoserver/demo_world/ows";
+            var wmsVersion = "1.3.0"; //default value
+
+
+			function onGeomajasLoad() {
+               var mapConfig = new gm.MapConfiguration();
+               mapConfig.setCrs("EPSG:4326", "DEGREES");
+               mapConfig.setMinimumResolution(2.1457672119140625E-5);
+               mapConfig.setMaxBounds(new gm.Bbox(-180, -90, 360, 180));
+
+               // will create and initialize the map with given map configuration
+               map = new gm.Map("js-map-element", mapConfig);
+               init();
+
+			}
+
+            function selectWmsVersion(value) {
+                wmsVersion = value;
+                init();
+            }
+
+            function init() {
+                // First clear the panel and the map;
+                map.getLayersModel().clear();
+                var tileConfig = new gm.layer.TileConfiguration(256, 256, new gm.Coordinate(-180, -90),
+                        map.getViewPort());
+
+                var layerConfig = new gm.WmsLayerConfiguration();
+
+                layerConfig.setBaseUrl(WMS_BASE_URL);
+                layerConfig.setFormat("image/png");
+                layerConfig.setVersion(wmsVersion);
+                layerConfig.setLayers("demo_world:simplified_country_borders");
+                layerConfig.setMaximumResolution(Number.MAX_VALUE);
+                layerConfig.setMinimumResolution(2.1457672119140625E-5);
+
+                // Now create a WMS layer and add it to the map:
+                var wmsLayer = new gm.WmsLayer("Blue Marble", map, layerConfig, tileConfig);
+                wmsLayer.setMaxBounds(new gm.Bbox(-180, -90, 360, 360));
+                map.getLayersModel().addLayer(wmsLayer);
+
+            }
+
+		</script>
+	</head>
+
+	<body>
+		<div class="titleBar">
+			<div class="title">Geomajas JavaScript API test</div>
+			<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
+		</div>
+		<div>
+			<table cellspacing="0" cellpadding="5">
+				<tr>
+					<td style="width:640px;">
+                        <div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
+							<!-- on load, the map is attached here -->
+						</div>
+					</td>
+					<td valign="top">
+						<h2>Basic WMS example</h2>
+						In this example we add WMS layer that is configured and created client side.  This example uses the following base WMS url: http://apps.geomajas.org/geoserver/demo_world/ows
+						<h4>Select WMS version</h4>
+
+                        <select onchange="selectWmsVersion(this.value);">
+                            <option selected value="1.3.0">WMS 1.3.0</option>
+                            <option value="1.1.1">WMS 1.1.0</option>
+                        </select>
+
+                    </td>
+
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

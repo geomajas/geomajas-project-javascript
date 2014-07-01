@@ -63,7 +63,7 @@ public interface JsMapConfiguration extends Exportable {
 	 * @param unitLength The length of a single unit of this map in actual meters. This is an approximate value in the
 	 *                   horizontal direction and in the initial center of the map. If the units of your CRS are
 	 *                   expressed in either meters or degrees, you can use the convenience method {@link
-	 *                   #setCrs(String, CrsType)}.
+	 *                   #setCrs(String, String)}.
 	 */
 	void setCrs(String crs, double unitLength);
 
