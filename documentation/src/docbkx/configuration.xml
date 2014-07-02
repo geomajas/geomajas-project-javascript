@@ -14,12 +14,97 @@
 <chapter id="chapter-configuration">
   <title>Configuration</title>
 
-  <para>This section explains what to do to use the Geomajas Project Javascript in your website.</para>
+  <para>This section explains how to use this library in your project.</para>
 
-  <sect1>
-    <title>Load and reference compiled files</title>
+  <section>
+    <title>Sources</title>
 
-    <para>TODO: waiting for implementation. Needed: a zip file containing all GWT compiled files.</para>
+	  <itemizedlist>
+		  <listitem>
+			  <para>
+				  The javascript Assembly dependency
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Assembly JAR file
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Assembly ZIP file
+			  </para>
+		  </listitem>
+	  </itemizedlist>
+  </section>
 
-  </sect1>
+	<section>
+		<title>Usage of the dependency</title>
+
+		<para>
+			Create a Web project and add the following to your pom file.
+			This will output the needed js file to the selected output directory.
+		</para>
+
+		<programlisting>
+			<dependency>
+				<groupId>org.geomajas.project</groupId>
+				<artifactId>geomajas-project-javascript-assembly</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+		</programlisting>
+
+		<programlisting>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack assembly</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.geomajas.project</groupId>
+									<artifactId>geomajas-project-javascript-assembly</artifactId>
+									<version>1.0.0-SNAPSHOT</version>
+									<type>jar</type>
+								</artifactItem>
+							</artifactItems>
+							<excludes>
+								**/WEB-INF/**,
+								**/META-INF/**,
+								**/org/**
+							</excludes>
+							<outputDirectory>${basedir}/src/main/webapp</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</programlisting>
+
+	</section>
+
+	<section>
+		<title>Usage of the jar file</title>
+
+		<para>
+			Copy the jar file to the WEB-INF/lib folder of your web project.
+			You only need to include the 'gm/gm.nocache.js' file in your page to make use of the api.
+		</para>
+
+	</section>
+
+	<section>
+		<title>Usage of the zip file</title>
+
+		<para>
+			This package contains and index.html example with the needed js files.
+		</para>
+
+	</section>
+
 </chapter>
