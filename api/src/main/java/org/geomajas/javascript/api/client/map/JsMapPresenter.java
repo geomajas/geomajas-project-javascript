@@ -49,6 +49,14 @@ public interface JsMapPresenter extends Exportable {
 	JsMapEventBus getEventBus();
 
 	/**
+	 * Manages different types of containers that can be added to the map. These containers are used to overlay
+	 * drawings/widgets/etc on the map.
+	 *
+	 * @return The container manager.
+	 */
+	JsContainerManager getContainerManager();
+
+	/**
 	 * Apply a new mouse cursor when hovering above the map.
 	 *
 	 * @param cursor

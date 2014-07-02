@@ -10,7 +10,7 @@
   -->
 
 <module>
-  	<inherits name="org.geomajas.gwt.GeomajasCommonGwtCommand"/>
-  	<inherits name="org.geomajas.javascript.api.JavascriptApi"/>
-  	<set-property name="export" value="yes"/>
+    <inherits name="org.geomajas.gwt.GeomajasCommonGwtCommand"/>
+    <inherits name="org.geomajas.javascript.api.JavascriptApi"/>
+    <set-property name="export" value="yes"/>
 </module>

@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import org.geomajas.gwt2.client.GeomajasImpl;
 import org.geomajas.gwt2.client.controller.AbstractMapController;
 import org.geomajas.gwt2.client.map.MapPresenter;
+import org.geomajas.javascript.api.client.map.JsContainerManager;
 import org.geomajas.javascript.api.client.map.JsMapEventBus;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsViewPort;
@@ -54,6 +55,11 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private JsMapEventBus eventBus;
 
+<<<<<<< HEAD
+=======
+	private JsContainerManager containerManager;
+
+>>>>>>> cfc0fc9... # This is a combination of 9 commits.
 	// Constructor is private
 	private JsMapPresenterImpl() {
 	}
@@ -106,6 +112,10 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		eventBus = new JsMapEventBusImpl(this);
 		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
 		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
+<<<<<<< HEAD
+=======
+		containerManager = new JsContainerManagerImpl(mapPresenter.getContainerManager());
+>>>>>>> cfc0fc9... # This is a combination of 9 commits.
 	}
 
 	/**
@@ -127,6 +137,11 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 	@Override
 	public JsMapEventBus getEventBus() {
 		return eventBus;
+	}
+
+	@Override
+	public JsContainerManager getContainerManager() {
+		return containerManager;
 	}
 
 	@Override
