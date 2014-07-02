@@ -55,7 +55,7 @@ public class JsMapConfigurationImpl implements JsMapConfiguration, Exportable {
 
 	@Override
 	public void setCrs(String crs, String crsType) {
-		mapConfiguration.setCrs(crsType, CrsType.valueOf(crsType));
+		mapConfiguration.setCrs(crs, CrsType.valueOf(crsType));
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class JsMapConfigurationImpl implements JsMapConfiguration, Exportable {
 	}
 	
 	@NoExport
-	public MapConfiguration getMapConfiguration() {
+	public MapConfiguration toGwt() {
 		return (MapConfiguration) mapConfiguration;
 	}
 }

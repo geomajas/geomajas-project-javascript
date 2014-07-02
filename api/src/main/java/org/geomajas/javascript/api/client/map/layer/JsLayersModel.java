@@ -15,7 +15,7 @@ import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * Exports {@link org.geomajas.gwt2.client.map.LayersModel}.
+ * Exports {@link org.geomajas.gwt2.client.map.layer.LayersModel }.
  *
  * @author David Debuck
  * @since 1.0.0
@@ -73,5 +73,10 @@ public interface JsLayersModel extends Exportable {
 	 * found, than -1 is returned.
 	 */
 	int getLayerPosition(JsLayer layer);
+
+	/**
+	 * Remove all layers from this layer model.
+	 */
+	void clear();
 
 }

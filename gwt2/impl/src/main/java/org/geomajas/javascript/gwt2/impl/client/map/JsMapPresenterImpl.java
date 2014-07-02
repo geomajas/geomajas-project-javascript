@@ -18,12 +18,9 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
-import org.geomajas.annotation.Api;
 import org.geomajas.gwt2.client.GeomajasImpl;
 import org.geomajas.gwt2.client.controller.AbstractMapController;
-import org.geomajas.gwt2.client.map.MapConfiguration;
 import org.geomajas.gwt2.client.map.MapPresenter;
-import org.geomajas.javascript.api.client.map.JsMapConfiguration;
 import org.geomajas.javascript.api.client.map.JsMapEventBus;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsViewPort;
@@ -33,6 +30,7 @@ import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
 import org.geomajas.javascript.gwt2.impl.client.map.feature.JsFeatureSearchServiceImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayersModelImpl;
 import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportConstructor;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
@@ -44,7 +42,7 @@ import org.timepedia.exporter.client.NoExport;
  */
 @Export("Map")
 @ExportPackage("gm")
-public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
+public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private MapPresenter mapPresenter;
 
@@ -60,47 +58,60 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private JsFeatureSearchService featureSearchService;
 
-	/**
-	 * No-arguments constructor. If this is removed, we get errors from the GWT exporter...
-	 */
-	public JsMapPresenterImpl() {
-	}
-
-	/**
-	 * Create a facade for a {@link MapPresenter}, available trough JavaScript. Use this constructor if you want to
-	 * fetch a server configuration.
-	 *
-	 * @param elementId the DOM element ID onto which to attach the map.
-	 */
-	@Api
-	public JsMapPresenterImpl(String elementId) {
-		mapPresenter = GeomajasImpl.getInstance().createMapPresenter();
-		setParentHtmlElementId(elementId);
-		eventBus = new JsMapEventBusImpl(this);
-		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
-		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
-		featureSearchService = new JsFeatureSearchServiceImpl(mapPresenter);
-		mapPresenter.setSize(getParentWidth(), getParentHeight());
+	// Constructor is private
+	private JsMapPresenterImpl() {
 	}
 
 	/**
 	 * Create a facade for a {@link MapPresenter}, available trough JavaScript.
 	 *
 	 * @param elementId the DOM element ID onto which to attach the map.
-	 * @param configuration the configuration.
+	 * @param mapConfiguration map configuration see {@link JsMapConfigurationImpl}.
 	 */
-	@Api
-	public JsMapPresenterImpl(String elementId, JsMapConfiguration configuration) {
-		createParent(elementId);
-		MapConfiguration mapConfiguration = ((JsMapConfigurationImpl) configuration).getMapConfiguration();
-		this.mapPresenter = GeomajasImpl.getInstance().createMapPresenter(mapConfiguration, getParentWidth(),
-				getParentHeight());
-		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
+	@ExportConstructor
+	public static JsMapPresenterImpl constructor(String elementId, JsMapConfigurationImpl mapConfiguration) {
+		JsMapPresenterImpl jsMapPresenter =  new JsMapPresenterImpl();
+		jsMapPresenter.construct(elementId, mapConfiguration);
+		return jsMapPresenter;
+	}
+
+	/**
+	 * Create a facade for a {@link MapPresenter}, available trough JavaScript.
+	 *
+	 * @param elementId the DOM element ID onto which to attach the map.
+	 */
+	@ExportConstructor
+	public static JsMapPresenterImpl constructor(String elementId) {
+		JsMapPresenterImpl jsMapPresenter =  new JsMapPresenterImpl();
+		jsMapPresenter.construct(elementId);
+		return jsMapPresenter;
 	}
 
 	// ------------------------------------------------------------------------
 	// Map implementation:
 	// ------------------------------------------------------------------------
+
+	private void construct(String elementId) {
+		mapPresenter = GeomajasImpl.getInstance().createMapPresenter();
+		setParentHtmlElementId(elementId);
+		initialize();
+		mapPresenter.setSize(getParentWidth(), getParentHeight());
+	}
+
+	private void construct(String elementId, JsMapConfigurationImpl mapConfiguration) {
+		setParentHtmlElementId(elementId);
+		mapPresenter = GeomajasImpl.getInstance().createMapPresenter(mapConfiguration.toGwt(),
+				getParentWidth(), getParentHeight());
+		initialize();
+	}
+
+	private void initialize() {
+		addMapToParent();
+		eventBus = new JsMapEventBusImpl(this);
+		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
+		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
+		featureSearchService = new JsFeatureSearchServiceImpl(mapPresenter);
+	}
 
 	/**
 	 * Returns the view port associated with this map. The view port regulates zooming and panning around the
@@ -128,19 +139,7 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		mapPresenter.setCursor(cursor);
 	}
 
-	/**
-	 * Couples this map to an existing HTML element (div or span).
-	 * This element will become the parent of the map.
-	 *
-	 * @param elementId id of the parent element
-	 */
-	@Override
-	public void setParentHtmlElementId(String elementId) {
-		parent = HTMLPanel.wrap(Document.get().getElementById(elementId));
-		int i = parent.getWidgetCount();
-		parent.add(mapPresenter);
-		mapAsWidget = parent.getWidget(i);
-	}
+
 
 	@Override
 	public String getParentHtmlElementId() {
@@ -180,9 +179,14 @@ public class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		return (MapPresenter) mapPresenter;
 	}
 
-	protected void createParent(String elementId) {
+	public void setParentHtmlElementId(String elementId) {
 		parent = HTMLPanel.wrap(Document.get().getElementById(elementId));
-		setParentHtmlElementId(elementId);
+	}
+
+	public void addMapToParent() {
+		int i = parent.getWidgetCount();
+		parent.add(mapPresenter);
+		mapAsWidget = parent.getWidget(i);
 	}
 
 	protected int getParentWidth() {

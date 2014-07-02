@@ -18,6 +18,7 @@ import org.geomajas.javascript.api.client.map.JsViewPortTransformationService;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
+import org.timepedia.exporter.client.NoExport;
 
 /**
  * Exports {@link org.geomajas.gwt2.client.map.ViewPort}.
@@ -45,6 +46,11 @@ public class JsViewPortImpl implements JsViewPort, Exportable {
 	@Override
 	public void applyPosition(Coordinate coordinate) {
 		viewPort.applyPosition(coordinate);
+	}
+
+	@NoExport
+	public ViewPort toGwt() {
+		return viewPort;
 	}
 
 	@Override
@@ -86,6 +92,5 @@ public class JsViewPortImpl implements JsViewPort, Exportable {
 	public String getCrs() {
 		return viewPort.getCrs();
 	}
-
 
 }

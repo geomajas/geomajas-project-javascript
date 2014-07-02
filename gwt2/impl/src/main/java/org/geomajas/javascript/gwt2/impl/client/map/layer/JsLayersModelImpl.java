@@ -80,6 +80,11 @@ public class JsLayersModelImpl implements JsLayersModel, Exportable {
 		return layersModel.getLayerPosition(((JsLayerImpl) layer).asLayer());
 	}
 
+	@Override
+	public void clear() {
+		layersModel.clear();
+	}
+
 	/**
 	 * Factory method for creating the correct {@link JsLayer} instances.
 	 * @param layer layer
