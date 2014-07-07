@@ -12,6 +12,7 @@
 package org.geomajas.javascript.api.client.map.feature;
 
 import org.geomajas.geometry.Bbox;
+import org.geomajas.geometry.Coordinate;
 import org.geomajas.javascript.api.client.map.layer.JsFeaturesSupported;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
@@ -22,6 +23,7 @@ import org.timepedia.exporter.client.Exportable;
  * ways of searching features.
  *
  * @author Pieter De Graef
+ * @author David Debuck
  */
 @Export
 @ExportPackage("gm.feature")
@@ -50,4 +52,14 @@ public interface JsFeatureSearchService extends Exportable {
 	 *            Call-back method executed on return (when features have been found).
 	 */
 	void searchInBounds(JsFeaturesSupported layer, Bbox bbox, JsFeatureArrayCallback callback);
+
+	/**
+	 * Search all features on a certain position on all Feature Supported layers.
+	 *
+	 * @param coordinate the WORLD position on the map
+	 * @param pixelBuffer a buffer in which the service may include features
+	 * @param callback Call-back method executed on return (when features have been found).
+	 */
+	void searchOnPosition(Coordinate coordinate, int pixelBuffer, JsFeatureArrayCallback callback);
+
 }

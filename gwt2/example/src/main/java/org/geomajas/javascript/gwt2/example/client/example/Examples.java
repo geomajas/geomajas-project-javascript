@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Static list of all examples in the showcase.
- * 
+ *
  * @author Pieter De Graef
  */
 public final class Examples {
@@ -53,6 +53,9 @@ public final class Examples {
 				+ "selection and deselection events. When (de)selecting features, Geomajas sends out an event. In this"
 				+ " example features are being selected through a controller on the map, and all events are caught and"
 				+ " logged into the HTML.", "examples/feature_selection_events.html"));
+		EXAMPLES.add(new Example("Feature Clicked", "This example show how to add a feature clicked handler to the " +
+				"map and get information about the feature that has been clicked.",
+				"examples/feature_clicked.html"));
 		EXAMPLES.add(new Example("Catching Server Exceptions", "In this example we let the server execute a faulty"
 				+ " operation just to be able to catch the exception in JavaScript.<br><font color='red'>TODO</font>",
 				"examples/backend_error.html"));

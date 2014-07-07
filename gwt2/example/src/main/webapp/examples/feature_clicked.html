@@ -1,0 +1,113 @@
+<html>
+<!--
+  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+  ~
+  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+  ~
+  ~ The program is available in open source according to the GNU Affero
+  ~ General Public License. All contributions in this program are covered
+  ~ by the Geomajas Contributors License Agreement. For full licensing
+  ~ details, see LICENSE.txt in the project root.
+-->
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+	<title>Geomajas Javascript API Showcase</title>
+	<link type="text/css" rel="stylesheet" href="geomajas.css" />
+
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+
+	<script type="text/javascript">
+
+		var map;
+		var featureSearchService;
+
+		function onGeomajasLoad() {
+
+			map = new gm.Map("js-map-element");
+			gm.ServerExtension.initializeMap(map, "app", "mapMain");
+			featureSearchService = new gm.feature.FeatureSearchService(map);
+
+			// Create the new MapController:
+			var mapController = gm.MapControllerFactory.createMapController();
+
+			// On mouse Up event
+			mapController.setUpHandler(function(event) {
+
+				// We have to pass the following parameters to the featureSearchService :
+				// - A Coordinate with WORLD position
+				// - A pixel buffer (a buffer in which the service may include features)
+				// - A callback function to receive the found features.
+				featureSearchService.searchOnPosition(mapController.getLocation(event, "world"), 5,
+						function(featureHolder) {
+
+					if (featureHolder.getFeatures().length < 1)  {
+
+						log.innerHTML += "<font color='#CC0000'>-- No feature(s) found on this position.</font><br>";
+
+					} else {
+
+						log.innerHTML += "<strong>-- Feature(s) clicked :</strong><br>";
+
+						for (i = 0; i < featureHolder.getFeatures().length; i++) {
+
+							log.innerHTML += "<font color='#00CC00'>" + featureHolder.getFeatures()[i].getLabel() + "</font><br>";
+
+						}
+
+					}
+
+				});
+
+			});
+
+			// Apply the MapController on the map:
+			map.setMapController(mapController);
+
+			// Add the feature clicked handler when Geomajas loads:
+			var log = document.getElementById("log");
+
+		}
+
+		function clearLog() {
+			var log = document.getElementById("log");
+			log.innerHTML = "";
+		}
+
+	</script>
+</head>
+
+<body>
+<div class="titleBar">
+	<div class="title">Geomajas JavaScript API test</div>
+	<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
+</div>
+<div>
+	<table cellspacing="0" cellpadding="5">
+		<tr>
+			<td valign="top" style="width:640px;">
+				<div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
+					<!-- on load, the map is attached here -->
+				</div>
+			</td>
+			<td valign="top">
+				<h2>Feature Clicked</h2>
+				<p>
+					This example shows how to add a feature clicked handler to the map.
+				</p>
+				<p>
+					Click near a border of a country to see the pixel buffer working. This should return multiple
+					features.
+				</p>
+
+				Clear log: <button onclick="clearLog()">Clear</button>
+
+				<h4>Event logging</h4>
+				<div id="log"></div>
+			</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>
