@@ -10,7 +10,7 @@
   ~ details, see LICENSE.txt in the project root.
   -->
 
-<module rename-to="emptyApp">
+<module rename-to="serverExtension">
     <inherits name="org.geomajas.javascript.gwt2.impl.JavascriptServerExtensionGwt2Impl"/>
     <inherits name="org.geomajas.javascript.common.JavascriptCommon"/>
 
@@ -22,5 +22,5 @@
 	<!-- where value = "ie6/opera/gecko1_8/safari/gecko" , "gecko1_8" is FireFox 3 -->
 	<!--<set-property name="user.agent" value="gecko1_8" />-->
 
-	<entry-point class="org.geomajas.javascript.gwt2.example.client.EmptyApp" />
+	<add-linker name="xsiframe"/>
 </module>

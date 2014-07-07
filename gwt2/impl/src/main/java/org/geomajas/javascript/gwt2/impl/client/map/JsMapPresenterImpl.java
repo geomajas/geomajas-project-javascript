@@ -25,9 +25,7 @@ import org.geomajas.javascript.api.client.map.JsMapEventBus;
 import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsViewPort;
 import org.geomajas.javascript.api.client.map.controller.JsMapController;
-import org.geomajas.javascript.api.client.map.feature.JsFeatureSearchService;
 import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
-import org.geomajas.javascript.gwt2.impl.client.map.feature.JsFeatureSearchServiceImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayersModelImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
@@ -55,8 +53,6 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 	private JsLayersModel layersModel;
 
 	private JsMapEventBus eventBus;
-
-	private JsFeatureSearchService featureSearchService;
 
 	// Constructor is private
 	private JsMapPresenterImpl() {
@@ -110,7 +106,6 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		eventBus = new JsMapEventBusImpl(this);
 		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
 		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
-		featureSearchService = new JsFeatureSearchServiceImpl(mapPresenter);
 	}
 
 	/**
@@ -163,11 +158,6 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		} else {
 			mapPresenter.setMapController(null);
 		}
-	}
-
-	@Override
-	public JsFeatureSearchService getFeatureSearchService() {
-		return featureSearchService;
 	}
 
 	// ------------------------------------------------------------------------

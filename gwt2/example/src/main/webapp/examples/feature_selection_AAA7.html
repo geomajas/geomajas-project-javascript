@@ -16,19 +16,19 @@
 		<title>Geomajas Javascript API Showcase</title>
 		<link type="text/css" rel="stylesheet" href="geomajas.css" />
 
-		<script type="text/javascript" language="javascript">var isomorphicDir = "../emptyApp/sc/";</script>
-		<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
+		<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
 		<script type="text/javascript">
 			var map;
+            var featureSelectService;
 
 			function navigateAndSelect() {
 				alert('ok');
 				var layer = map.getLayersModel().getLayer("clientLayerCountries");
 				alert(layer);
-				var service = map.getFeatureSearchService();
-				alert(service);
-				service.searchById(layer, ["110m_admin_0_countries.11"], function(featureHolder) {
+				featureSelectService = new gm.feature.FeatureSearchService(map);
+				alert(featureSelectService);
+                featureSelectService.searchById(layer, ["110m_admin_0_countries.11"], function(featureHolder) {
 					var feature = featureHolder.getFeatures()[0];
 					var bbox = Geomajas().getGeometryService().getBounds(feature.getGeometry());
 					map.getViewPort().applyBounds(bbox);
@@ -48,7 +48,7 @@
 
 			function selectFeature(id) {
 				var layer = map.getLayersModel().getLayer("clientLayerCountries");
-				map.getFeatureSearchService().searchById(layer, [id], function(featureHolder) {
+                featureSelectService.searchById(layer, [id], function(featureHolder) {
 					layer.selectFeature(featureHolder.getFeatures()[0]);
 				});
 			}

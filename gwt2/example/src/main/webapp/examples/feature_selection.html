@@ -16,22 +16,23 @@
 		<title>Geomajas Javascript API Showcase</title>
 		<link type="text/css" rel="stylesheet" href="geomajas.css" />
 
-		<script type="text/javascript" language="javascript">var isomorphicDir = "../emptyApp/sc/";</script>
-		<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
+		<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
 		<script type="text/javascript">
 			var map;
+            var featureSearchService;
 
 			function onGeomajasLoad() {
 				map = new gm.Map("js-map-element");
 				gm.ServerExtension.initializeMap(map, "app", "mapMain");
+                featureSearchService = new gm.feature.FeatureSearchService(map);
 			}
 
 			function selectFeature(id) {
-				var layer = map.getLayersModel().getLayer("clientLayerCountries");
+                var layer = map.getLayersModel().getLayer("clientLayerCountries");
 				var selected = eval(layer.isFeatureSelected(id).toString());
 				if (!selected) {
-					map.getFeatureSearchService().searchById(layer, [id], function(featureHolder) {
+					featureSearchService.searchById(layer, [id], function(featureHolder) {
 						layer.selectFeature(featureHolder.getFeatures()[0]);
 					});
 				}

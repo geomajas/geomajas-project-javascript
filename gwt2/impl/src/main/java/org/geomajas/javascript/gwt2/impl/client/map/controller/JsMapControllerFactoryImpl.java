@@ -10,7 +10,6 @@
  */
 package org.geomajas.javascript.gwt2.impl.client.map.controller;
 
-import org.geomajas.gwt2.client.controller.FeatureSelectionController;
 import org.geomajas.gwt2.client.controller.MapController;
 import org.geomajas.gwt2.client.controller.NavigationController;
 import org.geomajas.gwt2.client.controller.ZoomToRectangleController;
@@ -21,7 +20,7 @@ import org.timepedia.exporter.client.ExportStaticMethod;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * Exports {@link org.geomajas.gwt2.client.GeomajasServerExtension}.
+ * Exports ?.
  *
  * @author Jan De Moerloose
  */
@@ -83,14 +82,14 @@ public final class JsMapControllerFactoryImpl implements Exportable {
 				case ZOOM_TO_RECTANGLE:
 					controller = new ZoomToRectangleController();
 					break;
-				case FEATURE_SELECTION_DRAG:
-					controller = new FeatureSelectionController(
-							FeatureSelectionController.SelectionMethod.CLICK_AND_DRAG);
-					break;
-				case FEATURE_SELECTION_SINGLE:
-					controller = new FeatureSelectionController(
-							FeatureSelectionController.SelectionMethod.SINGLE_SELECTION);
-					break;
+//				case FEATURE_SELECTION_DRAG:
+//					controller = new FeatureSelectionController(
+//							FeatureSelectionController.SelectionMethod.CLICK_AND_DRAG);
+//					break;
+//				case FEATURE_SELECTION_SINGLE:
+//					controller = new FeatureSelectionController(
+//							FeatureSelectionController.SelectionMethod.SINGLE_SELECTION);
+//					break;
 			}
 			/* These GWT controllers have no counterpart (yet) in GWT2:
 			} else if (ToolId.TOOL_MEASURE_DISTANCE_MODE.equalsIgnoreCase(id)) {

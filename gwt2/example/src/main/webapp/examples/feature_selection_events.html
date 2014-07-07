@@ -16,8 +16,7 @@
 		<title>Geomajas Javascript API Showcase</title>
 		<link type="text/css" rel="stylesheet" href="geomajas.css" />
 
-		<script type="text/javascript" language="javascript">var isomorphicDir = "../emptyApp/sc/";</script>
-		<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
+		<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
 		<script type="text/javascript">
 			var map;
@@ -28,8 +27,7 @@
                 gm.ServerExtension.initializeMap(map, "app", "mapMain");
 
 				// Apply the selection controller:
-				var mapController = gm.MapControllerFactory.createMapController("featureSelectionSingle");
-				map.setMapController(mapController);
+				map.setMapController(new gm.controller.SelectionController("SINGLE_SELECTION"));
 
 				// Add the feature selection handlers when Geomajas loads:
 				addHandlers();

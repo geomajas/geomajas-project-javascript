@@ -16,8 +16,7 @@
 	<title>Geomajas Javascript API Showcase</title>
 	<link type="text/css" rel="stylesheet" href="geomajas.css" />
 	
-	<script type="text/javascript" language="javascript">var isomorphicDir = "../emptyApp/sc/";</script>
-	<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 	
 	<script type="text/javascript">
 		var map;
@@ -27,11 +26,23 @@
             gm.ServerExtension.initializeMap(map, "app", "mapMain");
 		}
 
-		function applyMapController(id) {
-			var mapController = gm.MapControllerFactory.createMapController(id);
-			map.setMapController(mapController);
-		}
-	</script>
+        function applyNavigationController() {
+            map.setMapController(new gm.controller.NavigationController());
+        }
+
+        function applyZoomToRectangleController() {
+            map.setMapController(new gm.controller.ZoomToRectangleController());
+        }
+
+        function applyFeatureSelectionDragController() {
+            map.setMapController(new gm.controller.FeatureSelectionController("CLICK_AND_DRAG"));
+        }
+
+        function applyFeatureSelectionSingleController() {
+            map.setMapController(new gm.controller.FeatureSelectionController("SINGLE_SELECTION"));
+        }
+
+    </script>
 </head>
 
 <body>
@@ -52,10 +63,10 @@
 					
 					<h4>Use default map controllers</h4>
 					Activate a controller on the map (only one can be active at a time). By default, the navigation controller is active.<br>
-					<button onclick="applyMapController('navigation')">Navigation</button><br>
-					<button onclick="applyMapController('zoomToRectangle')">ZoomToRectangle</button><br>
-					<button onclick="applyMapController('featureSelectionDrag')">Selection (multiple features)</button><br>
-					<button onclick="applyMapController('featureSelectionSingle')">Selection (single feature)</button><br>
+					<button onclick="applyNavigationController()">Navigation</button><br>
+					<button onclick="applyZoomToRectangleController()">ZoomToRectangle</button><br>
+					<button onclick="applyFeatureSelectionDragController()">Selection (multiple features)</button><br>
+					<button onclick="applyFeatureSelectionSingleController()">Selection (single feature)</button><br>
 				</td>
 			</tr>
 		</table>

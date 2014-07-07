@@ -43,8 +43,6 @@ public final class Examples {
 				+ " maps bounding box.", "examples/search_features.html"));
 		EXAMPLES.add(new Example("Busy events", "Demonstrates how to register to the Geomajas 'busy' events. These"
 				+ " events display when the client is busy talking to the server.", "examples/busy_state.html"));
-		EXAMPLES.add(new Example("Complex GWT app", "Demonstrates how a more complex GWT application can be used "
-				+ "within a JavaScript environment.", "examples/gwt_app.html"));
 		EXAMPLES.add(new Example("Cursors", "Demonstrates how change the cursor on the map. This sample includes a "
 				+ "custom cursor.", "examples/cursors.html"));
 		EXAMPLES.add(new Example("Feature Selection", "Demonstrates the selection of features in a vector layer.",

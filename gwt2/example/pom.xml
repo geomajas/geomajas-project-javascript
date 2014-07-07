@@ -131,8 +131,8 @@
 				</dependencies>
 				<configuration>
 					<modules>
-						<module>org.geomajas.javascript.gwt2.example.ComplexApp</module>
-						<module>org.geomajas.javascript.gwt2.example.EmptyApp</module>
+						<module>org.geomajas.javascript.gwt2.example.ClientOnly</module>
+						<module>org.geomajas.javascript.gwt2.example.ServerExtension</module>
 						<module>org.geomajas.javascript.gwt2.example.Showcase</module>
 					</modules>
 					<disableCastChecking>true</disableCastChecking>

@@ -12,7 +12,6 @@ package org.geomajas.javascript.api.client.map;
 
 import org.geomajas.annotation.Api;
 import org.geomajas.javascript.api.client.map.controller.JsMapController;
-import org.geomajas.javascript.api.client.map.feature.JsFeatureSearchService;
 import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
 import org.timepedia.exporter.client.Exportable;
 
@@ -85,12 +84,5 @@ public interface JsMapPresenter extends Exportable {
 	 *            At that time the fall-back controller is again activated.
 	 */
 	void setMapController(JsMapController controller);
-
-	/**
-	 * Returns the JsFeatureSearchService.
-	 *
-	 * @return JsFeatureSearchService
-	 */
-	JsFeatureSearchService getFeatureSearchService();
 
 }
