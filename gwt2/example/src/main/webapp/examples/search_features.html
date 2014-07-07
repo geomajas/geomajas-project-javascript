@@ -16,15 +16,16 @@
 	<title>Geomajas Javascript API Showcase</title>
 	<link type="text/css" rel="stylesheet" href="geomajas.css" />
 
-	<script type="text/javascript" language="javascript">var isomorphicDir = "../emptyApp/sc/";</script>
-	<script type="text/javascript" language="javascript" src="../emptyApp/emptyApp.nocache.js"></script>
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
 	<script type="text/javascript">
 		var map;
+        var featureSearchService;
 
 		function onGeomajasLoad() {
 			map = new gm.Map("js-map-element");
 			gm.ServerExtension.initializeMap(map, "app", "mapMain");
+            featureSearchService = new gm.feature.FeatureSearchService(map);
 		}
 
 		function searchById(id) {
@@ -33,9 +34,8 @@
 
 			//var layer = map.getLayersModel().getLayerAtIndex(1); // Get the countries layer
 			var layer = map.getLayersModel().getLayer("clientLayerCountries");
-			var service = map.getFeatureSearchService();
 
-			service.searchById(layer, [id], function(featureHolder){
+            featureSearchService.searchById(layer, [id], function(featureHolder){
 				if (featureHolder == null) {
 					element.innerHTML = "Feature could not be found.";
 				} else {
@@ -51,9 +51,8 @@
 			//var layer = map.getLayersModel().getLayerAtIndex(1); // Get the countries layer
 			var layer = map.getLayersModel().getLayer("clientLayerCountries");
 			var bounds = map.getViewPort().getBounds(); // Get the current map bounds
-			var service = map.getFeatureSearchService();
 
-			service.searchInBounds(layer, bounds, function(features) {
+            featureSearchService.searchInBounds(layer, bounds, function(features) {
 				if (features == null) {
 					element.innerHTML = "No features found.";
 				} else {

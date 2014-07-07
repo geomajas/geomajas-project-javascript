@@ -27,6 +27,7 @@ import org.geomajas.javascript.api.client.map.feature.JsFeature;
 import org.geomajas.javascript.api.client.map.feature.JsFeatureArrayCallback;
 import org.geomajas.javascript.api.client.map.feature.JsFeatureSearchService;
 import org.geomajas.javascript.api.client.map.layer.JsFeaturesSupported;
+import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
 import org.geomajas.layer.feature.SearchCriterion;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
@@ -51,8 +52,8 @@ public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Expor
 	public JsFeatureSearchServiceImpl() {
 	}
 
-	public JsFeatureSearchServiceImpl(MapPresenter mapPresenter) {
-		this.mapPresenter = mapPresenter;
+	public JsFeatureSearchServiceImpl(JsMapPresenterImpl mapPresenter) {
+		this.mapPresenter = mapPresenter.getMapPresenter();
 	}
 
 	/**
