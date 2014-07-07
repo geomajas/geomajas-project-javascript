@@ -29,6 +29,8 @@ public final class Examples {
 	static {
 		EXAMPLES.add(new Example("Navigation", "Demonstrates how to use the ViewPort to navigate around the map.",
 				"examples/navigation.html"));
+		EXAMPLES.add(new Example("Endpoint", "Demonstrates how to use the endpoint service of the map.",
+				"examples/endpoint.html"));
 		EXAMPLES.add(new Example("Map & Layers", "Demonstrates the methods of the LayersModel behind a map: how to "
 				+ "get the available layers, and how to manipulate them.", "examples/layers.html"));
 		EXAMPLES.add(new Example("Configuration Init Event", "This examples demonstrates the use of an event fired" +
