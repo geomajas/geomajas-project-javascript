@@ -167,8 +167,8 @@ public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Expor
 
 	@Override
 	public void searchOnPosition(Coordinate coordinate,
-	                             int pixelBuffer,
-	                             final JsFeatureArrayCallback callback) {
+								 int pixelBuffer,
+								 final JsFeatureArrayCallback callback) {
 
 		this.pixelBuffer = pixelBuffer;
 
