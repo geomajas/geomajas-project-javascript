@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Static list of all examples in the showcase.
- * 
+ *
  * @author Pieter De Graef
  */
 public final class Examples {
@@ -43,6 +43,8 @@ public final class Examples {
 				+ " maps bounding box.", "examples/search_features.html"));
 		EXAMPLES.add(new Example("Busy events", "Demonstrates how to register to the Geomajas 'busy' events. These"
 				+ " events display when the client is busy talking to the server.", "examples/busy_state.html"));
+		EXAMPLES.add(new Example("Complex GWT app", "Demonstrates how a more complex GWT application can be used "
+				+ "within a JavaScript environment.", "examples/gwt_app.html"));
 		EXAMPLES.add(new Example("Cursors", "Demonstrates how change the cursor on the map. This sample includes a "
 				+ "custom cursor.", "examples/cursors.html"));
 		EXAMPLES.add(new Example("Feature Selection", "Demonstrates the selection of features in a vector layer.",
@@ -53,6 +55,9 @@ public final class Examples {
 				+ "selection and deselection events. When (de)selecting features, Geomajas sends out an event. In this"
 				+ " example features are being selected through a controller on the map, and all events are caught and"
 				+ " logged into the HTML.", "examples/feature_selection_events.html"));
+		EXAMPLES.add(new Example("Feature Clicked", "This example show how to add a feature clicked handler to the " +
+				"map and get information about the feature that has been clicked.",
+				"examples/feature_clicked.html"));
 		EXAMPLES.add(new Example("Catching Server Exceptions", "In this example we let the server execute a faulty"
 				+ " operation just to be able to catch the exception in JavaScript.<br><font color='red'>TODO</font>",
 				"examples/backend_error.html"));

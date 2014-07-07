@@ -13,8 +13,10 @@ package org.geomajas.javascript.gwt2.impl.client.map.feature;
 
 import org.geomajas.command.dto.SearchFeatureRequest;
 import org.geomajas.geometry.Bbox;
+import org.geomajas.geometry.Coordinate;
 import org.geomajas.geometry.Geometry;
 import org.geomajas.geometry.service.GeometryService;
+import org.geomajas.gwt.client.map.RenderSpace;
 import org.geomajas.gwt2.client.GeomajasServerExtension;
 import org.geomajas.gwt2.client.map.MapPresenter;
 import org.geomajas.gwt2.client.map.feature.Feature;
@@ -28,6 +30,7 @@ import org.geomajas.javascript.api.client.map.feature.JsFeatureArrayCallback;
 import org.geomajas.javascript.api.client.map.feature.JsFeatureSearchService;
 import org.geomajas.javascript.api.client.map.layer.JsFeaturesSupported;
 import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
+import org.geomajas.javascript.gwt2.impl.client.map.layer.JsVectorServerLayerImpl;
 import org.geomajas.layer.feature.SearchCriterion;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
@@ -42,12 +45,15 @@ import java.util.Map;
  * ways of searching features.
  *
  * @author Pieter De Graef
+ * @author David Debuck
  */
 @Export("FeatureSearchService")
 @ExportPackage("gm.feature")
 public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Exportable {
 
 	private MapPresenter mapPresenter;
+
+	private int pixelBuffer = 10;
 
 	public JsFeatureSearchServiceImpl() {
 	}
@@ -158,4 +164,68 @@ public class JsFeatureSearchServiceImpl implements JsFeatureSearchService, Expor
 		}
 
 	}
+
+	@Override
+	public void searchOnPosition(Coordinate coordinate,
+	                             int pixelBuffer,
+	                             final JsFeatureArrayCallback callback) {
+
+		this.pixelBuffer = pixelBuffer;
+
+		Geometry point = new Geometry(Geometry.POINT, 0, -1);
+		point.setCoordinates(new Coordinate[] { coordinate });
+
+		GeomajasServerExtension
+				.getInstance()
+				.getServerFeatureService()
+				.search(mapPresenter, point, calculateBufferFromPixelTolerance(),
+						ServerFeatureService.QueryType.INTERSECTS,
+						ServerFeatureService.SearchLayerType.SEARCH_ALL_LAYERS, -1,
+						new FeatureMapFunction() {
+
+							@Override
+							public void execute(Map<FeaturesSupported, List<Feature>> featureMap) {
+
+								List<JsFeature> jsFeatures = new ArrayList<JsFeature>();
+
+								for (FeaturesSupported layer : featureMap.keySet()) {
+
+									List<Feature> features = featureMap.get(layer);
+
+									if (features != null) {
+										for (Feature f : features) {
+
+											jsFeatures.add(new JsFeatureImpl(
+													f,
+													new JsVectorServerLayerImpl(layer)));
+
+										}
+
+									}
+								}
+
+								callback.execute(new JsFeatureArrayCallback.JsFeatureArrayHolder(
+										jsFeatures.toArray(new JsFeature[jsFeatures.size()])
+								));
+
+							}
+						});
+
+	}
+
+	/**
+	 * Calculate a buffer in which the listener may include the features from the map.
+	 *
+	 * @return double buffer
+	 */
+	private double calculateBufferFromPixelTolerance() {
+
+		Coordinate c1 = mapPresenter.getViewPort().getTransformationService()
+				.transform(new Coordinate(0, 0), RenderSpace.SCREEN, RenderSpace.WORLD);
+		Coordinate c2 = mapPresenter.getViewPort().getTransformationService()
+				.transform(new Coordinate(pixelBuffer, 0), RenderSpace.SCREEN, RenderSpace.WORLD);
+		return c1.distance(c2);
+
+	}
+
 }
