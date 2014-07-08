@@ -55,11 +55,8 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	private JsMapEventBus eventBus;
 
-<<<<<<< HEAD
-=======
 	private JsContainerManager containerManager;
 
->>>>>>> cfc0fc9... # This is a combination of 9 commits.
 	// Constructor is private
 	private JsMapPresenterImpl() {
 	}
@@ -112,10 +109,7 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		eventBus = new JsMapEventBusImpl(this);
 		viewPort = new JsViewPortImpl(mapPresenter.getViewPort());
 		layersModel = new JsLayersModelImpl(mapPresenter.getLayersModel());
-<<<<<<< HEAD
-=======
 		containerManager = new JsContainerManagerImpl(mapPresenter.getContainerManager());
->>>>>>> cfc0fc9... # This is a combination of 9 commits.
 	}
 
 	/**
