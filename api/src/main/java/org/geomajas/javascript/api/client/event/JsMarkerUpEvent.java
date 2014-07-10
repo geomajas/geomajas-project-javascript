@@ -1,5 +1,6 @@
 package org.geomajas.javascript.api.client.event;
 
+import com.google.gwt.event.dom.client.MouseUpEvent;
 import org.geomajas.annotation.Api;
 import org.geomajas.javascript.api.client.map.JsImageWidget;
 import org.timepedia.exporter.client.Export;
@@ -18,12 +19,19 @@ public class JsMarkerUpEvent extends JsEvent<JsMarkerUpHandler> implements Expor
 
 	private JsImageWidget imageWidget;
 
-	public JsMarkerUpEvent(JsImageWidget imageWidget) {
+	private MouseUpEvent event;
+
+	public JsMarkerUpEvent(JsImageWidget imageWidget, MouseUpEvent event) {
 		this.imageWidget = imageWidget;
+		this.event = event;
 	}
 
 	public JsImageWidget getImageWidget() {
 		return imageWidget;
+	}
+
+	public MouseUpEvent getSource() {
+		return event;
 	}
 
 	@Override

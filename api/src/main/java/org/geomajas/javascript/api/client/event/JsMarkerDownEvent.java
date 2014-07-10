@@ -1,5 +1,6 @@
 package org.geomajas.javascript.api.client.event;
 
+import com.google.gwt.event.dom.client.MouseDownEvent;
 import org.geomajas.annotation.Api;
 import org.geomajas.javascript.api.client.map.JsImageWidget;
 import org.timepedia.exporter.client.Export;
@@ -18,12 +19,19 @@ public class JsMarkerDownEvent extends JsEvent<JsMarkerDownHandler> implements E
 
 	private JsImageWidget imageWidget;
 
-	public JsMarkerDownEvent(JsImageWidget imageWidget) {
+	private MouseDownEvent source;
+
+	public JsMarkerDownEvent(JsImageWidget imageWidget, MouseDownEvent source) {
 		this.imageWidget = imageWidget;
+		this.source = source;
 	}
 
 	public JsImageWidget getImageWidget() {
 		return imageWidget;
+	}
+
+	public MouseDownEvent getSource() {
+		return source;
 	}
 
 	@Override

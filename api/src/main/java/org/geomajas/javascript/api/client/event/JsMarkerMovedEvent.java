@@ -1,5 +1,6 @@
 package org.geomajas.javascript.api.client.event;
 
+import com.google.gwt.event.dom.client.MouseMoveEvent;
 import org.geomajas.annotation.Api;
 import org.geomajas.javascript.api.client.map.JsImageWidget;
 import org.timepedia.exporter.client.Export;
@@ -18,12 +19,19 @@ public class JsMarkerMovedEvent extends JsEvent<JsMarkerMovedHandler> implements
 
 	private JsImageWidget imageWidget;
 
-	public JsMarkerMovedEvent(JsImageWidget imageWidget) {
+	private MouseMoveEvent event;
+
+	public JsMarkerMovedEvent(JsImageWidget imageWidget, MouseMoveEvent event) {
 		this.imageWidget = imageWidget;
+		this.event = event;
 	}
 
 	public JsImageWidget getImageWidget() {
 		return imageWidget;
+	}
+
+	public MouseMoveEvent getSource() {
+		return event;
 	}
 
 	@Override

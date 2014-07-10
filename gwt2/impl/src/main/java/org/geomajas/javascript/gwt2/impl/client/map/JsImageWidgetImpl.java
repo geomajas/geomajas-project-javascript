@@ -125,22 +125,26 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 	@Override
 	public void onMouseDown(MouseDownEvent event) {
 		for(JsMarkerDownHandler handler: downHandlers) {
-			handler.onMarkerDown(new JsMarkerDownEvent(this));
+			handler.onMarkerDown(new JsMarkerDownEvent(this, event));
 		}
+		event.preventDefault();
+		event.stopPropagation();
 	}
 
-	// TODO : can we make this JS (so we don't need the extra events and handlers) ?
 	@Override
 	public void onMouseUp(MouseUpEvent event) {
 		for(JsMarkerUpHandler handler: upHandlers) {
-			handler.onMarkerUp(new JsMarkerUpEvent(this));
+			handler.onMarkerUp(new JsMarkerUpEvent(this, event));
 		}
+		event.preventDefault();
 	}
 
 	@Override
 	public void onMouseMove(MouseMoveEvent event) {
 		for (JsMarkerMovedHandler movedHandler : movedHandlers) {
-			movedHandler.onMarkerMoved(new JsMarkerMovedEvent(this));
+			movedHandler.onMarkerMoved(new JsMarkerMovedEvent(this, event));
 		}
+		event.preventDefault();
+		event.stopPropagation();
 	}
 }
