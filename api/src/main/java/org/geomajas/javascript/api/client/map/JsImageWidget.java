@@ -14,6 +14,9 @@ package org.geomajas.javascript.api.client.map;
 import org.geomajas.annotation.Api;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt2.client.gfx.TransformableWidget;
+import org.geomajas.javascript.api.client.event.JsMarkerDownHandler;
+import org.geomajas.javascript.api.client.event.JsMarkerMovedHandler;
+import org.geomajas.javascript.api.client.event.JsMarkerUpHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
@@ -26,6 +29,12 @@ import org.timepedia.exporter.client.Exportable;
 @Export
 @Api(allMethods = true)
 public interface JsImageWidget extends Exportable, TransformableWidget {
+
+	void addWidgetDownHandler(JsMarkerDownHandler handler);
+
+	void addWidgetUpHandler(JsMarkerUpHandler handler);
+
+	void addWidgetMovedHandler(JsMarkerMovedHandler handler);
 
 	/**
 	 * Set the world coordinate of the widget.
@@ -40,4 +49,5 @@ public interface JsImageWidget extends Exportable, TransformableWidget {
 	 * @return The world coordinate.
 	 */
 	Coordinate getCoordinate();
+
 }
