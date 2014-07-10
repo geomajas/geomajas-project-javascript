@@ -35,6 +35,9 @@ import org.geomajas.javascript.api.client.map.controller.JsMouseOverHandler;
 import org.geomajas.javascript.api.client.map.controller.JsUpHandler;
 import org.geomajas.javascript.gwt2.impl.client.JsGwtImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportPackage;
+import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
 
 //import org.geomajas.javascript.api.client.map.layer.JsExportableFunction;
@@ -45,7 +48,9 @@ import org.timepedia.exporter.client.NoExport;
  * @author Jan Venstermans
  * @since 1.0.0
  */
-public class JsMapControllerWrapperImpl extends JsMapControllerImpl {
+@Export
+@ExportPackage("gm.controller")
+public class JsMapControllerWrapperImpl extends JsMapControllerImpl implements Exportable {
 
 	private MapController mapController;
 

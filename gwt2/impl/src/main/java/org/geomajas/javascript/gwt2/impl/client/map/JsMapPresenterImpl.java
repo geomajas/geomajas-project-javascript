@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import org.geomajas.gwt2.client.GeomajasImpl;
 import org.geomajas.gwt2.client.controller.AbstractMapController;
+import org.geomajas.gwt2.client.controller.MapController;
 import org.geomajas.gwt2.client.map.MapPresenter;
 import org.geomajas.javascript.api.client.map.JsContainerManager;
 import org.geomajas.javascript.api.client.map.JsMapEventBus;
@@ -27,6 +28,7 @@ import org.geomajas.javascript.api.client.map.JsMapPresenter;
 import org.geomajas.javascript.api.client.map.JsViewPort;
 import org.geomajas.javascript.api.client.map.controller.JsMapController;
 import org.geomajas.javascript.api.client.map.layer.JsLayersModel;
+import org.geomajas.javascript.gwt2.impl.client.map.controller.JsMapControllerWrapperImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayersModelImpl;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
@@ -167,6 +169,11 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		} else {
 			mapPresenter.setMapController(null);
 		}
+	}
+
+	public JsMapController getMapController() {
+		MapController controller = mapPresenter.getMapController();
+		return new JsMapControllerWrapperImpl(controller);
 	}
 
 	// ------------------------------------------------------------------------

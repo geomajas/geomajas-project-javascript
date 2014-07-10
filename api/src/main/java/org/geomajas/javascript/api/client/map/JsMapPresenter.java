@@ -93,4 +93,6 @@ public interface JsMapPresenter extends Exportable {
 	 */
 	void setMapController(JsMapController controller);
 
+	JsMapController getMapController();
+
 }
