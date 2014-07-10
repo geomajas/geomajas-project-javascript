@@ -18,15 +18,22 @@ import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.Exportable;
 
 /**
+ * Handler for catching events that indicate a widget was moved.
  *
  * @author Youri Flement
+ * @since 1.0.0
  */
 @Export
 @ExportClosure
 @Api(allMethods = true)
 @UserImplemented
-public interface JsMarkerMovedHandler extends JsHandler, Exportable {
+public interface JsImageWidgetMovedHandler extends JsHandler, Exportable {
 
-	void onMarkerMoved(JsMarkerMovedEvent jsMarkerEvent);
+	/**
+	 * Called when a widget was moved.
+	 *
+	 * @param jsWidgetEvent The event.
+	 */
+	void onWidgetMoved(JsImageWidgetMovedEvent jsWidgetEvent);
 
 }

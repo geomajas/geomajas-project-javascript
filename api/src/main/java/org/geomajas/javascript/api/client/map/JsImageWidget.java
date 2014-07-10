@@ -14,9 +14,9 @@ package org.geomajas.javascript.api.client.map;
 import org.geomajas.annotation.Api;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt2.client.gfx.TransformableWidget;
-import org.geomajas.javascript.api.client.event.JsMarkerDownHandler;
-import org.geomajas.javascript.api.client.event.JsMarkerMovedHandler;
-import org.geomajas.javascript.api.client.event.JsMarkerUpHandler;
+import org.geomajas.javascript.api.client.event.JsImageWidgetDeselectedHandler;
+import org.geomajas.javascript.api.client.event.JsImageWidgetMovedHandler;
+import org.geomajas.javascript.api.client.event.JsImageWidgetSelectedHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
@@ -30,11 +30,26 @@ import org.timepedia.exporter.client.Exportable;
 @Api(allMethods = true)
 public interface JsImageWidget extends Exportable, TransformableWidget {
 
-	void addWidgetDownHandler(JsMarkerDownHandler handler);
+	/**
+	 * Add a handler that reacts to the widget being selected.
+	 *
+	 * @param handler The handler.
+	 */
+	void addWidgetSelectedHandler(JsImageWidgetSelectedHandler handler);
 
-	void addWidgetUpHandler(JsMarkerUpHandler handler);
+	/**
+	 * Add a handler that reacts to the widget being deselected.
+	 *
+	 * @param handler The handler.
+	 */
+	void addWidgetDeselectedHandler(JsImageWidgetDeselectedHandler handler);
 
-	void addWidgetMovedHandler(JsMarkerMovedHandler handler);
+	/**
+	 * Add a handler that reacts to the widget being moved.
+	 *
+	 * @param handler The handler.
+	 */
+	void addWidgetMovedHandler(JsImageWidgetMovedHandler handler);
 
 	/**
 	 * Set the world coordinate of the widget.

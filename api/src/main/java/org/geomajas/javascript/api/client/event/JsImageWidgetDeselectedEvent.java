@@ -11,7 +11,7 @@
 
 package org.geomajas.javascript.api.client.event;
 
-import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.web.bindery.event.shared.Event;
 import org.geomajas.annotation.Api;
 import org.geomajas.javascript.api.client.map.JsImageWidget;
 import org.timepedia.exporter.client.Export;
@@ -19,39 +19,57 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 /**
+ * Event that is thrown when a widget is deselected.
  *
  * @author Youri Flement
+ * @since 1.0.0
  */
 @Api(allMethods = true)
 @Export
 @ExportPackage("gm.event")
-public class JsMarkerUpEvent extends JsEvent<JsMarkerUpHandler> implements Exportable {
+public class JsImageWidgetDeselectedEvent extends JsEvent<JsImageWidgetDeselectedHandler> implements Exportable {
 
 	private JsImageWidget imageWidget;
 
-	private MouseUpEvent event;
+	private Event<?> source;
 
-	public JsMarkerUpEvent(JsImageWidget imageWidget, MouseUpEvent event) {
+	/**
+	 * Create a new event for a widget that was deselected.
+	 *
+	 * @param imageWidget The widget that was deselected.
+	 * @param source The source event that caused the deselection.
+	 */
+	public JsImageWidgetDeselectedEvent(JsImageWidget imageWidget, Event<?> source) {
 		this.imageWidget = imageWidget;
-		this.event = event;
+		this.source = source;
 	}
 
+	/**
+	 * Get the widget that was deselected.
+	 *
+	 * @return The widget.
+	 */
 	public JsImageWidget getImageWidget() {
 		return imageWidget;
 	}
 
-	public MouseUpEvent getSource() {
-		return event;
+	/**
+	 * Get the root event that caused the deselection.
+	 *
+	 * @return The event.
+	 */
+	public Event<?> getSource() {
+		return source;
 	}
 
 	@Override
-	protected void dispatch(JsMarkerUpHandler handler) {
-		handler.onMarkerUp(this);
+	protected void dispatch(JsImageWidgetDeselectedHandler handler) {
+		handler.onWidgetDeselected(this);
 	}
 
 	@Override
-	public Class<JsMarkerUpHandler> getType() {
-		return JsMarkerUpHandler.class;
+	public Class<JsImageWidgetDeselectedHandler> getType() {
+		return JsImageWidgetDeselectedHandler.class;
 	}
 }
 

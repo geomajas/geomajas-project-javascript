@@ -11,7 +11,7 @@
 
 package org.geomajas.javascript.api.client.event;
 
-import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.web.bindery.event.shared.Event;
 import org.geomajas.annotation.Api;
 import org.geomajas.javascript.api.client.map.JsImageWidget;
 import org.timepedia.exporter.client.Export;
@@ -19,39 +19,57 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 /**
+ * Event that is thrown when a widget is moved.
  *
  * @author Youri Flement
+ * @since 1.0.0
  */
 @Api(allMethods = true)
 @Export
 @ExportPackage("gm.event")
-public class JsMarkerMovedEvent extends JsEvent<JsMarkerMovedHandler> implements Exportable {
+public class JsImageWidgetMovedEvent extends JsEvent<JsImageWidgetMovedHandler> implements Exportable {
 
 	private JsImageWidget imageWidget;
 
-	private MouseMoveEvent event;
+	private Event<?> source;
 
-	public JsMarkerMovedEvent(JsImageWidget imageWidget, MouseMoveEvent event) {
+	/**
+	 * Create an event for a widget that was moved.
+	 *
+	 * @param imageWidget The moved widget.
+	 * @param source The source that caused the movement.
+	 */
+	public JsImageWidgetMovedEvent(JsImageWidget imageWidget, Event<?> source) {
 		this.imageWidget = imageWidget;
-		this.event = event;
+		this.source = source;
 	}
 
+	/**
+	 * Get the widget that was deselected.
+	 *
+	 * @return The widget.
+	 */
 	public JsImageWidget getImageWidget() {
 		return imageWidget;
 	}
 
-	public MouseMoveEvent getSource() {
-		return event;
+	/**
+	 * Get the root event that caused the deselection.
+	 *
+	 * @return The event.
+	 */
+	public Event<?> getSource() {
+		return source;
 	}
 
 	@Override
-	protected void dispatch(JsMarkerMovedHandler handler) {
-		handler.onMarkerMoved(this);
+	protected void dispatch(JsImageWidgetMovedHandler handler) {
+		handler.onWidgetMoved(this);
 	}
 
 	@Override
-	public Class<JsMarkerMovedHandler> getType() {
-		return JsMarkerMovedHandler.class;
+	public Class<JsImageWidgetMovedHandler> getType() {
+		return JsImageWidgetMovedHandler.class;
 	}
 }
 

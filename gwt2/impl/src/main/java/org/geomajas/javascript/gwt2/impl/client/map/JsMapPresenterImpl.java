@@ -171,6 +171,7 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		}
 	}
 
+	@Override
 	public JsMapController getMapController() {
 		MapController controller = mapPresenter.getMapController();
 		return new JsMapControllerWrapperImpl(controller);

@@ -93,6 +93,11 @@ public interface JsMapPresenter extends Exportable {
 	 */
 	void setMapController(JsMapController controller);
 
+	/**
+	 * Get the current map controller.
+	 *
+	 * @return The map controller or <code>null</code> if there is none.
+	 */
 	JsMapController getMapController();
 
 }
