@@ -27,7 +27,21 @@ public interface JsViewPortTransformationService extends Exportable {
 	 * Transform the given coordinate from a certain rendering space to another.
 	 *
 	 * @param coordinate
-	 *            The coordinate to transform. The X and Y ordinates are expected to be expressed in the 'from'
+	 *            The coordinate to transform. The X and Y coordinates are expected to be expressed in the 'from'
+	 *            rendering space.
+	 * @param from
+	 *            The rendering space as a String value that expresses the X and Y ordinates of the given coordinate.
+	 * @param to
+	 *            The rendering space as a String value where to the coordinate should be transformed.
+	 * @return The transformed coordinate.
+	 */
+	Coordinate transformCoordinate(Coordinate coordinate, String from, String to);
+
+	/**
+	 * Transform the given coordinate from a certain rendering space to another.
+	 *
+	 * @param coordinate
+	 *            The coordinate to transform. The X and Y coordinates are expected to be expressed in the 'from'
 	 *            rendering space.
 	 * @param from
 	 *            The rendering space that expresses the X and Y ordinates of the given coordinate.

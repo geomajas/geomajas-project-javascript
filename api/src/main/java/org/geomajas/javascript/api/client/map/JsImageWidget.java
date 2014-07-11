@@ -15,7 +15,6 @@ import org.geomajas.annotation.Api;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt2.client.gfx.TransformableWidget;
 import org.geomajas.javascript.api.client.event.JsImageWidgetDeselectedHandler;
-import org.geomajas.javascript.api.client.event.JsImageWidgetMovedHandler;
 import org.geomajas.javascript.api.client.event.JsImageWidgetSelectedHandler;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
@@ -43,13 +42,6 @@ public interface JsImageWidget extends Exportable, TransformableWidget {
 	 * @param handler The handler.
 	 */
 	void addWidgetDeselectedHandler(JsImageWidgetDeselectedHandler handler);
-
-	/**
-	 * Add a handler that reacts to the widget being moved.
-	 *
-	 * @param handler The handler.
-	 */
-	void addWidgetMovedHandler(JsImageWidgetMovedHandler handler);
 
 	/**
 	 * Set the world coordinate of the widget.

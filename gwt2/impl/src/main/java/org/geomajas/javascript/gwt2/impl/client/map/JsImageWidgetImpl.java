@@ -15,17 +15,14 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Image;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt2.client.gfx.AbstractTransformableWidget;
 import org.geomajas.javascript.api.client.event.JsImageWidgetDeselectedEvent;
 import org.geomajas.javascript.api.client.event.JsImageWidgetDeselectedHandler;
-import org.geomajas.javascript.api.client.event.JsImageWidgetMovedEvent;
-import org.geomajas.javascript.api.client.event.JsImageWidgetMovedHandler;
 import org.geomajas.javascript.api.client.event.JsImageWidgetSelectedEvent;
 import org.geomajas.javascript.api.client.event.JsImageWidgetSelectedHandler;
 import org.geomajas.javascript.api.client.map.JsImageWidget;
@@ -47,17 +44,15 @@ import java.util.Collection;
 @ExportPackage("gm")
 public class JsImageWidgetImpl extends AbstractTransformableWidget
 		implements JsImageWidget, Exportable, ExportOverlay<JsImageWidgetImpl>, MouseDownHandler,
-		MouseUpHandler, MouseMoveHandler {
+		MouseUpHandler {
 
 	private int anchorX;
 
 	private int anchorY;
 
-	private Collection<JsImageWidgetSelectedHandler> downHandlers;
+	private Collection<JsImageWidgetSelectedHandler> selectedHandlers;
 
-	private Collection<JsImageWidgetDeselectedHandler> upHandlers;
-
-	private Collection<JsImageWidgetMovedHandler> movedHandlers;
+	private Collection<JsImageWidgetDeselectedHandler> deselectedHandlers;
 
 	public JsImageWidgetImpl() {
 		this("", 0, 0);
@@ -69,14 +64,12 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 		this.anchorY = anchorY;
 		asWidget().getElement().getStyle().setPosition(Position.ABSOLUTE);
 
-		downHandlers = new ArrayList<JsImageWidgetSelectedHandler>();
-		upHandlers = new ArrayList<JsImageWidgetDeselectedHandler>();
-		movedHandlers = new ArrayList<JsImageWidgetMovedHandler>();
+		selectedHandlers = new ArrayList<JsImageWidgetSelectedHandler>();
+		deselectedHandlers = new ArrayList<JsImageWidgetDeselectedHandler>();
 
-		// Add handlers to the widget that will fire events when the widget is clicked/moved/...
-		asWidget().addHandler(this, MouseDownEvent.getType());
-		asWidget().addHandler(this, MouseUpEvent.getType());
-		asWidget().addHandler(this, MouseMoveEvent.getType());
+		// Add handlers to the widget that will fire events when the widget is clicked or released:
+		asWidget().addDomHandler(this, MouseDownEvent.getType());
+		asWidget().addDomHandler(this, MouseUpEvent.getType());
 	}
 
 	/**
@@ -98,17 +91,12 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 
 	@Override
 	public void addWidgetSelectedHandler(JsImageWidgetSelectedHandler handler) {
-		downHandlers.add(handler);
+		selectedHandlers.add(handler);
 	}
 
 	@Override
 	public void addWidgetDeselectedHandler(JsImageWidgetDeselectedHandler handler) {
-		upHandlers.add(handler);
-	}
-
-	@Override
-	public void addWidgetMovedHandler(JsImageWidgetMovedHandler handler) {
-		movedHandlers.add(handler);
+		deselectedHandlers.add(handler);
 	}
 
 	@Override
@@ -129,7 +117,11 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 
 	@Override
 	public void onMouseDown(MouseDownEvent event) {
-		for (JsImageWidgetSelectedHandler handler : downHandlers) {
+		// Put the widget to the bottom so the (possible) mouse move events are not lost on a 'higher' widget:
+		DOM.appendChild(asWidget().getParent().getElement(), asWidget().getElement());
+
+		// Notify the handlers:
+		for (JsImageWidgetSelectedHandler handler : selectedHandlers) {
 			handler.onWidgetSelected(new JsImageWidgetSelectedEvent(this, event));
 		}
 		event.preventDefault();
@@ -138,18 +130,11 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 
 	@Override
 	public void onMouseUp(MouseUpEvent event) {
-		for (JsImageWidgetDeselectedHandler handler : upHandlers) {
+		// Notify handlers:
+		for (JsImageWidgetDeselectedHandler handler : deselectedHandlers) {
 			handler.onWidgetDeselected(new JsImageWidgetDeselectedEvent(this, event));
 		}
 		event.preventDefault();
 	}
 
-	@Override
-	public void onMouseMove(MouseMoveEvent event) {
-		for (JsImageWidgetMovedHandler movedHandler : movedHandlers) {
-			movedHandler.onWidgetMoved(new JsImageWidgetMovedEvent(this, event));
-		}
-		event.preventDefault();
-		event.stopPropagation();
-	}
 }
