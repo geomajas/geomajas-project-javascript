@@ -49,6 +49,14 @@ public interface JsMapPresenter extends Exportable {
 	JsMapEventBus getEventBus();
 
 	/**
+	 * Manages different types of containers that can be added to the map. These containers are used to overlay
+	 * drawings/widgets/etc on the map.
+	 *
+	 * @return The container manager.
+	 */
+	JsContainerManager getContainerManager();
+
+	/**
 	 * Apply a new mouse cursor when hovering above the map.
 	 *
 	 * @param cursor
@@ -84,5 +92,12 @@ public interface JsMapPresenter extends Exportable {
 	 *            At that time the fall-back controller is again activated.
 	 */
 	void setMapController(JsMapController controller);
+
+	/**
+	 * Get the current map controller.
+	 *
+	 * @return The map controller or <code>null</code> if there is none.
+	 */
+	JsMapController getMapController();
 
 }

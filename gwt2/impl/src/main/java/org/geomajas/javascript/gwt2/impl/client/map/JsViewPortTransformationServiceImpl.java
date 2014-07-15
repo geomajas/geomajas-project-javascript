@@ -38,6 +38,11 @@ public class JsViewPortTransformationServiceImpl implements JsViewPortTransforma
 	}
 
 	@Override
+	public Coordinate transformCoordinate(Coordinate coordinate, String from, String to) {
+		return transform(coordinate, JsRenderSpace.getType(from), JsRenderSpace.getType(to));
+	}
+
+	@Override
 	public Coordinate transform(Coordinate coordinate, JsRenderSpace from, JsRenderSpace to) {
 		return viewPortTransformationService.transform(coordinate,
 				JsGwtImpl.getInstance().getJsGwtUtil().toRenderSpace(from),

@@ -61,8 +61,10 @@ public final class Examples {
 		EXAMPLES.add(new Example("Catching Server Exceptions", "In this example we let the server execute a faulty"
 				+ " operation just to be able to catch the exception in JavaScript.<br><font color='red'>TODO</font>",
 				"examples/backend_error.html"));
-
 		EXAMPLES.add(new Example("Basic WMS layer", "This example shows how to create a new map and add a WMS " +
 				"layer to it without using the Geomajas server.", "examples/client_wms_layer.html"));
+		EXAMPLES.add(new Example("Adding map markers", "In this example we show that a map marker can be added"
+				+ " on the map. The markers can also be dragged.",
+				"examples/marker.html"));
 	};
 }
