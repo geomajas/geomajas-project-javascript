@@ -11,9 +11,8 @@
 
 package org.geomajas.javascript.api.client.event;
 
-import com.google.web.bindery.event.shared.Event;
 import org.geomajas.annotation.Api;
-import org.geomajas.javascript.api.client.map.JsImageWidget;
+import org.geomajas.javascript.api.client.map.JsMarker;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
@@ -27,21 +26,17 @@ import org.timepedia.exporter.client.Exportable;
 @Api(allMethods = true)
 @Export
 @ExportPackage("gm.event")
-public class JsImageWidgetSelectedEvent extends JsEvent<JsImageWidgetSelectedHandler> implements Exportable {
+public class JsMarkerSelectedEvent extends JsEvent<JsMarkerSelectedHandler> implements Exportable {
 
-	private JsImageWidget imageWidget;
-
-	private Event<?> source;
+	private JsMarker marker;
 
 	/**
 	 * Create an event that indicates the widget was selected.
 	 *
-	 * @param imageWidget The widget that was selected.
-	 * @param source      The source event that caused the selection.
+	 * @param marker The widget that was selected.
 	 */
-	public JsImageWidgetSelectedEvent(JsImageWidget imageWidget, Event<?> source) {
-		this.imageWidget = imageWidget;
-		this.source = source;
+	public JsMarkerSelectedEvent(JsMarker marker) {
+		this.marker = marker;
 	}
 
 	/**
@@ -49,26 +44,18 @@ public class JsImageWidgetSelectedEvent extends JsEvent<JsImageWidgetSelectedHan
 	 *
 	 * @return The widget.
 	 */
-	public JsImageWidget getImageWidget() {
-		return imageWidget;
+	public JsMarker getMarker() {
+		return marker;
 	}
 
-	/**
-	 * Get the root event that caused the deselection.
-	 *
-	 * @return The event.
-	 */
-	public Event<?> getSource() {
-		return source;
-	}
 
 	@Override
-	protected void dispatch(JsImageWidgetSelectedHandler handler) {
+	protected void dispatch(JsMarkerSelectedHandler handler) {
 		handler.onWidgetSelected(this);
 	}
 
 	@Override
-	public Class<JsImageWidgetSelectedHandler> getType() {
-		return JsImageWidgetSelectedHandler.class;
+	public Class<JsMarkerSelectedHandler> getType() {
+		return JsMarkerSelectedHandler.class;
 	}
 }
