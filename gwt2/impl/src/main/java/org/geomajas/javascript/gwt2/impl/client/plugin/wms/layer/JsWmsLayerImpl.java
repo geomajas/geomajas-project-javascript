@@ -12,7 +12,6 @@
 package org.geomajas.javascript.gwt2.impl.client.plugin.wms.layer;
 
 import org.geomajas.geometry.Bbox;
-import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayerImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.tile.JsTileConfiguration;
 import org.geomajas.plugin.wms.client.WmsClient;
@@ -41,27 +40,24 @@ public final class JsWmsLayerImpl extends JsLayerImpl implements Exportable {
 	}
 
 	@ExportConstructor
-	public static JsWmsLayerImpl constructor(String title, JsMapPresenterImpl mapPresenter,
-											 JsWmsLayerConfiguration layerConfig, JsTileConfiguration tileConfig) {
+	public static JsWmsLayerImpl constructor(String title, String crs, JsWmsLayerConfiguration layerConfig,
+											 JsTileConfiguration tileConfig) {
 		final JsWmsLayerImpl jsWmsLayer = new JsWmsLayerImpl();
-		jsWmsLayer.construct(title, mapPresenter, layerConfig, tileConfig, null);
+		jsWmsLayer.construct(title, crs, layerConfig, tileConfig, null);
 
 		return  jsWmsLayer;
-
 	}
 
 	/**
 	 * Private construct function for {@link JsWmsLayerImpl} object.
 	 * @param title
-	 * @param mapPresenter
 	 * @param layerConfig
 	 * @param tileConfig
 	 */
-	private void construct(String title, JsMapPresenterImpl mapPresenter, JsWmsLayerConfiguration layerConfig,
+	private void construct(String title, String crs, JsWmsLayerConfiguration layerConfig,
 						   JsTileConfiguration tileConfig, WmsLayerInfo layerInfo) {
-		layer = WmsClient.getInstance().createLayer(title, mapPresenter.getMapPresenter().getConfiguration(),
-				tileConfig.toGwt(), layerConfig.toGwt(), layerInfo);
 
+		layer = WmsClient.getInstance().createLayer(title, crs, tileConfig.toGwt(), layerConfig.toGwt(), layerInfo);
 	}
 
 	/**
