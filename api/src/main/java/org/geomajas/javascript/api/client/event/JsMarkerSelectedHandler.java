@@ -18,7 +18,7 @@ import org.timepedia.exporter.client.ExportClosure;
 import org.timepedia.exporter.client.Exportable;
 
 /**
- * Handler for catching events that indicate a widget was deselected.
+ * Handler for catching events that indicate a widget was selected.
  *
  * @author Youri Flement
  * @since 1.0.0
@@ -27,13 +27,13 @@ import org.timepedia.exporter.client.Exportable;
 @ExportClosure
 @Api(allMethods = true)
 @UserImplemented
-public interface JsImageWidgetDeselectedHandler extends JsHandler, Exportable {
+public interface JsMarkerSelectedHandler extends JsHandler, Exportable {
 
 	/**
-	 * Called when a widget was deselected.
+	 * Called when a widget was selected.
 	 *
 	 * @param jsWidgetEvent The event.
 	 */
-	void onWidgetDeselected(JsImageWidgetDeselectedEvent jsWidgetEvent);
+	void onWidgetSelected(JsMarkerSelectedEvent jsWidgetEvent);
 
 }

@@ -100,5 +100,5 @@ public interface JsTransformableWidgetContainer extends Exportable, JsTransforma
 	 *
 	 * @param widget The image widget.
 	 */
-	void addImageWidget(JsImageWidget widget);
+	void addMarker(JsMarker widget);
 }

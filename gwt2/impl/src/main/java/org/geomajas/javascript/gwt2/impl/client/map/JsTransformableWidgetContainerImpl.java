@@ -14,7 +14,7 @@ package org.geomajas.javascript.gwt2.impl.client.map;
 import com.google.gwt.user.client.ui.Widget;
 import org.geomajas.gwt2.client.gfx.TransformableWidget;
 import org.geomajas.gwt2.client.gfx.TransformableWidgetContainer;
-import org.geomajas.javascript.api.client.map.JsImageWidget;
+import org.geomajas.javascript.api.client.map.JsMarker;
 import org.geomajas.javascript.api.client.map.JsTransformableWidget;
 import org.geomajas.javascript.api.client.map.JsTransformableWidgetContainer;
 import org.timepedia.exporter.client.Export;
@@ -116,7 +116,7 @@ public class JsTransformableWidgetContainerImpl implements JsTransformableWidget
 	}
 
 	@Override
-	public void addImageWidget(JsImageWidget widget) {
+	public void addMarker(JsMarker widget) {
 		transformableWidgetContainer.add(widget);
 	}
 

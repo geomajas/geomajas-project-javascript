@@ -11,6 +11,7 @@
 
 package org.geomajas.javascript.gwt2.impl.client.map;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -18,14 +19,16 @@ import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.IsWidget;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt2.client.gfx.AbstractTransformableWidget;
-import org.geomajas.javascript.api.client.event.JsImageWidgetDeselectedEvent;
-import org.geomajas.javascript.api.client.event.JsImageWidgetDeselectedHandler;
-import org.geomajas.javascript.api.client.event.JsImageWidgetSelectedEvent;
-import org.geomajas.javascript.api.client.event.JsImageWidgetSelectedHandler;
-import org.geomajas.javascript.api.client.map.JsImageWidget;
+import org.geomajas.javascript.api.client.event.JsMarkerDeselectedEvent;
+import org.geomajas.javascript.api.client.event.JsMarkerDeselectedHandler;
+import org.geomajas.javascript.api.client.event.JsMarkerSelectedEvent;
+import org.geomajas.javascript.api.client.event.JsMarkerSelectedHandler;
+import org.geomajas.javascript.api.client.map.JsMarker;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
 import org.timepedia.exporter.client.ExportOverlay;
@@ -36,36 +39,33 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Implementation of a {@link JsImageWidget}.
+ * Implementation of a {@link org.geomajas.javascript.api.client.map.JsMarker}.
  *
  * @author Youri Flement
+ * @author Dosi Bingov
  */
-@Export("ImageWidget")
+@Export("Marker")
 @ExportPackage("gm")
-public class JsImageWidgetImpl extends AbstractTransformableWidget
-		implements JsImageWidget, Exportable, ExportOverlay<JsImageWidgetImpl>, MouseDownHandler,
+public class JsMarkerImpl extends AbstractTransformableWidget
+		implements JsMarker, Exportable, ExportOverlay<JsMarkerImpl>, MouseDownHandler,
 		MouseUpHandler {
 
 	private int anchorX;
 
 	private int anchorY;
 
-	private Collection<JsImageWidgetSelectedHandler> selectedHandlers;
+	private Collection<JsMarkerSelectedHandler> selectedHandlers;
 
-	private Collection<JsImageWidgetDeselectedHandler> deselectedHandlers;
+	private Collection<JsMarkerDeselectedHandler> deselectedHandlers;
 
-	public JsImageWidgetImpl() {
-		this("", 0, 0);
-	}
-
-	public JsImageWidgetImpl(String url, int anchorX, int anchorY) {
-		super(new Image(url), 0, 0);
+	protected JsMarkerImpl(IsWidget panel, int anchorX, int anchorY) {
+		super(panel, 0, 0);
 		this.anchorX = anchorX;
 		this.anchorY = anchorY;
 		asWidget().getElement().getStyle().setPosition(Position.ABSOLUTE);
 
-		selectedHandlers = new ArrayList<JsImageWidgetSelectedHandler>();
-		deselectedHandlers = new ArrayList<JsImageWidgetDeselectedHandler>();
+		selectedHandlers = new ArrayList<JsMarkerSelectedHandler>();
+		deselectedHandlers = new ArrayList<JsMarkerDeselectedHandler>();
 
 		// Add handlers to the widget that will fire events when the widget is clicked or released:
 		asWidget().addDomHandler(this, MouseDownEvent.getType());
@@ -73,29 +73,43 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 	}
 
 	/**
+	 * Create a new transformable marker widget.
+	 *
+	 * @param element html dom object created in javascript.
+	 * @param anchorX The x-coordinate of the anchor of the marker.
+	 * @param anchorY The y-coordinate of the anchor of the marker.
+	 * @return A new marker widget.
+	 */
+	@ExportConstructor
+	public static JsMarkerImpl constructor(Element element, int anchorX, int anchorY) {
+		JsMarkerImpl marker = new JsMarkerImpl(new HTMLPanel(element.getString()), anchorX, anchorY);
+		return marker;
+	}
+
+	/**
 	 * Create a new transformable image widget.
 	 *
 	 * @param url     The URL to the image.
-	 * @param x       The x-coordinate of the image.
-	 * @param y       The y-coordinate of the image.
-	 * @param anchorX The x-coordinate of the anchor of the image.
-	 * @param anchorY The y-coordinate of the anchor of the image.
-	 * @return A new image widget.
+	 * @param coordinate The x-coordinate and the y-coordinate of the marker.
+	 * @param anchorX The x-coordinate of the anchor of the marker.
+	 * @param anchorY The y-coordinate of the anchor of the marker.
+	 * @return A new marker widget.
 	 */
 	@ExportConstructor
-	public static JsImageWidgetImpl constructor(String url, double x, double y, int anchorX, int anchorY) {
-		JsImageWidgetImpl imageWidget = new JsImageWidgetImpl(url, anchorX, anchorY);
-		imageWidget.setCoordinate(new Coordinate(x, y));
-		return imageWidget;
+	public static JsMarkerImpl constructor(String url, Coordinate coordinate, int anchorX, int anchorY) {
+		JsMarkerImpl marker = new JsMarkerImpl(new Image(url), anchorX, anchorY);
+		marker.setCoordinate(coordinate);
+		return marker;
 	}
 
+
 	@Override
-	public void addWidgetSelectedHandler(JsImageWidgetSelectedHandler handler) {
+	public void addWidgetSelectedHandler(JsMarkerSelectedHandler handler) {
 		selectedHandlers.add(handler);
 	}
 
 	@Override
-	public void addWidgetDeselectedHandler(JsImageWidgetDeselectedHandler handler) {
+	public void addWidgetDeselectedHandler(JsMarkerDeselectedHandler handler) {
 		deselectedHandlers.add(handler);
 	}
 
@@ -110,6 +124,27 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 	}
 
 	@Override
+	public void select() {
+		// Notify the handlers:
+		for (JsMarkerSelectedHandler handler : selectedHandlers) {
+			handler.onWidgetSelected(new JsMarkerSelectedEvent(this));
+		}
+	}
+
+	@Override
+	public void deselect() {
+		// Notify handlers:
+		for (JsMarkerDeselectedHandler handler : deselectedHandlers) {
+			handler.onWidgetDeselected(new JsMarkerDeselectedEvent(this));
+		}
+	}
+
+	@Override
+	public Element getElement() {
+		return asWidget().getElement();
+	}
+
+	@Override
 	public void setScreenPosition(double left, double top) {
 		asWidget().getElement().getStyle().setLeft(left - anchorX, Unit.PX);
 		asWidget().getElement().getStyle().setTop(top - anchorY, Unit.PX);
@@ -119,21 +154,15 @@ public class JsImageWidgetImpl extends AbstractTransformableWidget
 	public void onMouseDown(MouseDownEvent event) {
 		// Put the widget to the bottom so the (possible) mouse move events are not lost on a 'higher' widget:
 		DOM.appendChild(asWidget().getParent().getElement(), asWidget().getElement());
+		select();
 
-		// Notify the handlers:
-		for (JsImageWidgetSelectedHandler handler : selectedHandlers) {
-			handler.onWidgetSelected(new JsImageWidgetSelectedEvent(this, event));
-		}
 		event.preventDefault();
 		event.stopPropagation();
 	}
 
 	@Override
 	public void onMouseUp(MouseUpEvent event) {
-		// Notify handlers:
-		for (JsImageWidgetDeselectedHandler handler : deselectedHandlers) {
-			handler.onWidgetDeselected(new JsImageWidgetDeselectedEvent(this, event));
-		}
+		deselect();
 		event.preventDefault();
 	}
 
