@@ -91,7 +91,12 @@ public class JsMapConfigurationImpl implements JsMapConfiguration, Exportable {
 	public void setMinimumResolution(double minimumResolution) {
 		mapConfiguration.setMinimumResolution(minimumResolution);
 	}
-	
+
+	@Override
+	public void setInitBounds(Bbox initBounds) {
+		mapConfiguration.setHintValue(MapConfiguration.INITIAL_BOUNDS, initBounds);
+	}
+
 	@NoExport
 	public MapConfiguration toGwt() {
 		return (MapConfiguration) mapConfiguration;

@@ -1,0 +1,78 @@
+<html>
+<!--
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+		<title>Geomajas Javascript API Showcase</title>
+		<link type="text/css" rel="stylesheet" href="geomajas.css" />
+
+		<script type="text/javascript" language="javascript" src="../clientOnly/clientOnly.nocache.js"></script>
+
+		<script type="text/javascript">
+			var map;
+            var TMS_BASE_URL = "https://www.milieuinfo.be/orthos/";
+            var crs = "EPSG:31370"; //Belgium
+            var layerResolutions = [512.000, 256.000, 128.000, 64.000, 32.000, 16.000, 8.000, 4.000, 2.000, 1.000, 0.500, 0.250];
+
+			function onGeomajasLoad() {
+               var mapConfig = new gm.MapConfiguration();
+               mapConfig.setCrs(crs, "DEGREES");
+               mapConfig.setResolutions(layerResolutions);
+               mapConfig.setMaxBounds(new gm.Bbox(20000.000000, 143000.000000, 237000.000000, 92000.000000));
+               mapConfig.setInitBounds(new gm.Bbox(25000.000000, 145000.000000, 50000.000000, 60000.000000));
+
+               // will create and initialize the map with given map configuration
+               map = new gm.Map("js-map-element", mapConfig);
+               init();
+			}
+
+            function init() {
+                var tileConfig = new gm.layer.TileConfiguration(256, 256, new gm.Coordinate(13000.0, 162999.75),
+                        map.getViewPort());
+                var layerConfig = new gm.TmsLayerConfiguration();
+                layerConfig.setBaseUrl(TMS_BASE_URL);
+                layerConfig.setFileExtension(".jpg");
+
+                // Now create a TMS layer and add it to the map:
+                var tmsLayer = new gm.TmsLayer("tms-vlaanderen", layerConfig, tileConfig);
+                map.getLayersModel().addLayer(tmsLayer);
+
+               // map.getViewPort().applyBounds(new gm.Bbox(100000.000000, 80000.000000, 200000.000000, 75000.000000));
+            }
+
+		</script>
+	</head>
+
+	<body>
+		<div class="titleBar">
+			<div class="title">Geomajas JavaScript API test</div>
+			<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
+		</div>
+		<div>
+			<table cellspacing="0" cellpadding="5">
+				<tr>
+					<td style="width:640px;">
+                        <div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
+							<!-- on load, the map is attached here -->
+						</div>
+					</td>
+
+					<td valign="top">
+						<h2>Basic TMS example</h2>
+						In this example we add TMS layer that is configured and created client side.
+                    </td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>

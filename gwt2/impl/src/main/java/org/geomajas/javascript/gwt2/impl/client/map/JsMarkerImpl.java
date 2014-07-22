@@ -75,7 +75,7 @@ public class JsMarkerImpl extends AbstractTransformableWidget
 	/**
 	 * Create a new transformable marker widget.
 	 *
-	 * @param element html dom object created in javascript.
+	 * @param element dom element object.
 	 * @param anchorX The x-coordinate of the anchor of the marker.
 	 * @param anchorY The y-coordinate of the anchor of the marker.
 	 * @return A new marker widget.
