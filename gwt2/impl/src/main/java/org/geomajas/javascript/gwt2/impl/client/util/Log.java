@@ -27,8 +27,7 @@ public final class Log {
 	 * @param message
 	 */
 	public static native void log(String message)  /*-{
-		if (this.@org.geomajas.javascript.gwt2.impl.client.util.Log::isConsoleAvailable()) {
-			// console is available
+		if (@org.geomajas.javascript.gwt2.impl.client.util.Log::isConsoleAvailable()) {
 			console.log(message);
 		}
 	}-*/;
@@ -39,8 +38,7 @@ public final class Log {
 	 * @param message
 	 */
 	public static native void error(String message)  /*-{
-		if (this.@org.geomajas.javascript.gwt2.impl.client.util.Log::isConsoleAvailable()) {
-			// console is available
+		if (@org.geomajas.javascript.gwt2.impl.client.util.Log::isConsoleAvailable()) {
 			console.error(message);
 		}
 	}-*/;

@@ -25,6 +25,7 @@
 	<set-property name="gwt.logging.consoleHandler" value="ENABLED"/>-->
 
 	<set-property name="export" value="yes"/>
-    <collapse-all-properties />
-    <add-linker name="sso" />
+   <!-- uncomment to compile one javascript .cache.js file-->
+  <!--  <collapse-all-properties />
+    <add-linker name="sso" />-->
 </module>
