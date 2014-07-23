@@ -13,8 +13,10 @@ package org.geomajas.javascript.gwt2.impl.client.map;
 import org.geomajas.geometry.Bbox;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt2.client.map.ViewPort;
+import org.geomajas.gwt2.client.map.ZoomOption;
 import org.geomajas.javascript.api.client.map.JsViewPort;
 import org.geomajas.javascript.api.client.map.JsViewPortTransformationService;
+import org.geomajas.javascript.gwt2.impl.client.util.Log;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
@@ -37,7 +39,7 @@ public class JsViewPortImpl implements JsViewPort, Exportable {
 	/**
 	 * Create a new ViewPort.
 	 *
-	 * @param viewPort The ViewPort behind a map in the GWT face.
+	 * @param viewPort The ViewPort behind a map in gwt2.
 	 */
 	public JsViewPortImpl(ViewPort viewPort) {
 		this.viewPort = viewPort;
@@ -76,6 +78,19 @@ public class JsViewPortImpl implements JsViewPort, Exportable {
 	@Override
 	public void applyBounds(Bbox bounds) {
 		viewPort.applyBounds(bounds);
+	}
+
+	@Override
+	public void applyBounds(Bbox bounds, String zoomOption) {
+		if ("free".equalsIgnoreCase(zoomOption)) {
+			viewPort.applyBounds(bounds, ZoomOption.FREE);
+		} else if ("level_fit".equalsIgnoreCase(zoomOption)) {
+			viewPort.applyBounds(bounds, ZoomOption.LEVEL_FIT);
+		} else if ("level_closest".equalsIgnoreCase(zoomOption)) {
+			viewPort.applyBounds(bounds, ZoomOption.LEVEL_CLOSEST);
+		} else {
+			Log.error("invalid zoomOption argument for applyBounds");
+		}
 	}
 
 	@Override

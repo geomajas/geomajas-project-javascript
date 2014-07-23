@@ -66,5 +66,7 @@ public final class Examples {
 		EXAMPLES.add(new Example("Adding map markers", "In this example we show that a map marker can be added"
 				+ " on the map. The markers can also be dragged.",
 				"examples/marker.html"));
+		EXAMPLES.add(new Example("Basic TMS layer", "This example shows how to create a new map and add a TMS " +
+				"layer to it without using the Geomajas server.", "examples/client_tms_layer.html"));
 	};
 }

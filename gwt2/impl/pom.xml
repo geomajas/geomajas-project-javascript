@@ -24,7 +24,7 @@
 	<description>Geomajas Project JavaScript GWT2 - Implementation</description>
 
 	<dependencies>
-		<!-- Geomajas dependencies -->
+		<!-- Geomajas dependeNncies -->
 		<dependency>
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-client-gwt2-impl</artifactId>
@@ -34,10 +34,16 @@
 			<artifactId>geomajas-project-javascript-api</artifactId>
 		</dependency>
 
-        <!-- Geomajas wms plugin dependency -->
+        <!-- Geomajas wms plugin dependency (client) -->
         <dependency>
             <groupId>org.geomajas.plugin</groupId>
             <artifactId>geomajas-client-gwt2-plugin-wms</artifactId>
+        </dependency>
+
+        <!-- Geomajas tms plugin dependency (client) -->
+        <dependency>
+            <groupId>org.geomajas.plugin</groupId>
+            <artifactId>geomajas-client-gwt2-plugin-tms</artifactId>
         </dependency>
 
 		<dependency>

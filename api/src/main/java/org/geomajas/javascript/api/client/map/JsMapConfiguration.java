@@ -102,4 +102,12 @@ public interface JsMapConfiguration extends Exportable {
 	 * @param minimumResolution The minimum resolution (unit/pixel).
 	 */
 	void setMinimumResolution(double minimumResolution);
+
+	/**
+	 * That determines the initial extent of the map. This is the extent shown when the map is first
+	 * loaded. If no initial bounds is set, the map will take the maximum bounds as initial bounds.  Do not change this
+	 * value once the map has been initialized.
+	 * @param initBounds the initial bounds of the map.
+	 */
+	void setInitBounds(Bbox initBounds);
 }

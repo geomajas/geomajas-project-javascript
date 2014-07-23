@@ -74,6 +74,18 @@ public interface JsViewPort extends Exportable {
 	 */
 	void applyBounds(Bbox bounds);
 
+
+	/**
+	 * <p> Change the view on the map by applying a bounding box (world coordinates!). Since the width/height ratio of
+	 * the bounding box may differ from that of the map, the fit is "as good as possible". </p> <p> Also this function
+	 * will almost certainly change the scale on the map, so if there have been resolutions defined, it will snap to
+	 * them. </p>
+	 *
+	 * @param bounds     A bounding box in world coordinates that determines the view from now on.
+	 * @param zoomOption The way in which to zoom (3 options available LEVEL_FIT, FREE, LEVEL_CLOSEST).
+	 */
+	void applyBounds(Bbox bounds, String zoomOption);
+
 	/**
 	 * Get the maximum zooming extent that is allowed on this view port. These bounds are determined by the map
 	 * configuration.
@@ -94,5 +106,4 @@ public interface JsViewPort extends Exportable {
 	 * @return String crs
 	 */
 	String getCrs();
-
 }

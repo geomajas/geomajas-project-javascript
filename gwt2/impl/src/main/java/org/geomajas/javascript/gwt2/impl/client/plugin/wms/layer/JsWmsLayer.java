@@ -33,23 +33,23 @@ import org.timepedia.exporter.client.Exportable;
  */
 @Export("WmsLayer")
 @ExportPackage("gm")
-public final class JsWmsLayerImpl extends JsLayerImpl implements Exportable {
+public final class JsWmsLayer extends JsLayerImpl implements Exportable {
 
-	private JsWmsLayerImpl() {
+	private JsWmsLayer() {
 		super();
 	}
 
 	@ExportConstructor
-	public static JsWmsLayerImpl constructor(String title, String crs, JsWmsLayerConfiguration layerConfig,
+	public static JsWmsLayer constructor(String title, String crs, JsWmsLayerConfiguration layerConfig,
 											 JsTileConfiguration tileConfig) {
-		final JsWmsLayerImpl jsWmsLayer = new JsWmsLayerImpl();
+		final JsWmsLayer jsWmsLayer = new JsWmsLayer();
 		jsWmsLayer.construct(title, crs, layerConfig, tileConfig, null);
 
 		return  jsWmsLayer;
 	}
 
 	/**
-	 * Private construct function for {@link JsWmsLayerImpl} object.
+	 * Private construct function for {@link JsWmsLayer} object.
 	 * @param title
 	 * @param layerConfig
 	 * @param tileConfig
@@ -66,7 +66,6 @@ public final class JsWmsLayerImpl extends JsLayerImpl implements Exportable {
 	 * condition.
 	 *
 	 * @param maxBounds The maximum bounds
-	 * @since 2.1.0
 	 */
 	public void setMaxBounds(Bbox maxBounds) {
 		layer.setMaxBounds(maxBounds);
