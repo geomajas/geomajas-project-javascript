@@ -157,6 +157,11 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		}
 	}
 
+	@Override
+	public void setSize(int width, int height) {
+		mapPresenter.setSize(width, height);
+	}
+
 	public IsWidget getMapAsWidget() {
 		return mapAsWidget;
 	}

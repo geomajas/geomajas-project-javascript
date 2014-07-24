@@ -80,6 +80,16 @@ public interface JsMapPresenter extends Exportable {
 	String getParentHtmlElementId();
 
 	/**
+	 * Apply a new width and height on the map. Both parameters are expressed in pixels.
+	 *
+	 * @param width
+	 *            The new pixel width for the map.
+	 * @param height
+	 *            The new pixel height for the map.
+	 */
+	void setSize(int width, int height);
+
+	/**
 	 * Apply a new {@link org.geomajas.javascript.api.client.map.controller.JsMapController} on the map.
 	 * This controller will handle all mouse-events that are global for
 	 * the map. Only one controller can be set at any given time. When a controller is active on the map, using this
