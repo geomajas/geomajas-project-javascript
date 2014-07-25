@@ -56,6 +56,31 @@ public class JsViewPortImpl implements JsViewPort, Exportable {
 	}
 
 	@Override
+	public double getMaximumResolution() {
+		return viewPort.getMaximumResolution();
+	}
+
+	@Override
+	public double getMinimumResolution() {
+		return viewPort.getMinimumResolution();
+	}
+
+	@Override
+	public int getResolutionCount() {
+		return viewPort.getResolutionCount();
+	}
+
+	@Override
+	public double getResolution(int index) {
+		return viewPort.getResolution(index);
+	}
+
+	@Override
+	public int getResolutionIndex(double scale) {
+		return viewPort.getResolutionIndex(scale);
+	}
+
+	@Override
 	public Coordinate getPosition() {
 		return viewPort.getPosition();
 	}

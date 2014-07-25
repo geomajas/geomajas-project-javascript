@@ -25,6 +25,44 @@ import org.timepedia.exporter.client.Exportable;
 public interface JsViewPort extends Exportable {
 
 	/**
+	 * Return the maximum allowed resolution. This means minimum scale or zoom level.
+	 *
+	 * @return The maximum allowed resolution.
+	 */
+	double getMaximumResolution();
+
+	/**
+	 * Return the minimum allowed resolution. This means maximum scale or zoom level.
+	 *
+	 * @return The minimum allowed resolution.
+	 */
+	double getMinimumResolution();
+
+	/**
+	 * Get the total number of preferred fixed resolutions. These resolutions are used among others by the zooming
+	 * controls on the map.
+	 *
+	 * @return The total number of fixed zoom resolutions, or -1 if no fixed list of scales is known.
+	 */
+	int getResolutionCount();
+
+	/**
+	 * Get a preferred fixed resolution at a certain index.
+	 *
+	 * @param index The index to get a scale for. Index 0 means the maximum resolution (=zoomed out).
+	 * @return Returns the preferred resolution.
+	 */
+	double getResolution(int index);
+
+	/**
+	 * Get the index for the fixed resolution that is closest to the provided resolution.
+	 *
+	 * @param scale The resolution to request the closest fixed resolution level for.
+	 * @return Returns the fixed resolution level index.
+	 */
+	int getResolutionIndex(double scale);
+
+	/**
 	 * Get the current center position expressed in world space.
 	 *
 	 * @return The current center position expressed in world space.
