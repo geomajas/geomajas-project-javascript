@@ -19,6 +19,9 @@ import org.timepedia.exporter.client.ExportConstructor;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Javascript exportable implementation of a {@link org.geomajas.gwt2.client.map.layer.tile.TileConfiguration}.
  *
@@ -53,6 +56,27 @@ public final class JsTileConfiguration implements Exportable {
 		return  jsTileConfiguration;
 	}
 
+
+	/**
+	 * Create a new instance using, specifying all values.
+	 *
+	 * @param tileWidth  The width in pixels for image tiles.
+	 * @param tileHeight The height in pixels for image tiles.
+	 * @param tileOrigin The position in world space where tile (0,0) begins.
+	 *
+	 */
+	@ExportConstructor
+	public static JsTileConfiguration constructor(int tileWidth, int tileHeight, Coordinate tileOrigin) {
+		final JsTileConfiguration jsTileConfiguration = new JsTileConfiguration();
+		jsTileConfiguration.construct(tileWidth, tileHeight, tileOrigin);
+
+		return  jsTileConfiguration;
+	}
+
+	private void construct(int tileWidth, int tileHeight, Coordinate tileOrigin) {
+		configuration = new TileConfiguration(tileWidth, tileHeight, tileOrigin, new ArrayList<Double>());
+	}
+
 	private void construct(int tileWidth, int tileHeight, Coordinate tileOrigin, JsViewPortImpl viewPort) {
 		configuration = new TileConfiguration(tileWidth, tileHeight, tileOrigin, viewPort.toGwt());
 	}
@@ -62,7 +86,24 @@ public final class JsTileConfiguration implements Exportable {
 	 *
 	 * @return {@link TileConfiguration}
 	 */
+
+
 	public TileConfiguration toGwt() {
 		return configuration;
+	}
+
+	/**
+	 * Set the list of resolutions for this configuration object. Each should represent a tile level. Know that
+	 * resolutions passed through this method will be ordered from large values to small values (from zoom out to zoom
+	 * in).
+	 *
+	 * @param resolutions The new list of resolutions.
+	 */
+	public void setResolutions(double[] resolutions) {
+		List<Double> resList = new ArrayList<Double>();
+		for (int i = 0; i < resolutions.length; i++) {
+			resList.add(resolutions[i]);
+		}
+		configuration.setResolutions(resList);
 	}
 }
