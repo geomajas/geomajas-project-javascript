@@ -11,14 +11,14 @@
 
 package org.geomajas.javascript.gwt2.impl.client.plugin.tms.layer;
 
-import org.geomajas.plugin.tms.client.layer.TmsLayerConfiguration;
+import org.geomajas.gwt2.plugin.tms.client.layer.TmsLayerConfiguration;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
 
 /**
- * Exportable JavaScript implementation of {@link org.geomajas.plugin.tms.client.layer.TmsLayerConfiguration}.
+ * Exportable JavaScript implementation of {@link org.geomajas.gwt2.plugin.tms.client.layer.TmsLayerConfiguration}.
  *
  * @author Dosi Bingov
  * @since 1.0.0
@@ -76,7 +76,7 @@ public class JsTmsLayerConfiguration implements Exportable {
 	 * Converts {@link org.geomajas.javascript.gwt2.impl.client.plugin.tms.layer.JsTmsLayerConfiguration} to
 	 * {@link TmsLayerConfiguration}.
 	 *
-	 * @return {@link org.geomajas.plugin.wms.client.layer.WmsLayerConfiguration}
+	 * @return {@link org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration}
 	 */
 	@NoExport
 	public TmsLayerConfiguration toGwt() {
