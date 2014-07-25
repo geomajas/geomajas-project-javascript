@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -9,78 +9,120 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-	<title>Geomajas Javascript API Showcase</title>
-	<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<title>Gwt editing javascript - Showcase</title>
 
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
 	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-	<script type="text/javascript">
-
-		var map;
-		var layer;
-
-		function onGeomajasLoad() {
-			map = new gm.Map("js-map-element");
-			gm.ServerExtension.initializeMap(map, "app", "mapMain");
-		}
-
-		function createException() {
-
-			var log = document.getElementById("log");
-
-			try {
-
-				layer = map.getLayersModel().getLayer("clientLayerFake");
-				log.innerHTML += "LayerId: " + layer.getId() + "</br>";
-
-			}
-			catch(err) {
-
-				log.innerHTML += "ClientLayerFake not found!</br>";
-
-			}
-
-		}
-
-		function cleanup(){
-			var log = document.getElementById("log");
-			log.innerHTML = "<h4>The exception will be logged here:</h4>";
-		}
-	</script>
 </head>
 
 <body>
-	<div class="titleBar">
-		<div class="title">Geomajas JavaScript API test</div>
-		<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-	</div>
-	<div>
-		<table cellspacing="0" cellpadding="5">
-			<tr>
-				<td style="width: 640px;">
-					<div id="js-map-element" style="width: 640px; height: 480px; border: 1px solid #337428;">
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Create server exception</h3>
+			<h4>
+				In this example the server throws an exception when requesting a layer that does not exist.<br>
+				This is caught in JavaScript and an exception is logged in HTML.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="createException">
+					<a href="#">Create exception</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
 						<!-- on load, the map is attached here -->
 					</div>
-				</td>
-				<td valign="top">
-					<h2>Catch Server Exceptions</h2>
 
-					<h4>Create server exception</h4>
+				</div>
 
-					In this example we are requesting a layer that does not exist just to be able to catch the
-					exception in JavaScript. This exception is then logged in the HTML page.<br>
+				<div class="column one_half">
 
-					<button onclick="createException()">Execute!</button>
-					<button onclick="cleanup()">Cleanup</button>
-					<div id=log><h4>The exception will be logged here:</h4></div>
-				</td>
-			</tr>
-		</table>
-	</div>
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+	var layer;
+
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+	}
+
+	function createException() {
+
+		try {
+
+			layer = map.getLayersModel().getLayer("clientLayerFake");
+			log("LayerId: " + layer.getId());
+		}
+		catch (err) {
+
+			log("ClientLayerFake not found!");
+
+		}
+
+	}
+
+	function log(txt) {
+		while ($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt + "</li>");
+	}
+
+	$('#createException').click(function () {
+		$('.filter li').removeClass('active');
+		createException();
+	});
+
+</script>
+
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -9,109 +9,169 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-	<title>Geomajas Javascript API Showcase</title>
-	<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<title>Gwt editing javascript - Showcase</title>
 
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
 	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-	<script type="text/javascript">
-		var map;
-        var featureSearchService;
-
-		function onGeomajasLoad() {
-			map = new gm.Map("js-map-element");
-			gm.ServerExtension.initializeMap(map, "app", "mapMain");
-            featureSearchService = new gm.feature.FeatureSearchService(map);
-		}
-
-		function searchById(id) {
-			var element = document.getElementById('log');
-			element.innerHTML = "Searching...";
-
-			//var layer = map.getLayersModel().getLayerAtIndex(1); // Get the countries layer
-			var layer = map.getLayersModel().getLayer("clientLayerCountries");
-
-            featureSearchService.searchById(layer, [id], function(featureHolder){
-				if (featureHolder == null) {
-					element.innerHTML = "Feature could not be found.";
-				} else {
-					element.innerHTML = "ID = " + id + "<br>Label: " + featureHolder.getFeatures()[0].getLabel();
-				}
-			});
-		}
-
-		function search() {
-			var element = document.getElementById('log');
-			element.innerHTML = "Searching...";
-
-			//var layer = map.getLayersModel().getLayerAtIndex(1); // Get the countries layer
-			var layer = map.getLayersModel().getLayer("clientLayerCountries");
-			var bounds = map.getViewPort().getBounds(); // Get the current map bounds
-
-            featureSearchService.searchInBounds(layer, bounds, function(features) {
-				if (features == null) {
-					element.innerHTML = "No features found.";
-				} else {
- 					element.innerHTML = "Found " + features.getFeatures().length + " features:<br>";
-					for (var i=0; i < features.getFeatures().length; i++) {
-						var feature = features.getFeatures()[i];
-						element.innerHTML += "<br>" + feature.getId() + " = " + feature.getLabel();
-					}
-				}
-			});
-		}
-
-		function listMethods(myObject) {
-			var element = document.getElementById('log');
-			element.innerHTML += "Properties for " + myObject;
-			for ( var property in myObject) {
-				element.innerHTML += "<br>Property: "+ property;
-			}
-		}
-	</script>
 </head>
 
 <body>
-	<div class="titleBar">
-		<div class="title">Geomajas JavaScript API test</div>
-		<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-	</div>
-	<div>
-		<table cellspacing="0" cellpadding="5">
-			<tr>
-				<td style="width: 640px;" valign="top">
-					<div id="js-map-element" style="width: 640px; height: 480px; border: 1px solid #337428;">
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Search features</h3>
+			<h4>
+				This example demonstrates searching for features on the countries vector layer.<br>
+				"Search all" displays all features within the current map bounds. Also search by id
+				"110m_admin_0_countries.13" is included.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="searchById">
+					<a href="#">Search for single feature by ID</a>
+				</li>
+				<li id="searchAll">
+					<a href="#">Search all</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
 						<!-- on load, the map is attached here -->
 					</div>
-				</td>
 
-				<td valign="top">
-					<h2>Search features</h2>
-					<p>
-						This examples demonstrates searching for features. All search requests in this example
-						occur on the countries vector layer.
-					</p>
+				</div>
 
-					<h4>Search by ID</h4>
-					Search for a single feature by ID:<br>
-					<button onclick="searchById('110m_admin_0_countries.13')">Search</button>
+				<div class="column one_half">
 
-					<h4>Search by bounds</h4>
-					Use the current map bounds to search for features:<br>
-					<button onclick="search()">Search</button>
+					<h4>Log:</h4>
+					<ul id="log"></ul>
 
-					<h4>Search results:</h4>
-					<div id="log" style="border: 1px solid #337428; margin-top: 15px; padding: 3px 5px;">
-						Search results will be shown here.
-					</div>
-				</td>
-			</tr>
-		</table>
-	</div>
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+	var featureSearchService;
+
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+		featureSearchService = new gm.feature.FeatureSearchService(map);
+	}
+
+	function searchById(id) {
+
+		//var layer = map.getLayersModel().getLayerAtIndex(1); // Get the countries layer
+		var layer = map.getLayersModel().getLayer("clientLayerCountries");
+
+		featureSearchService.searchById(layer, [id], function(featureHolder){
+			if (featureHolder == null) {
+				log(
+						"Feature could not be found."
+				);
+			} else {
+				log(
+						"ID = " + id + "<br>Label: " + featureHolder.getFeatures()[0].getLabel()
+				);
+			}
+		});
+	}
+
+	function search() {
+
+		//var layer = map.getLayersModel().getLayerAtIndex(1); // Get the countries layer
+		var layer = map.getLayersModel().getLayer("clientLayerCountries");
+		var bounds = map.getViewPort().getBounds(); // Get the current map bounds
+
+		featureSearchService.searchInBounds(layer, bounds, function(features) {
+			if (features == null) {
+				log(
+								"No features found!"
+				);
+			} else {
+				for (var i=0; i < features.getFeatures().length; i++) {
+					var feature = features.getFeatures()[i];
+					log(
+									feature.getId() + " = " + feature.getLabel()
+					);
+				}
+				log(
+								"<strong>" + features.getFeatures().length + " features where found.</strong>"
+				);
+			}
+		});
+	}
+
+	function listMethods(myObject) {
+		log(
+						"<strong>Properties for " + myObject + "</strong>"
+		);
+		for ( var property in myObject) {
+			log(
+							"Property: "+ property
+			);
+		}
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#searchById').click(function() {
+		$('.filter li').removeClass('active');
+		searchById('110m_admin_0_countries.13');
+	});
+
+	$('#searchAll').click(function() {
+		$('.filter li').removeClass('active');
+		search();
+	});
+
+</script>
+
 </body>
 
 </html>

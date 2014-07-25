@@ -1,134 +1,184 @@
-<html>
-	<!--
-	  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
-	  ~
-	  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
-	  ~
-	  ~ The program is available in open source according to the GNU Affero
-	  ~ General Public License. All contributions in this program are covered
-	  ~ by the Geomajas Contributors License Agreement. For full licensing
-	  ~ details, see LICENSE.txt in the project root.
-	-->
-	<head>
-		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<!DOCTYPE html>
+<!--
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-		<title>Geomajas Javascript API Showcase</title>
-		<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<title>Gwt editing javascript - Showcase</title>
 
-		<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
 
-		<script type="text/javascript">
-			var map;
-            var osmLayer;
-            var osmId = 'clientLayerOsm';
-            var countriesLayer;
-            var countriesId = 'clientLayerCountries';
-	
-			function onGeomajasLoad() {
-			    // do nothing
-			}
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
 
-			function createAndInitializeMap() {
-                // clear the parent tag
-                document.getElementById("js-map-element").innerHTML = "";
+	<script src="../js/jquery.modernizr.min.js"></script>
 
-                // Create the map:
-                map = new gm.Map("js-map-element");
-                // register handlers
-                map.getEventBus().addLayerAddedHandler(function(event) {
-                    displayLayerAddedEvent(event);
-                });
-                map.getEventBus().addLayerRemovedHandler(function(event) {
-                    displayLayerRemovedEvent(event);
-                });
-                map.getEventBus().addMapInitializationHandler(function(event) {
-                    displayMapInitialization(event);
-                });
-                gm.ServerExtension.initializeMap(map, "app", "mapMain");
-			}
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-			function clearLogging() {
-                document.getElementById("log").innerHTML = "";
-			}
+</head>
 
-            function displayLayerAddedEvent(event) {
-                var log = document.getElementById("log");
-                log.innerHTML += "LayerAddedEvent fired. Added layer: " + event.getAddedLayer().getTitle() +
-                        ". Currently " +
-                        map.getLayersModel().getLayerCount() + " layers<br>";
-            }
+<body>
 
-            function displayLayerRemovedEvent(event) {
-                var log = document.getElementById("log");
-                log.innerHTML += "LayerRemovedEvent fired. Removed layer: " + event.getRemovedLayer().getTitle() +
-                        ". Currently " + map.getLayersModel().getLayerCount() + " layers<br>";
-            }
+<div id="page">
 
-            function displayMapInitialization(event) {
-                var log = document.getElementById("log");
-                log.innerHTML += "Event MapInitialization fired<br>";
-                osmLayer = map.getLayersModel().getLayer(osmId);
-                countriesLayer = map.getLayersModel().getLayer(countriesId);
-            }
+	<header id="header" class="wrapper">
 
-            function toggleAddRemove(layer) {
-                var layerId = layer.getId();
-                var layerIndex = map.getLayersModel().getLayerPosition(layer);
-                if (layerIndex < 0) {
-                    // layer not in layersModel => add
-                    map.getLayersModel().addLayer(layer);
-                    if (layerId == osmId) {
-                        document.getElementById("osmButtonSpan").innerHTML = 'Remove';
-                    } else if (layerId == countriesId) {
-                        document.getElementById("countriesButtonSpan").innerHTML = 'Remove';
-                    }
-                } else {
-                    // layer in layersModel => remove
-                    map.getLayersModel().removeLayer(layerId);
-                    if (layerId == osmId) {
-                        document.getElementById("osmButtonSpan").innerHTML = 'Add';
-                    } else if (layerId == countriesId) {
-                        document.getElementById("countriesButtonSpan").innerHTML = 'Add';
-                    }
-                }
-            }
-		</script>
-	</head>
-
-	<body>
-		<div class="titleBar">
-			<div class="title">Geomajas JavaScript API test</div>
-			<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
+		<div class="header_tagline">
+			<h3>Basic map & layer events</h3>
+			<h4>
+				This example shows the events that are fired when initializing the map and toggling layers.<br>
+				First initialize the map; then toggle the layers.
+			</h4>
 		</div>
-		<div>
-			<table cellspacing="0" cellpadding="5">
-				<tr>
-					<td style="width: 640px;">
-						<div id="js-map-element" style="width: 640px; height: 480px; border: 1px solid #337428;">
-							<!-- on load, the map is attached here -->
-						</div>
-					</td>
-					<td valign="top">
-						<h2>Basic map and layer events</h2>
 
-						<p>
-							When the Geomajas map is initialized, the map is build in a number of steps.
-                            E.g. a request is sent to the server to ask for the map's configuration.
-                            The layers are added one by one to the map.<br>
-                            This example shows the events that are fired and how to listen to these events.
-                            First, create and initialize the map; the remove or add the layers.
-						</p>
-                        <button onclick="createAndInitializeMap()">Create And Initialize Map</button><br>
-                        <button onclick="toggleAddRemove(osmLayer)"><span id="osmButtonSpan">Remove</span> Osm layer</button>
-                        <button onclick="toggleAddRemove(countriesLayer)"><span id="countriesButtonSpan">Remove</span> countries layer</button>
+	</header>
 
-						<h4>Event logging <button onclick="clearLogging()">Clear logging</button></h4>
-						<div id="log"></div>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</body>
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="create">
+					<a href="#">create and initialize the map</a>
+				</li>
+				<li id="toggleOsm">
+					<a href="#">toggle Osm layer</a>
+				</li>
+				<li id="toggleCountries">
+					<a href="#">toggle Countries layer</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
+						<!-- on load, the map is attached here -->
+					</div>
+
+				</div>
+
+				<div class="column one_half">
+
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+	var osmLayer;
+	var osmId = 'clientLayerOsm';
+	var countriesLayer;
+	var countriesId = 'clientLayerCountries';
+
+	function onGeomajasLoad() {
+		// do nothing
+	}
+
+	function createAndInitializeMap() {
+		// clear the parent tag
+		document.getElementById("js-map-element").innerHTML = "";
+
+		// Create the map:
+		map = new gm.Map("js-map-element");
+		// register handlers
+		map.getEventBus().addLayerAddedHandler(function(event) {
+			displayLayerAddedEvent(event);
+		});
+		map.getEventBus().addLayerRemovedHandler(function(event) {
+			displayLayerRemovedEvent(event);
+		});
+		map.getEventBus().addMapInitializationHandler(function(event) {
+			displayMapInitialization(event);
+		});
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+	}
+
+	function displayLayerAddedEvent(event) {
+		log(
+			"<strong>LayerAddedEvent fired. Added layer: </strong>" +  event.getAddedLayer().getTitle() + "<br>" +
+			"<strong>Currently: </strong>" +  map.getLayersModel().getLayerCount() + " layers<br>"
+		);
+	}
+
+	function displayLayerRemovedEvent(event) {
+		log(
+			"<strong>LayerRemovedEvent fired. Removed layer: </strong>" +  event.getRemovedLayer().getTitle() + "<br>" +
+			"<strong>Currently: </strong>" +  map.getLayersModel().getLayerCount() + " layers<br>"
+		);
+	}
+
+	function displayMapInitialization(event) {
+		osmLayer = map.getLayersModel().getLayer(osmId);
+		countriesLayer = map.getLayersModel().getLayer(countriesId);
+		log(
+				"<strong>Event MapInitialization fired</strong><br>"
+		);
+	}
+
+	function toggleAddRemove(layer) {
+		var layerId = layer.getId();
+		var layerIndex = map.getLayersModel().getLayerPosition(layer);
+		if (layerIndex < 0) {
+			// layer not in layersModel => add
+			map.getLayersModel().addLayer(layer);
+		} else {
+			// layer in layersModel => remove
+			map.getLayersModel().removeLayer(layerId);
+		}
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#create').click(function() {
+		$('.filter li').removeClass('active');
+		createAndInitializeMap();
+	});
+
+	$('#toggleOsm').click(function() {
+		$('.filter li').removeClass('active');
+		toggleAddRemove(osmLayer);
+	});
+
+	$('#toggleCountries').click(function() {
+		$('.filter li').removeClass('active');
+		toggleAddRemove(countriesLayer);
+	});
+
+</script>
+
+</body>
 
 </html>

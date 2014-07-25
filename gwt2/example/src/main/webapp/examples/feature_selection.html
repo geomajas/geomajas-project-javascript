@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -9,84 +9,164 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
-	<head>
-		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-		<title>Geomajas Javascript API Showcase</title>
-		<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<title>Gwt editing javascript - Showcase</title>
 
-		<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
 
-		<script type="text/javascript">
-			var map;
-            var featureSearchService;
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
 
-			function onGeomajasLoad() {
-				map = new gm.Map("js-map-element");
-				gm.ServerExtension.initializeMap(map, "app", "mapMain");
-                featureSearchService = new gm.feature.FeatureSearchService(map);
-			}
+	<script src="../js/jquery.modernizr.min.js"></script>
 
-			function selectFeature(id) {
-                var layer = map.getLayersModel().getLayer("clientLayerCountries");
-				var selected = eval(layer.isFeatureSelected(id).toString());
-				if (!selected) {
-					featureSearchService.searchById(layer, [id], function(featureHolder) {
-						layer.selectFeature(featureHolder.getFeatures()[0]);
-					});
-				}
-			}
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-			function deselectAll() {
-				var layer = map.getLayersModel().getLayer("clientLayerCountries");
-				layer.clearSelectedFeatures();
-			}
+</head>
 
-			function isFeatureSelected(id) {
-				var layer = map.getLayersModel().getLayer("clientLayerCountries");
-				var selected = eval(layer.isFeatureSelected(id).toString()); // Boolean to boolean conversion...
-				if (selected) {
-					alert("Yes! Feature with ID: " + id + ", is selected");
-				} else {
-					alert("No! Feature with ID: " + id + ", is not selected");
-				}
-			}
-		</script>
-	</head>
+<body>
 
-	<body>
-		<div class="titleBar">
-			<div class="title">Geomajas JavaScript API test</div>
-			<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Feature selection</h3>
+			<h4>
+				In this example features are selected / deselected from within the JavaScript environment.<br>
+				Note that the map automatically updates to display the selection.
+			</h4>
 		</div>
-		<div>
-			<table cellspacing="0" cellpadding="5">
-				<tr>
-					<td style="width:640px;">
-						<div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
-							<!-- on load, the map is attached here -->
-						</div>
-					</td>
-					<td valign="top">
-						<h2>Feature selection example</h2>
-						In this example we select and deselect features from within the JavaScript environment. The
-						idea is that the map automatically updates itself to display the selection.
 
-						<h4>Select features by ID</h4>
-						<button onclick="selectFeature('110m_admin_0_countries.42')">Select Germany</button><br>
-						<button onclick="selectFeature('110m_admin_0_countries.56')">Select France</button>
+	</header>
 
-						<h4>Deselect all features</h4>
-						<button onclick="deselectAll()">Deselect all</button>
+	<section id="main">
 
-						<h4>Ask current selection state</h4>
-						Is a certain feature select or not? Let's ask:<br>
-						<button onclick="isFeatureSelected('110m_admin_0_countries.42')">Is Germany selected?</button><br>
-						<button onclick="isFeatureSelected('110m_admin_0_countries.56')">Is France selected?</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</body>
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="selectGermany">
+					<a href="#">Select Germany</a>
+				</li>
+				<li id="selectFrance">
+					<a href="#">Select France</a>
+				</li>
+				<li id="clear">
+					<a href="#">Clear selections</a>
+				</li>
+				<li id="isSelectedGermany">
+					<a href="#">Is Germany selected?</a>
+				</li>
+				<li id="isSelectedFrance">
+					<a href="#">Is France selected?</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
+						<!-- on load, the map is attached here -->
+					</div>
+
+				</div>
+
+				<div class="column one_half">
+
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+	var featureSearchService;
+
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+		featureSearchService = new gm.feature.FeatureSearchService(map);
+	}
+
+	function selectFeature(id) {
+		var layer = map.getLayersModel().getLayer("clientLayerCountries");
+		var selected = eval(layer.isFeatureSelected(id).toString());
+		if (!selected) {
+			featureSearchService.searchById(layer, [id], function(featureHolder) {
+				layer.selectFeature(featureHolder.getFeatures()[0]);
+			});
+		}
+	}
+
+	function deselectAll() {
+		var layer = map.getLayersModel().getLayer("clientLayerCountries");
+		layer.clearSelectedFeatures();
+		log("Features cleared.");
+	}
+
+	function isFeatureSelected(id) {
+		var layer = map.getLayersModel().getLayer("clientLayerCountries");
+		var selected = eval(layer.isFeatureSelected(id).toString()); // Boolean to boolean conversion...
+		if (selected) {
+			log("Yes! Feature with ID: " + id + ", is selected");
+		} else {
+			log("No! Feature with ID: " + id + ", is not selected");
+		}
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#selectGermany').click(function() {
+		$('.filter li').removeClass('active');
+		selectFeature('110m_admin_0_countries.42');
+	});
+
+	$('#selectFrance').click(function() {
+		$('.filter li').removeClass('active');
+		selectFeature('110m_admin_0_countries.56');
+	});
+
+	$('#clear').click(function() {
+		$('.filter li').removeClass('active');
+		deselectAll();
+	});
+
+	$('#isSelectedGermany').click(function() {
+		$('.filter li').removeClass('active');
+		isFeatureSelected('110m_admin_0_countries.42');
+	});
+
+	$('#isSelectedFrance').click(function() {
+		$('.filter li').removeClass('active');
+		isFeatureSelected('110m_admin_0_countries.56');
+	});
+
+</script>
+
+</body>
+
 </html>

@@ -1,101 +1,162 @@
-<html>
-	<!--
-	  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
-	  ~
-	  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
-	  ~
-	  ~ The program is available in open source according to the GNU Affero
-	  ~ General Public License. All contributions in this program are covered
-	  ~ by the Geomajas Contributors License Agreement. For full licensing
-	  ~ details, see LICENSE.txt in the project root.
-	-->
+<!DOCTYPE html>
+<!--
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-	<head>
-		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<title>Gwt editing javascript - Showcase</title>
 
-		<title>Geomajas Javascript API Showcase</title>
-		<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
 
-		<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
 
-		<script type="text/javascript">
-			var map;
-			var geometryService;
-			var bboxService;
+	<script src="../js/jquery.modernizr.min.js"></script>
 
-			function onGeomajasLoad() {
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-				map = new gm.Map("js-map-element");
-				gm.ServerExtension.initializeMap(map, "app", "mapMain");
+</head>
 
-				geometryService =  gm.GwtCommandDispatcher.getGeometryService();
-				bboxService = gm.GwtCommandDispatcher.getBboxService();
+<body>
 
-				// Apply the select single feature controller:
-				map.setMapController(new gm.controller.SelectionController("SINGLE_SELECTION"));
-			}
+<div id="page">
 
-			function zoomToSelection() {
-				// Get all selected features:
-				var layer = map.getLayersModel().getLayer("clientLayerCountries");
-				var features = layer.getSelectedFeatures();
+	<header id="header" class="wrapper">
 
-				console.log(features);
-
-				// Calculate the union of the bounds of all selected geometries:
-				var bounds = null;
-				for (var i = 0; i < features.length; i++) {
-					var geometry = features[i].getGeometry();
-					var bbox = geometryService.getBounds(geometry);
-					if (bounds == null) {
-						bounds = bbox;
-					} else {
-						bounds = bboxService.union(bounds, bbox);
-					}
-				}
-
-				// Zoom to the calculated bounds:
-				if (bounds != null) {
-					map.getViewPort().applyBounds(bounds);
-				}
-			}
-
-			function deselectAll() {
-				var layer = map.getLayersModel().getLayer("clientLayerCountries");
-				layer.clearSelectedFeatures();
-			}
-		</script>
-	</head>
-
-	<body>
-		<div class="titleBar">
-			<div class="title">Geomajas JavaScript API test</div>
-			<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
+		<div class="header_tagline">
+			<h3>Zoom to selection</h3>
+			<h4>
+				This example demonstrates how to zoom to the current selection.<br>
+				Select a feature by clicking on the map, the use the controls to zoom to the selected feature or
+				clear the selection.
+			</h4>
 		</div>
-		<div>
-			<table cellspacing="0" cellpadding="5">
-				<tr>
-					<td style="width: 640px;">
-						<div id="js-map-element" style="width: 640px; height: 480px; border: 1px solid #337428;">
-							<!-- on load, the map is attached here -->
-						</div>
-					</td>
-					<td valign="top">
-						<h2>Zoom to selection</h2>
 
-						<h4>Zoom to the current selection</h4>
-						This example demonstrates how to zoom to the current selection. By default, the "Selection"
-						controller has been activated on the map instead of the navigation controller. Use it to select
-						certain features, and than zoom to your selection.<br>
-						<button onclick="zoomToSelection()">Zoom to the current selection</button>
+	</header>
 
-						<h4>Deselect all features</h4>
-						<button onclick="deselectAll()">Deselect all</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</body>
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="zoomToSelected">
+					<a href="#">Zoom to selected feature</a>
+				</li>
+				<li id="clear">
+					<a href="#">Clear selection</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
+						<!-- on load, the map is attached here -->
+					</div>
+
+				</div>
+
+				<div class="column one_half">
+
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+	var geometryService;
+	var bboxService;
+
+	function onGeomajasLoad() {
+
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+
+		geometryService =  gm.GwtCommandDispatcher.getGeometryService();
+		bboxService = gm.GwtCommandDispatcher.getBboxService();
+
+		// Apply the select single feature controller:
+		map.setMapController(new gm.controller.FeatureSelectionController("SINGLE_SELECTION"));
+	}
+
+	function zoomToSelection() {
+		// Get all selected features:
+		var layer = map.getLayersModel().getLayer("clientLayerCountries");
+		var features = layer.getSelectedFeatures();
+
+		// Calculate the union of the bounds of all selected geometries:
+		var bounds = null;
+		for (var i = 0; i < features.length; i++) {
+
+			log("Zooming to feature: " + features[i].getLabel());
+
+			var geometry = features[i].getGeometry();
+			var bbox = geometryService.getBounds(geometry);
+			if (bounds == null) {
+				bounds = bbox;
+			} else {
+				bounds = bboxService.union(bounds, bbox);
+			}
+		}
+
+		// Zoom to the calculated bounds:
+		if (bounds != null) {
+			map.getViewPort().applyBounds(bounds);
+		}
+	}
+
+	function deselectAll() {
+		var layer = map.getLayersModel().getLayer("clientLayerCountries");
+		layer.clearSelectedFeatures();
+		log("Selection cleared from map.");
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#zoomToSelected').click(function() {
+		$('.filter li').removeClass('active');
+		zoomToSelection();
+	});
+
+	$('#clear').click(function() {
+		$('.filter li').removeClass('active');
+		deselectAll();
+	});
+
+</script>
+
+</body>
 
 </html>

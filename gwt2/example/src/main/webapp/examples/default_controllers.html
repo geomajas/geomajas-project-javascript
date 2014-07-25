@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -9,68 +9,160 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-	
-	<title>Geomajas Javascript API Showcase</title>
-	<link type="text/css" rel="stylesheet" href="geomajas.css" />
-	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+	<title>Gwt editing javascript - Showcase</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
 	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
-	
-	<script type="text/javascript">
-		var map;
 
-		function onGeomajasLoad() {
-            map = new gm.Map("js-map-element");
-            gm.ServerExtension.initializeMap(map, "app", "mapMain");
-		}
-
-        function applyNavigationController() {
-            map.setMapController(new gm.controller.NavigationController());
-        }
-
-        function applyZoomToRectangleController() {
-            map.setMapController(new gm.controller.ZoomToRectangleController());
-        }
-
-        function applyFeatureSelectionDragController() {
-            map.setMapController(new gm.controller.FeatureSelectionController("CLICK_AND_DRAG"));
-        }
-
-        function applyFeatureSelectionSingleController() {
-            map.setMapController(new gm.controller.FeatureSelectionController("SINGLE_SELECTION"));
-        }
-
-    </script>
 </head>
 
 <body>
-	<div class="titleBar">
-		<div class="title">Geomajas JavaScript API test</div>
-		<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-	</div>
-	<div>
-		<table cellspacing="0" cellpadding="5">
-			<tr>
-				<td style="width: 640px;">
-					<div id="js-map-element" style="width: 640px; height: 480px; border: 1px solid #337428;">
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Map controllers</h3>
+			<h4>
+				Activate a controller on the map (only one can be active at a time).<br>
+				By default, the navigation controller is active.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="applyNavigation" class="active">
+					<a href="#">Navigation</a>
+				</li>
+				<li id="applyZoomToRectangle">
+					<a href="#">Zoom to rectangle</a>
+				</li>
+				<li id="applyFeatureSelectionDrag">
+					<a href="#">Feature selection drag</a>
+				</li>
+				<li id="applyFeatureSelectionSingle">
+					<a href="#">Feature selection click</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
 						<!-- on load, the map is attached here -->
 					</div>
-				</td>
-				<td valign="top">
-					<h2>Map Controllers</h2>
-					
-					<h4>Use default map controllers</h4>
-					Activate a controller on the map (only one can be active at a time). By default, the navigation controller is active.<br>
-					<button onclick="applyNavigationController()">Navigation</button><br>
-					<button onclick="applyZoomToRectangleController()">ZoomToRectangle</button><br>
-					<button onclick="applyFeatureSelectionDragController()">Selection (multiple features)</button><br>
-					<button onclick="applyFeatureSelectionSingleController()">Selection (single feature)</button><br>
-				</td>
-			</tr>
-		</table>
-	</div>
+
+				</div>
+
+				<div class="column one_half">
+
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+	}
+
+	function applyNavigationController() {
+		map.setMapController(new gm.controller.NavigationController());
+		log(
+				"<strong>Navigation controller set</strong><br>"
+		);
+	}
+
+	function applyZoomToRectangleController() {
+		map.setMapController(new gm.controller.ZoomToRectangleController());
+		log(
+				"<strong>Zoom to rectangle controller set</strong><br>"
+		);
+	}
+
+	function applyFeatureSelectionDragController() {
+		map.setMapController(new gm.controller.FeatureSelectionController("CLICK_AND_DRAG"));
+		log(
+				"<strong>Feature controller CLICK_AND_DRAG set</strong><br>"
+		);
+	}
+
+	function applyFeatureSelectionSingleController() {
+		map.setMapController(new gm.controller.FeatureSelectionController("SINGLE_SELECTION"));
+		log(
+				"<strong>Feature controller SINGLE_SELECTION set</strong><br>"
+		);
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#applyNavigation').click(function() {
+		$('.filter li').removeClass('active');
+		$(this).addClass('active');
+		applyNavigationController();
+	});
+
+	$('#applyZoomToRectangle').click(function() {
+		$('.filter li').removeClass('active');
+		$(this).addClass('active');
+		applyZoomToRectangleController();
+	});
+
+	$('#applyFeatureSelectionDrag').click(function() {
+		$('.filter li').removeClass('active');
+		$(this).addClass('active');
+		applyFeatureSelectionDragController();
+	});
+
+	$('#applyFeatureSelectionSingle').click(function() {
+		$('.filter li').removeClass('active');
+		$(this).addClass('active');
+		applyFeatureSelectionSingleController();
+	});
+
+</script>
+
 </body>
 
 </html>

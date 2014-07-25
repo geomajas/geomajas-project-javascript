@@ -1,5 +1,4 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -10,154 +9,206 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-    <title>Geomajas Javascript API Showcase</title>
-    <link type="text/css" rel="stylesheet" href="geomajas.css"/>
+	<title>Gwt editing javascript - Showcase</title>
 
-    <script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript">
-        // The map, controller and container for the markers and a variable for implementing dragging:
-        var map;
-        var markerContainer;
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
 
-        /**
-         * When Geomajas is loaded, create the map and initialize the handlers.
-         **/
-        function onGeomajasLoad() {
-            map = new gm.Map("js-map-element");
-            gm.ServerExtension.initializeMap(map, "app", "mapMain");
+	<script src="../js/jquery.modernizr.min.js"></script>
 
-            map.getEventBus().addMapInitializationHandler(function (event) {
-                // Add a widget container to the map and assign it to the container for the markers:
-                markerContainer = map.getContainerManager().addWorldWidgetContainer();
-            });
-        }
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-        /**
-         * Add a marker to the map. Markers are given random positions and are added
-         * to the markers array.
-         */
-        function addMarkers() {
-            var dragging = false;
-            var selectedMarker = null;
-            var service = map.getViewPort().getTransformationService();
-            var mapElement = document.getElementById(map.getParentHtmlElementId());
-
-            //create div dom element for the marker (it can be something else too)
-            var div = document.createElement("div");
-
-            //var text = document.createElement("span");
-            //text.textContent = "it is a marker";
-
-            //append image element
-            var oImg = document.createElement("img");
-
-            div.appendChild(oImg);
-            //div.appendChild(text);
-
-            oImg.setAttribute('src', 'images/marker.png');
-
-            // Add 20 markers:
-            if (markerContainer != null) {
-                for (var i = 0; i < 20; i++) {
-                    // Random world coordinates for vthe marker:
-                    var worldX = Math.random() * 40000000 - 20000000;
-                    var worldY = Math.random() * 40000000 - 20000000;
-                    var randomCoordinate = new gm.Coordinate(worldX, worldY);
-
-                    // Create new marker with the coordinates:
-                    // (the image is 32 x 32 so we center the mouse in the middle)
-
-                    // first constructor creates marker from given 'dom element' that will be wrapped in 'div' tag
-                    var marker = new gm.Marker(div, 16, 16);
-                    marker.setCoordinate(randomCoordinate);
-
-                    //second constructor that creates an image marker by given url
-                    //var marker = new gm.Marker('images/marker.png', randomCoordinate, 16, 16);
-
-                    // Add a selected handler - this function is called when the marker is selected:
-                    marker.addWidgetSelectedHandler(function (widgetEvent) {
-                        dragging = true;
-                        selectedMarker = widgetEvent.getMarker();
-
-                        //get the root element of a marker
-                        //var markerDivEl = selectedMarker.getElement();
-
-                        map.setCursor('move');
-                    });
-
-                    // Add a deselected handler - this function is called when the marker is deselected:
-                    marker.addWidgetDeselectedHandler(function (widgetEvent) {
-                        dragging = false;
-                        selectedMarker = null;
-                        map.setCursor('default');
-                    });
-
-                    // Don't forget to add the widget to the container so it will be drawn:
-                    markerContainer.addMarker(marker);
-                }
-            }
-
-            document.getElementById('markerLabel').innerHTML = "Markers are added.";
-
-            // Add a mouse move listener to the map. When a marker is being dragged the location of the mouse
-            // is converted to a world coordinate and the coordinate of the marker is updated. There is no
-            // mouse move listener on the marker because the marker can get lost if the mouse moves too fast.
-            mapElement.addEventListener("mousemove", function (event) {
-                if (dragging && selectedMarker != null) {
-                    // Get the screen coordinate of the dragged marker:
-                    var rect = mapElement.getBoundingClientRect();
-                    var screenCoordinate = new gm.Coordinate(event.clientX - rect.left, event.clientY - rect.top);
-
-                    // Transform it to a world coordinate:
-                    var worldCoordinate = service.transformCoordinate(screenCoordinate, "screen", "world");
-
-                    // And update the coordinate of the marker:
-                    selectedMarker.setCoordinate(worldCoordinate);
-
-                    // Stop the event or the map will be dragged:
-                    event = event || window.event;
-                    if (event.stopPropagation) {
-                        event.stopPropagation();
-                    } else {
-                        event.cancelBubble = true;
-                    }
-                }
-            });
-        }
-
-    </script>
 </head>
 
 <body>
-<div class="titleBar">
-    <div class="title">Geomajas JavaScript API test</div>
-    <div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-</div>
-<div>
-    <table cellspacing="0" cellpadding="5">
-        <tr>
-            <td style="width:640px;">
-                <div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
-                    <!-- on load, the map is attached here -->
-                </div>
-            </td>
-            <td valign="top">
-                <h4>Adding markers to the map</h4>
-                Click the button to add markers to the map. The markers can be dragged to another point on the map.
-                It's possible you will have to zoom out in order to see all the markers.
-                <br/>
-                <button onclick="addMarkers()">Add markers</button>
-                <br/>
-                <div id="markerLabel"></div>
-            </td>
-        </tr>
-    </table>
-</div>
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Add markers to the map</h3>
+			<h4>
+				Click the button to add markers to the map. The markers can be dragged to another point on the map.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="addMarkers">
+					<a href="#">Add markers</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
+						<!-- on load, the map is attached here -->
+					</div>
+
+				</div>
+
+				<div class="column one_half">
+
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	// The map, controller and container for the markers and a variable for implementing dragging:
+	var map;
+	var markerContainer;
+
+	/**
+	 * When Geomajas is loaded, create the map and initialize the handlers.
+	 **/
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+
+		map.getEventBus().addMapInitializationHandler(function (event) {
+			// Add a widget container to the map and assign it to the container for the markers:
+			markerContainer = map.getContainerManager().addWorldWidgetContainer();
+		});
+	}
+
+	/**
+	 * Add a marker to the map. Markers are given random positions and are added
+	 * to the markers array.
+	 */
+	function addMarkers() {
+		var dragging = false;
+		var selectedMarker = null;
+		var service = map.getViewPort().getTransformationService();
+		var mapElement = document.getElementById(map.getParentHtmlElementId());
+
+		//create div dom element for the marker (it can be something else too)
+		var div = document.createElement("div");
+
+		//var text = document.createElement("span");
+		//text.textContent = "it is a marker";
+
+		//append image element
+		var oImg = document.createElement("img");
+
+		div.appendChild(oImg);
+		//div.appendChild(text);
+
+		oImg.setAttribute('src', 'images/marker.png');
+
+		// Add 20 markers:
+		if (markerContainer != null) {
+			for (var i = 0; i < 20; i++) {
+				// Random world coordinates for the marker:
+				var worldX = Math.random() * map.getViewPort().getBounds().getMaxX();
+				var worldY = Math.random() * map.getViewPort().getBounds().getMaxY();
+				var randomCoordinate = new gm.Coordinate(worldX, worldY);
+
+				// Create new marker with the coordinates:
+				// (the image is 32 x 32 so we center the mouse in the middle)
+
+				// first constructor creates marker from given 'dom element' that will be wrapped in 'div' tag
+				var marker = new gm.Marker(div, 16, 16);
+				marker.setCoordinate(randomCoordinate);
+
+				//second constructor that creates an image marker by given url
+				//var marker = new gm.Marker('images/marker.png', randomCoordinate, 16, 16);
+
+				// Add a selected handler - this function is called when the marker is selected:
+				marker.addWidgetSelectedHandler(function (widgetEvent) {
+					dragging = true;
+					selectedMarker = widgetEvent.getMarker();
+
+					//get the root element of a marker
+					//var markerDivEl = selectedMarker.getElement();
+
+					map.setCursor('move');
+				});
+
+				// Add a deselected handler - this function is called when the marker is deselected:
+				marker.addWidgetDeselectedHandler(function (widgetEvent) {
+					dragging = false;
+					selectedMarker = null;
+					map.setCursor('default');
+				});
+
+				// Don't forget to add the widget to the container so it will be drawn:
+				markerContainer.addMarker(marker);
+			}
+		}
+
+		log("Markers are added.");
+
+		// Add a mouse move listener to the map. When a marker is being dragged the location of the mouse
+		// is converted to a world coordinate and the coordinate of the marker is updated. There is no
+		// mouse move listener on the marker because the marker can get lost if the mouse moves too fast.
+		mapElement.addEventListener("mousemove", function (event) {
+			if (dragging && selectedMarker != null) {
+				// Get the screen coordinate of the dragged marker:
+				var rect = mapElement.getBoundingClientRect();
+				var screenCoordinate = new gm.Coordinate(event.clientX - rect.left, event.clientY - rect.top);
+
+				// Transform it to a world coordinate:
+				var worldCoordinate = service.transformCoordinate(screenCoordinate, "screen", "world");
+
+				// And update the coordinate of the marker:
+				selectedMarker.setCoordinate(worldCoordinate);
+
+				// Stop the event or the map will be dragged:
+				event = event || window.event;
+				if (event.stopPropagation) {
+					event.stopPropagation();
+				} else {
+					event.cancelBubble = true;
+				}
+			}
+		});
+	}
+
+	function log(txt) {
+		while ($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt + "</li>");
+	}
+
+	$('#addMarkers').click(function () {
+		$('.filter li').removeClass('active');
+		addMarkers();
+	});
+
+</script>
+
 </body>
 
 </html>

@@ -1,113 +1,152 @@
-<html>
+<!DOCTYPE html>
 <!--
-  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
-  ~
-  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
-  ~
-  ~ The program is available in open source according to the GNU Affero
-  ~ General Public License. All contributions in this program are covered
-  ~ by the Geomajas Contributors License Agreement. For full licensing
-  ~ details, see LICENSE.txt in the project root.
--->
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-	<title>Geomajas Javascript API Showcase</title>
-	<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<title>Gwt editing javascript - Showcase</title>
 
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
 	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-	<script type="text/javascript">
-
-		var map;
-		var featureSearchService;
-
-		function onGeomajasLoad() {
-
-			map = new gm.Map("js-map-element");
-			gm.ServerExtension.initializeMap(map, "app", "mapMain");
-			featureSearchService = new gm.feature.FeatureSearchService(map);
-
-			// Create the new MapController:
-			var mapController = gm.MapControllerFactory.createMapController();
-
-			// On mouse Up event
-			mapController.setUpHandler(function(event) {
-
-				// We have to pass the following parameters to the featureSearchService :
-				// - A Coordinate with WORLD position
-				// - A pixel buffer (a buffer in which the service may include features)
-				// - A callback function to receive the found features.
-				featureSearchService.searchOnPosition(mapController.getLocation(event, "world"), 5,
-						function(featureHolder) {
-
-					if (featureHolder.getFeatures().length < 1)  {
-
-						log.innerHTML += "<font color='#CC0000'>-- No feature(s) found on this position.</font><br>";
-
-					} else {
-
-						log.innerHTML += "<strong>-- Feature(s) clicked :</strong><br>";
-
-						for (i = 0; i < featureHolder.getFeatures().length; i++) {
-
-							log.innerHTML += "<font color='#00CC00'>" + featureHolder.getFeatures()[i].getLabel() + "</font><br>";
-
-						}
-
-					}
-
-				});
-
-			});
-
-			// Apply the MapController on the map:
-			map.setMapController(mapController);
-
-			// Add the feature clicked handler when Geomajas loads:
-			var log = document.getElementById("log");
-
-		}
-
-		function clearLog() {
-			var log = document.getElementById("log");
-			log.innerHTML = "";
-		}
-
-	</script>
 </head>
 
 <body>
-<div class="titleBar">
-	<div class="title">Geomajas JavaScript API test</div>
-	<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-</div>
-<div>
-	<table cellspacing="0" cellpadding="5">
-		<tr>
-			<td valign="top" style="width:640px;">
-				<div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
-					<!-- on load, the map is attached here -->
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Catching feature events</h3>
+			<h4>
+				This example shows how to add a feature clicked handler to the map.<br>
+				Click near a border of a country to see the pixel buffer working. This should return multiple
+				features.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
+						<!-- on load, the map is attached here -->
+					</div>
+
 				</div>
-			</td>
-			<td valign="top">
-				<h2>Feature Clicked</h2>
-				<p>
-					This example shows how to add a feature clicked handler to the map.
-				</p>
-				<p>
-					Click near a border of a country to see the pixel buffer working. This should return multiple
-					features.
-				</p>
 
-				Clear log: <button onclick="clearLog()">Clear</button>
+				<div class="column one_half">
 
-				<h4>Event logging</h4>
-				<div id="log"></div>
-			</td>
-		</tr>
-	</table>
-</div>
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+	var featureSearchService;
+
+	function onGeomajasLoad() {
+
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+		featureSearchService = new gm.feature.FeatureSearchService(map);
+
+		// Create the new MapController:
+		var mapController = gm.MapControllerFactory.createMapController();
+
+		// On mouse Up event
+		mapController.setUpHandler(function(event) {
+
+			// We have to pass the following parameters to the featureSearchService :
+			// - A Coordinate with WORLD position
+			// - A pixel buffer (a buffer in which the service may include features)
+			// - A callback function to receive the found features.
+			featureSearchService.searchOnPosition(mapController.getLocation(event, "world"),
+					5, function(featureHolder) {
+
+						if (featureHolder.getFeatures().length < 1)  {
+
+							log("No feature(s) found on this position.");
+
+						} else {
+
+							for (i = 0; i < featureHolder.getFeatures().length; i++) {
+
+								log("Feature: " + featureHolder.getFeatures()[i].getLabel());
+
+							}
+
+							log("<strong>-- Feature(s) clicked :</strong>");
+
+						}
+
+					});
+
+		});
+
+		// Apply the MapController on the map:
+		map.setMapController(mapController);
+
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#addHandler').click(function() {
+		$('.filter li').removeClass('active');
+		addHandlers();
+	});
+
+	$('#removeHandler').click(function() {
+		$('.filter li').removeClass('active');
+		removeHandlers();
+	});
+
+</script>
+
 </body>
+
 </html>

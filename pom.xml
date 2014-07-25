@@ -156,6 +156,18 @@
 				<version>1.9.5</version>
 			</dependency>
 
+=======
+			<!-- This is needed for the js-doc profile -->
+			<dependency>
+				<groupId>com.sun</groupId>
+				<artifactId>tools</artifactId>
+				<version>1.6</version>
+				<scope>system</scope>
+				<optional>true</optional>
+				<systemPath>${java.home}/../lib/tools.jar</systemPath>
+			</dependency>
+
+>>>>>>> GJP-41 Adapted showcase samples to the new design.
 		</dependencies>
 	</dependencyManagement>
 
