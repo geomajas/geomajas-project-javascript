@@ -12,16 +12,15 @@
 package org.geomajas.javascript.gwt2.example.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * Entry point and main class for GWT application. This class defines the layout and functionality of this application.
- * 
+ *
  * @author Pieter De Graef
  */
 public class Showcase implements EntryPoint {
 
 	public void onModuleLoad() {
-		RootPanel.get().add(new ShowcaseLayout());
+		//
 	}
 }

@@ -1,27 +1,407 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-    <head>
-		<!--
-		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
-		  ~
-		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
-		  ~
-		  ~ The program is available in open source according to the GNU Affero
-		  ~ General Public License. All contributions in this program are covered
-		  ~ by the Geomajas Contributors License Agreement. For full licensing
-		  ~ details, see LICENSE.txt in the project root.
-		  -->
-        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-        <title>Geomajas Javascript API examples</title>
+<!DOCTYPE html>
 
-        <link type="text/css" rel="stylesheet" href="geomajas.css">
-        <script type="text/javascript" language="javascript" src="showcase/showcase.nocache.js"></script>
-    </head>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-    <body>
-    <!-- 
-        <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position: absolute; width: 0; height: 0; border: 0"></iframe>
-         -->
-    </body>
+		<title>Javascript showcase</title>
+
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link href="css/isotope.css" rel="stylesheet" type="text/css">
+		<link href="css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+		<script src="js/jquery.modernizr.min.js"></script>
+	</head>
+
+	<body>
+
+		<div id="page">
+
+			<section id="main">
+
+				<div class="main_inner wrapper clearfix">
+
+					<ul class="filter">
+						<li class="active">
+							<a href="" data-option-value="*">All</a>
+						</li>
+						<li>
+							<a href="" data-option-value=".layer">Layer</a>
+						</li>
+						<li>
+							<a href="" data-option-value=".feature">Feature</a>
+						</li>
+						<li>
+							<a href="" data-option-value=".controller">Controller</a>
+						</li>
+						<li>
+							<a href="" data-option-value=".event">Event</a>
+						</li>
+					</ul>
+
+					<div class="search">
+
+						<input type="search" id="search" name="search" placeholder="Search examples ...">
+
+					</div>
+
+					<div id="masonry" class="entries clearfix isotope">
+
+						<div class="masonry_item entry isotope-item event">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/navigation.html" rel="navigation" target="_blank">
+											Navigate the map.
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> event ?
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates how to use the ViewPort to navigate around the map.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item event">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/endpoint.html" rel="endpoint" target="_blank">
+											Endpoint
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> event ?
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates how to use the endpoint service of the map.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item layer">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/layers.html" rel="layers" target="_blank">
+											Map & Layers
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> layer
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates the methods of the LayersModel behind a map: how to get the available layers, and how to manipulate them.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item event layer">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/layersmodel_event.html" rel="layersmodel-event"
+										   target="_blank">
+											Configuration Init Event
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> layer, event
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									This examples demonstrates the use of an event fired "when the layer configuration is loaded.
+									It will display the list of layers that are configured within the map.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item controller">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/default_controllers.html" rel="default-controller"
+										   target="_blank">
+											Default Controllers
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> controller
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates how to use existing controllers from the Geomajas GWT face on a JavaScript map.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item controller">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/custom_controller.html" rel="custom-controller"
+										   target="_blank">
+											Custom Controllers
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> controller
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates how to create custom controllers and apply them on the map.
+									The controller in this sample prints out the mouse coordinates on the map.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item feature">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/search_features.html" rel="search-features"
+										   target="_blank">
+											Search features
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> feature
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates how to search for features by ID and by using the maps bounding box.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item event">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/busy_state.html" rel="busy-state" target="_blank">
+											Busy events
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> event
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates how to register to the Geomajas 'busy' events.
+									These events display when the client is busy talking to the server.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item event">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/cursors.html" rel="cursors" target="_blank">
+											Cursors
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> event
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates how change the cursor on the map. This sample includes a custom cursor.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item feature layer">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/zoom_to_selection.html" rel="feature-selection"
+										   target="_blank">
+											Feature Selection
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> feature, layer
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									Demonstrates the selection of features in a vector layer.
+
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item feature event">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/feature_selection_events.html" rel="feature-selection-event"
+										   target="_blank">
+											Feature Selection Events
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> feature, event
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									This examples demonstrates how to catch feature selection and deselection events.
+									When (de)selecting features, Geomajas sends out an event.
+									In this example features are being selected through a controller on the map, and
+									all events are caught and logged into the HTML.
+
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item feature">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/feature_clicked.html" rel="feature-clicked"
+										   target="_blank">
+											Feature Clicked
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> feature
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									This example show how to add a feature clicked handler to the map and get information about the feature that has been clicked.
+
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item event">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/backend_error.html" rel="backend-error"
+										   target="_blank">
+											Catching Server Exceptions
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> event ?
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									In this example we let the server execute a faulty operation just to be able to
+									catch the exception in JavaScript.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item layer">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/client_wms_layer.html" rel="basic-wms-layer"
+										   target="_blank">
+											Basic WMS layer
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> layer
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									This example shows how to create a new map and add a WMS layer to it without using the Geomajas server.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item event">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/marker.html" rel="marker"
+										   target="_blank">
+											Adding map markers
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> event ?
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									In this example we show that a map marker can be added on the map. The markers can also be dragged.
+								</p>
+							</div>
+						</div>
+
+						<div class="masonry_item entry isotope-item layer">
+							<div class="entry-headline">
+								<div class="entry-title">
+									<h4>
+										<a href="examples/client_tms_layer.html" rel="client-tms-layer"
+										   target="_blank">
+											Basic TMS layer
+										</a>
+									</h4>
+								</div>
+								<div class="entry-category">
+									<strong>Category:</strong> layer
+								</div>
+							</div>
+							<div class="entry-info">
+								<p>
+									This example shows how to create a new map and add a TMS layer to it without using the Geomajas server.
+								</p>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</section>
+
+		</div>
+
+		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="js/jquery.isotope.min.js"></script>
+		<script src="js/script.js"></script>
+
+	</body>
 
 </html>
