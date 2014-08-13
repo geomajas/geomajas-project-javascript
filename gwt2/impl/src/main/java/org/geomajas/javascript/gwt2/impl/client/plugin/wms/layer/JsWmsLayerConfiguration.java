@@ -11,8 +11,8 @@
 
 package org.geomajas.javascript.gwt2.impl.client.plugin.wms.layer;
 
-import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
-import org.geomajas.gwt2.plugin.wms.client.service.WmsService;
+import org.geomajas.plugin.wms.client.layer.WmsLayerConfiguration;
+import org.geomajas.plugin.wms.client.service.WmsService;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
