@@ -15,8 +15,8 @@
 	<!--<inherits name="org.geomajas.gwt.GeomajasCommonGwtCommand"/>-->
     <inherits name="org.geomajas.gwt2.GeomajasClientImpl" />
   	<inherits name="org.geomajas.javascript.api.JavascriptApi" />
-    <inherits name="org.geomajas.gwt2.plugin.wms.GeomajasClientPluginWms" />
-    <inherits name="org.geomajas.gwt2.plugin.tms.GeomajasClientPluginTms" />
+    <inherits name="org.geomajas.plugin.wms.GeomajasClientPluginWms" />
+    <inherits name="org.geomajas.plugin.tms.GeomajasClientPluginTms" />
 
 <!--	<inherits name="com.google.gwt.logging.Logging"/>
 
