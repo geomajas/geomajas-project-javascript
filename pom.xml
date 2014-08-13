@@ -65,7 +65,7 @@
 	<properties>
 		<geomajas-gwt2-client-version>2.1.0-SNAPSHOT</geomajas-gwt2-client-version>
 		<gwt-exporter-version>2.4.0</gwt-exporter-version>
-		<version-gwt>2.5.0</version-gwt>
+		<version-gwt>2.5.1</version-gwt>
 	</properties>
 
 	<dependencyManagement>
