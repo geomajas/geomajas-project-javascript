@@ -60,6 +60,8 @@
 		<module>server-extension-api</module>
 		<module>common</module>
 		<module>gwt2</module>
+		<module>documentation</module>
+		<module>javadoc</module>
 	</modules>
 
 	<properties>
@@ -154,79 +156,10 @@
 				<version>1.9.5</version>
 			</dependency>
 
-			<!-- This is needed for the js-doc profile -->
-			<dependency>
-				<groupId>com.sun</groupId>
-				<artifactId>tools</artifactId>
-				<version>1.6</version>
-				<scope>system</scope>
-				<optional>true</optional>
-				<systemPath>${java.home}/../lib/tools.jar</systemPath>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
 	<profiles>
-		<profile>
-			<id>full-build</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				 <module>documentation</module>
-			</modules>
-		</profile>
-
-		<!-- We need to run JDK 1.6.10 -->
-		<profile>
-			<id>js-doc</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<configuration>
-							<finalName>js</finalName>
-							<doclet>org.timepedia.exporter.doclet.JsDoclet</doclet>
-							<docletArtifact>
-								<groupId>org.timepedia.exporter</groupId>
-								<artifactId>gwtexporter</artifactId>
-								<version>2.4.0</version>
-							</docletArtifact>
-							<destDir>${project.build.directory}/apidocs</destDir>
-						</configuration>
-
-						<executions>
-							<execution>
-								<phase>prepare-package</phase>
-								<id>attach-jsdoc</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-
-			</build>
-			<modules>
-				<module>documentation</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>skipDocs</id>
-			<activation>
-				<property>
-					<name>skipDocs</name>
-				</property>
-			</activation>
-		</profile>
 		<profile>
 			<id>m2e</id>
 			<activation>
