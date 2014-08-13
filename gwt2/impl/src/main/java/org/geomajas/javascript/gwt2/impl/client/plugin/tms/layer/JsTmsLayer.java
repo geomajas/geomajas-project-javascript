@@ -14,7 +14,7 @@ package org.geomajas.javascript.gwt2.impl.client.plugin.tms.layer;
 import org.geomajas.geometry.Bbox;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayerImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.tile.JsTileConfiguration;
-import org.geomajas.plugin.tms.client.TmsClient;
+import org.geomajas.gwt2.plugin.tms.client.TmsClient;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
 import org.timepedia.exporter.client.ExportPackage;
@@ -22,7 +22,7 @@ import org.timepedia.exporter.client.Exportable;
 
 /**
  *
- * Javascript exporter implementation of {@link org.geomajas.plugin.tms.client.layer.TmsLayer}.
+ * Javascript exporter implementation of {@link org.geomajas.gwt2.plugin.tms.client.layer.TmsLayer}.
  *
  * @author Dosi Bingov
  *

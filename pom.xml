@@ -65,7 +65,7 @@
 	<properties>
 		<geomajas-gwt2-client-version>2.1.0-SNAPSHOT</geomajas-gwt2-client-version>
 		<gwt-exporter-version>2.4.0</gwt-exporter-version>
-		<version-gwt>2.5.0</version-gwt>
+		<version-gwt>2.5.1</version-gwt>
 	</properties>
 
 	<dependencyManagement>
@@ -78,7 +78,19 @@
 				<type>pom</type>
 			</dependency>
 
-			<!-- sub project dependencies -->
+			<!-- geomajas plugin dependencies-->
+			<dependency>
+				<groupId>org.geomajas.plugin</groupId>
+				<artifactId>geomajas-client-gwt2-plugin-wms</artifactId>
+				<version>${geomajas-gwt2-client-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geomajas.plugin</groupId>
+				<artifactId>geomajas-client-gwt2-plugin-tms</artifactId>
+				<version>${geomajas-gwt2-client-version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-javascript-api</artifactId>
@@ -141,19 +153,6 @@
 				<artifactId>mockito-all</artifactId>
 				<version>1.9.5</version>
 			</dependency>
-
-            <!-- geomajas plugin dependencies-->
-            <dependency>
-                <groupId>org.geomajas.plugin</groupId>
-                <artifactId>geomajas-client-gwt2-plugin-wms</artifactId>
-                <version>2.1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.geomajas.plugin</groupId>
-                <artifactId>geomajas-client-gwt2-plugin-tms</artifactId>
-                <version>2.1.0-SNAPSHOT</version>
-            </dependency>
 
 			<!-- This is needed for the js-doc profile -->
 			<dependency>
