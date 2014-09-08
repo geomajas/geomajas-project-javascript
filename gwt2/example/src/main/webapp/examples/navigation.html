@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -9,22 +9,137 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-	<title>Geomajas Javascript API Showcase</title>
-	<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<title>Gwt editing javascript - Showcase</title>
 
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
 	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+
+</head>
+
+<body>
+
+	<div id="page">
+
+		<header id="header" class="wrapper">
+
+			<div class="header_tagline">
+				<h3>Navigate the map</h3>
+				<h4>
+					Use the controls below to change the viewport of the map.
+				</h4>
+			</div>
+
+		</header>
+
+		<section id="main">
+
+			<div class="main_inner wrapper clearfix">
+
+				<ul class="filter">
+					<li id="left">
+						<a href="#">Left</a>
+					</li>
+					<li id="right">
+						<a href="#">Right</a>
+					</li>
+					<li id="down">
+						<a href="#">Down</a>
+					</li>
+					<li id="up">
+						<a href="#">Up</a>
+					</li>
+					<li>
+						<input type="text" id="translateDistance" value="500000" class="smallInput" />
+						<i>Move distance (Map units, meters)</i>
+					</li>
+				</ul>
+
+				<ul class="filter">
+					<li id="zoomIn">
+						<a href="#">Zoom in</a>
+					</li>
+					<li id="zoomOut">
+						<a href="#">Zoom out</a>
+					</li>
+					<li>
+						<input type="text" id="zoomFactor" value="2" class="smallInput" />
+						<i>(Zoom in or out by factor)</i>
+					</li>
+				</ul>
+
+				<ul class="filter">
+					<li id="displayBounds">
+						<a href="#">Display bounds</a>
+					</li>
+					<li id="applyBounds">
+						<a href="#">Apply bounds</a>
+					</li>
+					<li>
+						<i>(Xmin:)</i>
+						<input type="text" id="boundsXmin" class="smallInput" />
+					</li>
+					<li>
+						<i>(Xmax:)</i>
+						<input type="text" id="boundsXmax" class="smallInput" />
+					</li>
+					<li>
+						<i>(Ymin:)</i>
+						<input type="text" id="boundsYmin" class="smallInput" />
+					</li>
+					<li>
+						<i>(Ymax:)</i>
+						<input type="text" id="boundsYmax" class="smallInput" />
+					</li>
+				</ul>
+
+				<div class="columnsection">
+
+					<div class="column one_half">
+
+						<div id="js-map-element">
+							<!-- on load, the map is attached here -->
+						</div>
+
+					</div>
+
+					<div class="column one_half">
+
+						<h4>Log:</h4>
+						<ul id="log"></ul>
+
+					</div>
+
+				</div>
+
+			</div><!-- END main inner -->
+
+		</section><!-- END #content -->
+
+	</div><!-- END #page -->
+
+	<script src="../js/jquery-1.7.1.min.js"></script>
 
 	<script type="text/javascript">
 		var map;
 
 		function onGeomajasLoad() {
+			/*			map = Geomajas().createMap("app", "mapMain", "js-map-element");*/
 			map = new gm.Map("js-map-element");
 			gm.ServerExtension.initializeMap(map, "app", "mapMain");
- 		}
+		}
 
 		<!-- using translate2 , as translate is a reserved word in chrome ! -->
 		function translate2(directionX, directionY) {
@@ -39,20 +154,27 @@
 			var factor = document.getElementById("zoomFactor").value;
 			var resolution = map.getViewPort().getResolution();
 			map.getViewPort().applyResolution(resolution / parseFloat(factor));
-		}	
+		}
 
 		function zoomOut() {
 			var factor = document.getElementById("zoomFactor").value;
-            var resolution = map.getViewPort().getResolution();
+			var resolution = map.getViewPort().getResolution();
 			map.getViewPort().applyResolution(resolution * parseFloat(factor));
-		}		
+		}
 
 		function displayBounds() {
 			var bbox = map.getViewPort().getBounds();
-			document.getElementById("boundsXmin").value = bbox.getX();
-			document.getElementById("boundsYmin").value = bbox.getY();
-			document.getElementById("boundsXmax").value = bbox.getMaxX();
-			document.getElementById("boundsYmax").value = bbox.getMaxY();
+			log(
+							"<strong>BOUNDS:</strong><br>" +
+							"<strong>Xmin: </strong>" + bbox.getX() + "<br>" +
+							"<strong>Ymin: </strong>" + bbox.getY() + "<br>" +
+							"<strong>Xmax: </strong>" + bbox.getMaxX() + "<br>" +
+							"<strong>Ymax: </strong>" + bbox.getMaxY() + "<br>"
+			);
+			document.getElementById("boundsXmin").value = parseFloat(Math.round(bbox.getX() * 100) / 100).toFixed(3);
+			document.getElementById("boundsYmin").value =parseFloat(Math.round(bbox.getY() * 100) / 100).toFixed(3);
+			document.getElementById("boundsXmax").value = parseFloat(Math.round(bbox.getMaxX() * 100) / 100).toFixed(3);
+			document.getElementById("boundsYmax").value = parseFloat(Math.round(bbox.getMaxY() * 100) / 100).toFixed(3);
 		}
 
 		function applyBounds() {
@@ -63,48 +185,66 @@
 
 			var bbox = new gm.Bbox(xmin, ymin, xmax - xmin, ymax - ymin);
 			map.getViewPort().applyBounds(bbox);
+			log("New bounds applied to map.")
 		}
+
+		function log(txt) {
+			while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+				$('#log li:last-child').remove();
+			}
+
+			$('#log li').removeClass('first-log-item');
+			$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+		}
+
+		$('#left').click(function() {
+			$('.filter li').removeClass('active');
+			log("left has been clicked.");
+			translate2(-1, 0);
+		});
+
+		$('#right').click(function() {
+			$('.filter li').removeClass('active');
+			log("right has been clicked.");
+			translate2(1, 0);
+		});
+
+		$('#down').click(function() {
+			$('.filter li').removeClass('active');
+			log("down has been clicked.");
+			translate2(0, -1);
+		});
+
+		$('#up').click(function() {
+			$('.filter li').removeClass('active');
+			log("up has been clicked.");
+			translate2(0, 1);
+		});
+
+		$('#zoomIn').click(function() {
+			$('.filter li').removeClass('active');
+			log("zoom in has been clicked.");
+			zoomIn();
+		});
+
+		$('#zoomOut').click(function() {
+			$('.filter li').removeClass('active');
+			log("zoom out has been clicked.");
+			zoomOut();
+		});
+
+		$('#displayBounds').click(function() {
+			$('.filter li').removeClass('active');
+			displayBounds();
+		});
+
+		$('#applyBounds').click(function() {
+			$('.filter li').removeClass('active');
+			applyBounds();
+		});
+
 	</script>
-</head>
 
-<body>
-	<div class="titleBar">
-		<div class="title">Geomajas JavaScript API test</div>
-		<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-	</div>
-	<div>
-		<table cellspacing="0" cellpadding="5">
-			<tr>
-				<td style="width:640px;">
-					<div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
-						<!-- on load, the map is attached here -->
-					</div>
-				</td>
-				<td valign="top">
-					<h2>Navigation</h2>
-					<h4>Translating</h4>
-					<button onclick="translate2(-1, 0)">LEFT</button>
-					<button onclick="translate2(1, 0)">RIGHT</button>
-					<button onclick="translate2(0, -1)">DOWN</button>
-					<button onclick="translate2(0, 1)">UP</button><br>
-					Move distance: <input type="text" id="translateDistance" value="500000" /> <i>(Map units, meters)</i>
-
-					<h4>Scaling (a.k.a zooming)</h4>
-					Zoom in or out by factor: <input type="text" id="zoomFactor" value="2" /><br>
-					<button onclick="zoomIn()">Zoom in</button>
-					<button onclick="zoomOut()">Zoom out</button>
-
-					<h4>Using Bounds</h4>
-					<button onclick="displayBounds()">Get bounds</button>
-					<button onclick="applyBounds()">Apply bounds</button><br />
-					Xmin: <input type="text" id="boundsXmin" />
-					Xmax: <input type="text" id="boundsXmax" /><br/>
-					Ymin: <input type="text" id="boundsYmin" />
-					Ymax: <input type="text" id="boundsYmax" />
-				</td>
-			</tr>
-		</table>
-	</div>
 </body>
 
 </html>

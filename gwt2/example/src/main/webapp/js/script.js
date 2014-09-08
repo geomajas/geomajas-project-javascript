@@ -1,3 +1,14 @@
+/*
+			  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+			  ~
+			  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+			  ~
+			  ~ The program is available in open source according to the GNU Affero
+			  ~ General Public License. All contributions in this program are covered
+			  ~ by the Geomajas Contributors License Agreement. For full licensing
+			  ~ details, see LICENSE.txt in the project root.
+			  */
+
 // load when the document is ready.
 $(document).ready(function() {
 
@@ -13,6 +24,10 @@ $(document).ready(function() {
 	// use value of search field to filter
 	var $search = $('#search').keyup(function() {
 
+		// Reset the active class to all items.
+		$('.filter li').removeClass('active');
+		$('#filterAll').addClass('active');
+
 		$container.isotope({
 			itemSelector: '.masonry_item',
 			filter: function() {
@@ -22,6 +37,19 @@ $(document).ready(function() {
 
 		qsRegex = new RegExp( $search.val(), 'gi' );
 		$container.isotope();
+
+	});
+
+
+	// Show every item when the X is clicked in the search input form.
+	$('input[type=search]').on('search', function () {
+
+		$container.isotope({
+			itemSelector: '.masonry_item',
+			filter: "*"
+		});
+
+		return(false);
 
 	});
 
@@ -53,6 +81,11 @@ $(document).ready(function() {
 
 		});
 
+	});
+
+	// Ignore clicking on the sample link so we don't open the sample twice.
+	$('.entryLink').click(function(e) {
+		e.stopImmediatePropagation();
 	});
 
 });

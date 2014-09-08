@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -9,107 +9,227 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 
-	<title>Geomajas Javascript API Showcase</title>
-	<link type="text/css" rel="stylesheet" href="geomajas.css" />
+	<title>Gwt editing javascript - Showcase</title>
 
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
 	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
 
-	<script type="text/javascript">
-		var map;
-
-		function onGeomajasLoad() {
-            map = new gm.Map("js-map-element");
-            gm.ServerExtension.initializeMap(map, "app", "mapMain");
-            map.getEventBus().addMapInitializationHandler(function(event) {
-                refreshCountriesOpacityLabel();
-            });
-		}
-
-		function getLayers() {
-			var text = "";
-			for (var i=0; i < map.getLayersModel().getLayerCount(); i++) {
-				var layer = map.getLayersModel().getLayerAtIndex(i);
-				text += layer.getTitle() + "\n";
-			}
-			document.getElementById("layersList").value = text;
-		}
-
-		function toggleVisibility(index) {
-			var layer = map.getLayersModel().getLayerAtIndex(index);
-			var visible = eval(layer.isMarkedAsVisible().toString()); // Boolean -> boolean conversion
-			layer.setMarkedAsVisible(!visible);
-		}
-
-		function increaseCountriesLayerOpacity() {
-			var layer = map.getLayersModel().getLayerAtIndex(1);
-			var opacity = layer.getOpacity() + 0.2;
-            // rounding
-            opacity = Math.round(opacity * 100) / 100
-			layer.setOpacity(Math.min(opacity, 1));
-            refreshCountriesOpacityLabel();
-		}
-
-        function decreaseCountriesLayerOpacity() {
-            var layer = map.getLayersModel().getLayerAtIndex(1);
-            var opacity = layer.getOpacity() - 0.2;
-            // rounding
-            opacity = Math.round(opacity * 100) / 100
-            layer.setOpacity(Math.max(opacity, 0));
-            refreshCountriesOpacityLabel();
-        }
-
-        function refreshCountriesOpacityLabel() {
-            document.getElementById("countriesOpacityLabel").innerHTML = map.getLayersModel().getLayerAtIndex(1).getOpacity();
-        }
-
-		function refreshLayer(layerName) {
-			var layer = map.getLayersModel().getLayer(layerName);
-			layer.refresh();
-		}
-	</script>
 </head>
 
 <body>
-	<div class="titleBar">
-		<div class="title">Geomajas JavaScript API test</div>
-		<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-	</div>
-	<div>
-		<table cellspacing="0" cellpadding="5">
-			<tr>
-				<td style="width:640px;" valign="top">
-					<div id="js-map-element" style="width:640px; height:480px; border: 1px solid #337428;">
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Map & Layers</h3>
+			<h4>
+				Switch on / off layer and refresh layers.<br>
+				Play with the opacity of the visible layers.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="showLayers">
+					<a href="#">log layers</a>
+				</li>
+				<li id="toggleLayer0">
+					<a href="#">toggle layer_0</a>
+				</li>
+				<li id="toggleLayer1">
+					<a href="#">toggle layer_1</a>
+				</li>
+				<li id="refreshLayer0">
+					<a href="#">refresh layer_0</a>
+				</li>
+				<li id="refreshLayer1">
+					<a href="#">refresh layer_1</a>
+				</li>
+			</ul>
+
+			<ul class="filter">
+				<li id="increaseOpacityLayer0">
+					<a href="#">increase layer_0 opacity</a>
+				</li>
+				<li id="decreaseOpacityLayer0">
+					<a href="#">decrease layer_0 opacity</a>
+				</li>
+
+				<li id="increaseOpacityLayer1">
+					<a href="#">increase layer_1 opacity</a>
+				</li>
+				<li id="decreaseOpacityLayer1">
+					<a href="#">decrease layer_1 opacity</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
 						<!-- on load, the map is attached here -->
 					</div>
-				</td>
-				<td valign="top">
-					<h2>Map & Layers</h2>
-					<h4>Layers</h4>
-					Get a list of all layers available in the layer model behind the map:<br>
-					<button onclick="getLayers()">Show Layers</button><br>
-					<textarea rows="6" cols="50" id="layersList"></textarea>
 
-					<h4>Toggle visibility</h4>
-					Toggle the visibility for OSM layer: <button onclick="toggleVisibility(0)">Toggle</button><br>
-					Toggle the visibility for Countries layer: <button onclick="toggleVisibility(1)">Toggle</button>
+				</div>
 
-					<h4>Change Opacity</h4>
-                    Change the opacity for Countries layer:<br>
-                    <button onclick="increaseCountriesLayerOpacity()">More</button>
-                    <button onclick="decreaseCountriesLayerOpacity()">Less</button>
-                    Current opacity: <label id="countriesOpacityLabel"></label>
+				<div class="column one_half">
 
-					<h4>Refresh layer</h4>
-					Refresh OSM layer: <button onclick="refreshLayer('clientLayerOsm')">Refresh</button><br>
-					Refresh Countries layer: <button onclick="refreshLayer('clientLayerCountries')">Refresh</button>
-				</td>
-			</tr>
-		</table>
-	</div>
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+		map.getEventBus().addMapInitializationHandler(function(event) {
+			getLayers()
+		});
+	}
+
+	function getLayers() {
+		var text = "";
+		for (var i=0; i < map.getLayersModel().getLayerCount(); i++) {
+			var layer = map.getLayersModel().getLayerAtIndex(i);
+			text += "Layer_" + i + ": " + layer.getTitle() + "<br>";
+		}
+		log(
+						"<strong>LAYERS AVAILABLE:</strong><br>" + text
+		);
+	}
+
+	function toggleVisibility(index) {
+		var layer = map.getLayersModel().getLayerAtIndex(index);
+		var visible = eval(layer.isMarkedAsVisible().toString()); // Boolean -> boolean conversion
+		layer.setMarkedAsVisible(!visible);
+		log(
+						layer.getTitle() + " toggled.<br>"
+		);
+	}
+
+	function increaseLayerOpacity(index) {
+		var layer = map.getLayersModel().getLayerAtIndex(index);
+		var opacity = layer.getOpacity() + 0.2;
+		// rounding
+		opacity = Math.round(opacity * 100) / 100;
+		layer.setOpacity(Math.min(opacity, 1));
+		refreshOpacityLabel(layer.getTitle(), index);
+	}
+
+	function decreaseLayerOpacity(index) {
+		var layer = map.getLayersModel().getLayerAtIndex(index);
+		var opacity = layer.getOpacity() - 0.2;
+		// rounding
+		opacity = Math.round(opacity * 100) / 100;
+		layer.setOpacity(Math.max(opacity, 0));
+		refreshOpacityLabel(layer.getTitle(), index);
+	}
+
+	function refreshOpacityLabel(layer, index) {
+		log(
+						layer + " opacity: " + map.getLayersModel().getLayerAtIndex(index).getOpacity() + "<br>"
+		);
+	}
+
+	function refreshLayer(layerName) {
+		var layer = map.getLayersModel().getLayer(layerName);
+		layer.refresh();
+		log(
+						layer.getTitle() + " refreshed.<br>"
+		);
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#showLayers').click(function() {
+		$('.filter li').removeClass('active');
+		getLayers();
+	});
+
+	$('#toggleLayer0').click(function() {
+		$('.filter li').removeClass('active');
+		toggleVisibility(0);
+	});
+
+	$('#toggleLayer1').click(function() {
+		$('.filter li').removeClass('active');
+		toggleVisibility(1);
+	});
+
+	$('#refreshLayer0').click(function() {
+		$('.filter li').removeClass('active');
+		refreshLayer('clientLayerOsm');
+	});
+
+	$('#refreshLayer1').click(function() {
+		$('.filter li').removeClass('active');
+		refreshLayer('clientLayerCountries');
+	});
+
+	$('#increaseOpacityLayer0').click(function() {
+		$('.filter li').removeClass('active');
+		increaseLayerOpacity(0);
+	});
+
+	$('#decreaseOpacityLayer0').click(function() {
+		$('.filter li').removeClass('active');
+		decreaseLayerOpacity(0);
+	});
+
+	$('#increaseOpacityLayer1').click(function() {
+		$('.filter li').removeClass('active');
+		increaseLayerOpacity(1);
+	});
+
+	$('#decreaseOpacityLayer1').click(function() {
+		$('.filter li').removeClass('active');
+		decreaseLayerOpacity(1);
+	});
+
+</script>
+
 </body>
 
 </html>

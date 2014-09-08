@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <!--
 		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
 		  ~
@@ -9,109 +9,174 @@
 		  ~ by the Geomajas Contributors License Agreement. For full licensing
 		  ~ details, see LICENSE.txt in the project root.
 		  -->
+<html lang="en">
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-	
-	<title>Geomajas Javascript API Showcase</title>
-	<link type="text/css" rel="stylesheet" href="geomajas.css" />
-	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+	<title>Gwt editing javascript - Showcase</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
 	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
-	
-	<script type="text/javascript">
-		var map;
 
-		function onGeomajasLoad() {
-            map = new gm.Map("js-map-element");
-            gm.ServerExtension.initializeMap(map, "app", "mapMain");
-		}
-
-		function removeCustomController() {
-            map.setMapController(gm.MapControllerFactory.createMapController('navigation'));
-		}
-
-		function applyCustomController() {
-			// Create the new MapController:
-			var mapController = gm.MapControllerFactory.createMapController();
-
-			// Apply handlers for Mouse Events:
-			mapController.setMouseMoveHandler(function(event) {
-                var screenLocation = mapController.getLocation(event, "screen");
-                var worldLocation = mapController.getLocation(event, "world");
-                displayMouseLocation(screenLocation, worldLocation);
-			});
-			mapController.setMouseOverHandler(function(event) {
-				// Do something usefull...
-			});
-			mapController.setMouseOutHandler(function(event) {
-				// Do something usefull...
-			});
-			mapController.setDownHandler(function(event) {
-				// Do something usefull...
-			});
-			mapController.setUpHandler(function(event) {
-				// Do something usefull...
-			});
-            mapController.setDragHandler(function(event) {
-                // Do something usefull...
-            });
-            mapController.setDoubleClickHandler(function(event) {
-                // Do something usefull...
-            });
-
-			// Apply activation (for init) and deactivation (for cleanup) handlers:
-			mapController.setActivationHandler(function() {
-				var element = document.getElementById("mouse-location");
-				element.innerHTML = "Activated custom controller...";
-			});
-			mapController.setDeactivationHandler(function() {
-				var element = document.getElementById("mouse-location");
-				element.innerHTML = "Deactivated custom controller...";
-			});
-
-			// Apply the MapController on the map:
-			map.setMapController(mapController);
-		}
-
-		function displayMouseLocation(screenLocation, worldLocation) {
-			var element = document.getElementById("mouse-location");
-			var txt = "<b>Mouse location:</b><br>"
-			txt += "Screen: " + screenLocation.getX() + ", " + screenLocation.getY();
-			txt += "<br>World: " + worldLocation.getX() + ", " + worldLocation.getY();
-			element.innerHTML = txt;
-		}
-	</script>
 </head>
 
 <body>
-	<div class="titleBar">
-		<div class="title">Geomajas JavaScript API test</div>
-		<div class="subtitle">This example uses an empty GWT application - JavaScript only</div>
-	</div>
-	<div>
-		<table cellspacing="0" cellpadding="5">
-			<tr>
-				<td style="width: 640px;">
-					<div id="js-map-element" style="width: 640px; height: 480px; border: 1px solid #337428;">
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Map controllers</h3>
+			<h4>
+				This example shows how to create a custom controller and apply it on the map.<br>
+				Apply / remove the  custom controller to show / hide the mouse position in both screen and world
+				coordinates.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+			<ul class="filter">
+				<li id="applyCustom">
+					<a href="#">Apply custom controller</a>
+				</li>
+				<li id="removeCustom">
+					<a href="#">Remove custom controller</a>
+				</li>
+			</ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
 						<!-- on load, the map is attached here -->
 					</div>
-				</td>
-				<td valign="top">
-					<h2>Custom Map Controllers</h2>
-					<h4>Apply Custom Controller</h4>
-					This example shows how to create a custom controller and apply it on the map.<br>
-                    This custom controller shows the mouse position in both screen and world coordinates.<br>
-					<button onclick="applyCustomController()">Apply Custom Controller</button>
 
-					<div id="mouse-location" style="padding-left: 40px;color:#337428;"><b>Mouse location: ?</b></div>
+				</div>
 
-					<h4>Remove Custom Controller</h4>
-					To remove the custom controller and apply the default (navigation) controller again:<br>
-					<button onclick="removeCustomController()">Remove Custom Controller</button>
-				</td>
-			</tr>
-		</table>
-	</div>
+				<div class="column one_half">
+
+					<h4>Mouse location:</h4>
+					<ul id="mouseLocation">
+						<li><strong>Screen: </strong></li>
+						<li><strong>World: </strong></li>
+					</ul>
+
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+	}
+
+	function removeCustomController() {
+		map.setMapController(gm.MapControllerFactory.createMapController('navigation'));
+		log(
+				"Default navigation controller set.<br>"
+		);
+	}
+
+	function applyCustomController() {
+		// Create the new MapController:
+		var mapController = gm.MapControllerFactory.createMapController();
+
+		// Apply handlers for Mouse Events:
+		mapController.setMouseMoveHandler(function(event) {
+			var screenLocation = mapController.getLocation(event, "screen");
+			var worldLocation = mapController.getLocation(event, "world");
+			displayMouseLocation(screenLocation, worldLocation);
+		});
+		mapController.setMouseOverHandler(function(event) {
+			// Do something usefull...
+		});
+		mapController.setMouseOutHandler(function(event) {
+			// Do something usefull...
+		});
+		mapController.setDownHandler(function(event) {
+			// Do something usefull...
+		});
+		mapController.setUpHandler(function(event) {
+			// Do something usefull...
+		});
+		mapController.setDragHandler(function(event) {
+			// Do something usefull...
+		});
+		mapController.setDoubleClickHandler(function(event) {
+			// Do something usefull...
+		});
+
+		// Apply activation (for init) and deactivation (for cleanup) handlers:
+		mapController.setActivationHandler(function() {
+			log("Activated custom controller<br>");
+		});
+		mapController.setDeactivationHandler(function() {
+			log("Deactivated custom controller<br>");
+		});
+
+		// Apply the MapController on the map:
+		map.setMapController(mapController);
+	}
+
+	function displayMouseLocation(screenLocation, worldLocation) {
+		var txt = "<li><strong>Screen: </strong>" + screenLocation.getX() + ", " + screenLocation.getY() + "</li>";
+		txt += "<li><strong>World: </strong>" + worldLocation.getX() + ", " + worldLocation.getY() + "</li>";
+		$("#mouseLocation").empty();
+		$("#mouseLocation").append(txt);
+	}
+
+	function log(txt) {
+		while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 120) {
+			$('#log li:last-child').remove();
+		}
+
+		$('#log li').removeClass('first-log-item');
+		$("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+	}
+
+	$('#applyCustom').click(function() {
+		$('.filter li').removeClass('active');
+		applyCustomController();
+	});
+
+	$('#removeCustom').click(function() {
+		$('.filter li').removeClass('active');
+		removeCustomController();
+	});
+
+</script>
+
 </body>
 
 </html>

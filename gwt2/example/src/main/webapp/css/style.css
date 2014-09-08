@@ -1,3 +1,14 @@
+/*
+			  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+			  ~
+			  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+			  ~
+			  ~ The program is available in open source according to the GNU Affero
+			  ~ General Public License. All contributions in this program are covered
+			  ~ by the Geomajas Contributors License Agreement. For full licensing
+			  ~ details, see LICENSE.txt in the project root.
+			  */
+
 /*----------------------------------------------
 Reset
 ------------------------------------------------*/
@@ -71,7 +82,8 @@ html {
 
 body {
 	font-family: 'DINNextLTPro-Regular', sans-serif; font-size:14px; color:#999999; text-align: left; line-height:19px;
-	}
+}
+
 ::selection { background:#12a04f; color:#fff; }
 ::-moz-selection { background:#12a04f; color:#fff; }
 ::-webkit-selection { background:#12a04f; color:#fff; }
@@ -117,7 +129,12 @@ input[type=text], input[type=password], input[type=search], textarea {
 	padding: 10px 10px;
 	}
 
-input[type=text], input[type=search], input[type=password] { width: 350px; }
+input[type=text].smallInput { width: 100px; }
+
+input[type=text].middleInput { width: 220px; }
+
+input[type=text].largeInput, input[type=search].largeInput, input[type=password].largeInput { width: 350px; }
+
 
 /* Links
 ---------------------------------------- */
@@ -260,7 +277,6 @@ General ID's or Classes
 Header
 ------------------------------------------------*/
 header, #header {
-	overflow: hidden;
 	margin-top: 10px;
 }
 
@@ -300,6 +316,7 @@ Entries
 
 .entry:hover {
 	cursor: pointer;
+	background-color: #F8F8F8;
 }
 
 .entry .entry-headline {
@@ -419,6 +436,7 @@ Columns
 	width: 540px;
 	height: 480px;
 	border: 1px solid #12a04f;
+	margin-bottom: 15px;
 }
 
 .log-item {
@@ -431,4 +449,27 @@ Columns
 
 #indexMouseOverOut {
 	color: #12a04f;
+}
+
+#busyElement {
+	color: #FFFFFF;
+	background-color: #000000;
+	font-weight: bold;
+	padding: 5px 15px 3px 15px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	margin-top: 5px;
+}
+
+.busyState {
+	border: 1px solid #660000;
+	background-color: #990000;
+}
+
+.relaxedState {
+	border: 1px solid #006600;
+	background-color: #009900;
 }
