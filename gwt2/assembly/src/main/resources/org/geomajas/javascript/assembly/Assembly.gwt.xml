@@ -18,4 +18,8 @@
 
 	<add-linker name="xsiframe" />
 
+<!--
+	<collapse-all-properties />
+-->
+
 </module>

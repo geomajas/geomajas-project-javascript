@@ -26,8 +26,7 @@
 	<modules>
 		<module>impl</module>
 		<module>server-extension-impl</module>
-		<module>assembly</module>
-
+		<!--<module>assembly</module>-->
 	</modules>
 
 	<profiles>
