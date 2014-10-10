@@ -57,8 +57,9 @@
 
 	<modules>
 		<module>api</module>
-		<module>server-extension-api</module>
 		<module>common</module>
+		<module>server-extension-api</module>
+		<module>server-extension-common</module>
 		<module>gwt2</module>
 		<module>documentation</module>
 		<module>javadoc</module>
@@ -106,6 +107,11 @@
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-javascript-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas.project</groupId>
+				<artifactId>geomajas-project-javascript-server-extension-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

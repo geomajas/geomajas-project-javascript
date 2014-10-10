@@ -38,7 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.project</groupId>
-			<artifactId>geomajas-project-javascript-common</artifactId>
+			<artifactId>geomajas-project-javascript-server-extension-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -55,14 +55,6 @@
 			<artifactId>gwtexporter</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -137,10 +129,7 @@
 					<disableClassMetadata>true</disableClassMetadata>
 					<extraJvmArgs>-Xmx1024M -Xss1024k</extraJvmArgs>
 					<!--<style>PRETTY</style>-->
-					<!--<style>DETAILED</style>-->
-					<!--<logLevel>DEBUG</logLevel>-->
-					<!--<draftCompile>true</draftCompile>-->
-					<!--<optimizationLevel>0</optimizationLevel>-->
+					<style>DETAILED</style>
 					<runTarget>index.html</runTarget>
 					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
 					<copyWebapp>true</copyWebapp>

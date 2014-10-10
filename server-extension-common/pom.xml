@@ -18,10 +18,10 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>geomajas-project-javascript-common</artifactId>
+	<artifactId>geomajas-project-javascript-server-extension-common</artifactId>
 	<packaging>jar</packaging>
-	<name>Geomajas Project JavaScript - Common</name>
-	<description>Geomajas Project JavaScript - Common code that can be shared between implementation
+	<name>Geomajas Project JavaScript - Server Extension Common</name>
+	<description>Geomajas Project JavaScript - Server Extension Common code that can be shared between implementation
 		(code that does not depend on gwt2/smartgwt client)</description>
 
 	<dependencies>
@@ -44,10 +44,13 @@
 		<!-- Geomajas dependencies -->
 		<dependency>
 			<groupId>org.geomajas.project</groupId>
-			<artifactId>geomajas-project-javascript-api</artifactId>
+			<artifactId>geomajas-project-javascript-server-extension-api</artifactId>
 		</dependency>
-
-</dependencies>
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-common-gwt-command</artifactId>
+		</dependency>
+	</dependencies>
 
 	<profiles>
 		<!--  include sources in build -->

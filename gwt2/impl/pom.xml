@@ -34,11 +34,15 @@
 		<!-- FIXME: this is needed for command, don't know why (OM) -->
 		<dependency>
 			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-client-gwt2-server-extension</artifactId>
+			<artifactId>geomajas-client-common-gwt-command</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.project</groupId>
 			<artifactId>geomajas-project-javascript-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-javascript-common</artifactId>
 		</dependency>
 
 

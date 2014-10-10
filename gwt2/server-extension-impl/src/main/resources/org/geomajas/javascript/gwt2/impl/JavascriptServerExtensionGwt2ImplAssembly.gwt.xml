@@ -15,6 +15,14 @@
 
 	<set-property name="export" value="yes"/>
 
+	<!--
+	GWT Logic: collapse-all-properties and sso linker only works together with style=PRETTY or DETAILED.
+	We need a single javascript file, so that's what we do now. Only drawback is that the file is bigger
+	(however zipped it has the same size).
+
+	Alternative is to use the xsiframe linker, this generates two javascript files (nocache.js and <MD5>.cache.js)
+	-->
+
 	<collapse-all-properties />
 	<add-linker name="sso" />
 </module>
