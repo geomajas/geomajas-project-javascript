@@ -104,48 +104,57 @@
 
 	</dependencies>
 
-	<build>
-		<plugins>
+	<profiles>
+		<profile>
+			<id>build-javadoc</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
 
-			<!-- We need to run JDK 1.6.10 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
+					<!-- We need to run JDK 1.6.10 -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
 
-				<!-- The javadoc for the exporter will be in the same directory as the normal javadoc -->
-				<!-- It will have an index 'jsdoc.html' where the documentation is aggregated. -->
-				<configuration>
-					<finalName>js</finalName>
-					<doclet>org.timepedia.exporter.doclet.JsDoclet</doclet>
-					<docletArtifact>
-						<groupId>org.timepedia.exporter</groupId>
-						<artifactId>gwtexporter</artifactId>
-						<version>2.4.0</version>
-					</docletArtifact>
-					<destDir>${project.build.directory}/apidocs</destDir>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>javadoc-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
+						<!-- The javadoc for the exporter will be in the same directory as the normal javadoc -->
+						<!-- It will have an index 'jsdoc.html' where the documentation is aggregated. -->
 						<configuration>
-							<includeDependencySources>true</includeDependencySources>
-
-							<dependencySourceIncludes>
-								<dependencySourceInclude>org.geomajas.project:*</dependencySourceInclude>
-							</dependencySourceIncludes>
+							<finalName>js</finalName>
+							<doclet>org.timepedia.exporter.doclet.JsDoclet</doclet>
+							<docletArtifact>
+								<groupId>org.timepedia.exporter</groupId>
+								<artifactId>gwtexporter</artifactId>
+								<version>2.4.0</version>
+							</docletArtifact>
+							<destDir>${project.build.directory}/apidocs</destDir>
 						</configuration>
-					</execution>
-				</executions>
 
-			</plugin>
+						<executions>
+							<execution>
+								<id>javadoc-jar</id>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<includeDependencySources>true</includeDependencySources>
 
-		</plugins>
-	</build>
+									<dependencySourceIncludes>
+										<dependencySourceInclude>org.geomajas.project:*</dependencySourceInclude>
+									</dependencySourceIncludes>
+								</configuration>
+							</execution>
+						</executions>
+
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 
 </project>
