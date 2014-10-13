@@ -22,6 +22,11 @@
 	  <itemizedlist>
 		  <listitem>
 			  <para>
+				  Online
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
 				  ZIP file
 			  </para>
 		  </listitem>
@@ -37,6 +42,18 @@
 		  </listitem>
 	  </itemizedlist>
   </section>
+
+	<section>
+		<title>Online</title>
+
+		<para>
+			The javascript files are available online:
+			http://dev.geomajas.org/geomajas-project-javascript-gwt2-distribution-<?eval ${project.version}?>/
+			Note: to save bandwidth and guarantee availability you are encouraged to host the javascript yourself,
+			especially for production environments.
+		</para>
+
+	</section>
 
 	<section>
 		<title>Usage of the zip file</title>
