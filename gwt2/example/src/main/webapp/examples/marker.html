@@ -52,6 +52,9 @@
 				<li id="addMarkers">
 					<a href="#">Add markers</a>
 				</li>
+                <li id="clearMarkers">
+                    <a href="#">Clear</a>
+                </li>
 			</ul>
 
 			<div class="columnsection">
@@ -128,8 +131,10 @@
 		if (markerContainer != null) {
 			for (var i = 0; i < 20; i++) {
 				// Random world coordinates for the marker:
-				var worldX = Math.random() * map.getViewPort().getBounds().getMaxX();
-				var worldY = Math.random() * map.getViewPort().getBounds().getMaxY();
+				var worldX = map.getViewPort().getBounds().getX() + (Math.random() *
+                        (map.getViewPort().getBounds().getMaxX() - map.getViewPort().getBounds().getX()));
+                var worldY = map.getViewPort().getBounds().getY() + (Math.random() *
+                        (map.getViewPort().getBounds().getMaxY() - map.getViewPort().getBounds().getY()));
 				var randomCoordinate = new gm.Coordinate(worldX, worldY);
 
 				// Create new marker with the coordinates:
@@ -193,6 +198,10 @@
 		});
 	}
 
+    function clearMarkers() {
+        markerContainer.clear();
+    }
+
 	function log(txt) {
 		while ($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
 			$('#log li:last-child').remove();
@@ -206,6 +215,11 @@
 		$('.filter li').removeClass('active');
 		addMarkers();
 	});
+
+    $('#clearMarkers').click(function () {
+        $('.filter li').removeClass('active');
+        clearMarkers();
+    });
 
 </script>
 
