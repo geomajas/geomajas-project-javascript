@@ -33,33 +33,33 @@ import org.timepedia.exporter.client.Exportable;
 @ExportPackage("gm")
 public final class JsOsmLayer extends JsLayerImpl implements Exportable {
 
-    private JsOsmLayer() {
-        super();
-    }
+	private JsOsmLayer() {
+		super();
+	}
 
-    @ExportConstructor
-    public static JsOsmLayer constructor(String title, JsTileConfiguration tileConfig,
-                                         String url) {
-        final JsOsmLayer jsOsmLayer = new JsOsmLayer();
-        jsOsmLayer.construct(title, tileConfig, url);
+	@ExportConstructor
+	public static JsOsmLayer constructor(String title, JsTileConfiguration tileConfig,
+										 String url) {
+		final JsOsmLayer jsOsmLayer = new JsOsmLayer();
+		jsOsmLayer.construct(title, tileConfig, url);
 
-        return jsOsmLayer;
-    }
+		return jsOsmLayer;
+	}
 
-    private void construct(String title, JsTileConfiguration tileConfig,
-                           String url) {
-        this.layer = TileBasedLayerClient.getInstance().createOsmLayer(title, tileConfig.toGwt(), url);
-    }
+	private void construct(String title, JsTileConfiguration tileConfig,
+						   String url) {
+		this.layer = TileBasedLayerClient.getInstance().createOsmLayer(title, tileConfig.toGwt(), url);
+	}
 
-    /**
-     * Set the maximum bounds. The bounds is defined in the map CRS. For tile-based layers, only tiles within the
-     * maximum bounds will be fetched. To avoid rounding errors, the center of the tile may be used for checking the
-     * condition.
-     *
-     * @param maxBounds The maximum bounds
-     */
-    public void setMaxBounds(Bbox maxBounds) {
-        this.layer.setMaxBounds(maxBounds);
-    }
+	/**
+	 * Set the maximum bounds. The bounds is defined in the map CRS. For tile-based layers, only tiles within the
+	 * maximum bounds will be fetched. To avoid rounding errors, the center of the tile may be used for checking the
+	 * condition.
+	 *
+	 * @param maxBounds The maximum bounds
+	 */
+	public void setMaxBounds(Bbox maxBounds) {
+		this.layer.setMaxBounds(maxBounds);
+	}
 
 }
