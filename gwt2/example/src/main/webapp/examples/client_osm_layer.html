@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <title>Gwt editing javascript - Showcase</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+    <script src="../js/jquery.modernizr.min.js"></script>
+
+    <script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
+    <script type="text/javascript" language="javascript" src="../clientOnly/clientOnly.nocache.js"></script>
+
+</head>
+
+<body>
+
+<div id="page">
+
+    <header id="header" class="wrapper">
+
+        <div class="header_tagline">
+            <h3>Basic client side OSM</h3>
+            <h4>
+                In this example a OSM layer is configured and created client side.
+            </h4>
+        </div>
+
+    </header>
+
+    <section id="main">
+
+        <div class="main_inner wrapper clearfix">
+
+            <div class="columnsection">
+
+                <div class="column one_half">
+
+                    <div id="js-map-element">
+                        <!-- on load, the map is attached here -->
+                    </div>
+
+                </div>
+
+                <div class="column one_half">
+
+                    <h4>Log:</h4>
+                    <ul id="log"></ul>
+
+                </div>
+
+            </div>
+
+        </div><!-- END main inner -->
+
+    </section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+    var map;
+    var OSM_BASE_URL = "http://a.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    var crs = "EPSG:900913";
+    var resolutions = [];
+    var MAX_ZOOM_LEVELS = 19;
+    var EQUATOR_IN_METERS = 40075016.686;
+    var HALF_EQUATOR_IN_METERS = 40075016.686 / 2;
+
+    function onGeomajasLoad() {
+        initResolutions();
+
+        var mapConfig = new gm.MapConfiguration();
+        mapConfig.setCrs(crs, "METRIC");
+        var bounds = new gm.Bbox(-HALF_EQUATOR_IN_METERS, -HALF_EQUATOR_IN_METERS, EQUATOR_IN_METERS, EQUATOR_IN_METERS);
+        mapConfig.setInitBounds(bounds);
+        mapConfig.setMaxBounds(bounds);
+        mapConfig.setResolutions(resolutions);
+
+        // will create and initialize the map with given map configuration
+        map = new gm.Map("js-map-element", mapConfig);
+        init();
+    }
+
+    function init() {
+        var tileConfig = new gm.layer.TileConfiguration(256, 256, new gm.Coordinate(-HALF_EQUATOR_IN_METERS, -HALF_EQUATOR_IN_METERS));
+        tileConfig.setResolutions(resolutions);
+        // Now create a OSM layer and add it to the map:
+        var osmLayer = new gm.OsmLayer("osmCountries", tileConfig, OSM_BASE_URL);
+        map.getLayersModel().addLayer(osmLayer);
+
+        log("Map initialized.");
+    }
+
+    function initResolutions() {
+        for (var i = 0; i < MAX_ZOOM_LEVELS; i++) {
+            resolutions.push(EQUATOR_IN_METERS / (256 * Math.pow(2, i)));
+        }
+    }
+
+    function log(txt) {
+        while ($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+            $('#log li:last-child').remove();
+        }
+
+        $('#log li').removeClass('first-log-item');
+        $("#log").prepend("<li class='first-log-item log-item'>" + txt + "</li>");
+    }
+
+</script>
+
+</body>
+
+</html>
