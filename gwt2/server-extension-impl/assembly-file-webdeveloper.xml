@@ -1,0 +1,40 @@
+<assembly
+xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+	<id>WEB</id>
+
+	<baseDirectory>geomajas-project-javascript-assembly-${version}</baseDirectory>
+
+	<formats>
+		<format>zip</format>
+	</formats>
+
+	<includeBaseDirectory>false</includeBaseDirectory>
+
+	<fileSets>
+
+		<fileSet>
+			<directory>${basedir}/target/classes/</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>**/index.html</include>
+				<include>gm/**</include>
+			</includes>
+			<excludes>
+				<exclude>gm/gm.nocache.js</exclude>
+			</excludes>
+		</fileSet>
+
+	</fileSets>
+
+	<files>
+		<file>
+			<source>${basedir}/target/classes/gm/gm.nocache.js</source>
+			<outputDirectory>/</outputDirectory>
+			<destName>gm/gm.js</destName>
+		</file>
+	</files>
+
+</assembly>

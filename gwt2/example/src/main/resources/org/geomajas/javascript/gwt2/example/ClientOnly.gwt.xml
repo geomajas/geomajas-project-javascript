@@ -22,4 +22,6 @@
 	<!--<set-property name="user.agent" value="gecko1_8" />-->
 
 	<add-linker name="xsiframe"/>
+
+	<collapse-all-properties/>
 </module>

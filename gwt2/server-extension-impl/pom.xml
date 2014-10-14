@@ -37,6 +37,10 @@
 			<artifactId>geomajas-project-javascript-server-extension-api</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-javascript-server-extension-common</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<scope>provided</scope>
@@ -51,14 +55,6 @@
 			<artifactId>gwtexporter</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -105,6 +101,85 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- some default config, added to in profiles -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>${version-gwt}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-user</artifactId>
+						<version>${version-gwt}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-dev</artifactId>
+						<version>${version-gwt}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<modules>
+						<module>org.geomajas.javascript.gwt2.impl.JavascriptServerExtensionGwt2ImplAssembly</module>
+					</modules>
+					<disableCastChecking>true</disableCastChecking>
+					<disableClassMetadata>true</disableClassMetadata>
+					<extraJvmArgs>-Xmx1024M -Xss1024k</extraJvmArgs>
+					<!--<style>PRETTY</style>-->
+					<style>DETAILED</style>
+					<runTarget>index.html</runTarget>
+					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+					<copyWebapp>true</copyWebapp>
+					<webappDirectory>
+						${project.build.directory}/classes
+					</webappDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>
+							/assembly-file-webdeveloper.xml
+						</descriptor>
+						<descriptor>
+							/assembly-file-jar.xml
+						</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
 
 	<profiles>
 		<!--  include sources in build -->

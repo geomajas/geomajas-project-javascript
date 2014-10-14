@@ -8,7 +8,9 @@
   ~ General Public License. All contributions in this program are covered
   ~ by the Geomajas Contributors License Agreement. For full licensing
   ~ details, see LICENSE.txt in the project root.
-  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -29,22 +31,33 @@
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-client-gwt2-impl</artifactId>
 		</dependency>
+		<!-- FIXME: this is needed for command, don't know why (OM) -->
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-common-gwt-command</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.geomajas.project</groupId>
 			<artifactId>geomajas-project-javascript-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-javascript-common</artifactId>
+		</dependency>
 
-        <!-- Geomajas wms plugin dependency (client) -->
-        <dependency>
-            <groupId>org.geomajas.plugin</groupId>
-            <artifactId>geomajas-client-gwt2-plugin-wms</artifactId>
-        </dependency>
 
-        <!-- Geomajas tms plugin dependency (client) -->
-        <dependency>
-            <groupId>org.geomajas.plugin</groupId>
-            <artifactId>geomajas-client-gwt2-plugin-tms</artifactId>
-        </dependency>
+
+		<!-- Geomajas wms plugin dependency (client) -->
+		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-client-gwt2-plugin-wms</artifactId>
+		</dependency>
+
+		<!-- Geomajas tms plugin dependency (client) -->
+		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-client-gwt2-plugin-tms</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -100,6 +113,88 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- some default config, added to in profiles -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>${version-gwt}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-user</artifactId>
+						<version>${version-gwt}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-dev</artifactId>
+						<version>${version-gwt}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<modules>
+						<module>org.geomajas.javascript.gwt2.impl.JavascriptImplAssembly</module>
+					</modules>
+					<disableCastChecking>true</disableCastChecking>
+					<disableClassMetadata>true</disableClassMetadata>
+					<extraJvmArgs>-Xmx1024M -Xss1024k</extraJvmArgs>
+					<!--<style>PRETTY</style>-->
+					<style>DETAILED</style>
+					<!--<logLevel>DEBUG</logLevel>-->
+					<!--<draftCompile>true</draftCompile>-->
+					<!--<optimizationLevel>0</optimizationLevel>-->
+					<runTarget>index.html</runTarget>
+					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+					<copyWebapp>true</copyWebapp>
+					<webappDirectory>
+						${project.build.directory}/classes
+					</webappDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>
+							/assembly-file-webdeveloper.xml
+						</descriptor>
+						<descriptor>
+							/assembly-file-jar.xml
+						</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
 
 	<profiles>
 		<!--  include sources in build -->
