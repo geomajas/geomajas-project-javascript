@@ -11,11 +11,10 @@
   -->
 
 <module rename-to="gm">
+	<inherits name="org.geomajas.javascript.gwt2.impl.JavascriptServerExtensionGwt2Impl" />
 
-	<inherits name="org.geomajas.javascript.gwt2.impl.JavascriptImpl"/>
+	<set-property name="export" value="yes"/>
 
-	<entry-point class="org.geomajas.javascript.assembly.client.Assembly" />
-
+	<collapse-all-properties />
 	<add-linker name="xsiframe" />
-
 </module>

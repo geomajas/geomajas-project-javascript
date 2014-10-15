@@ -57,15 +57,16 @@
 
 	<modules>
 		<module>api</module>
-		<module>server-extension-api</module>
 		<module>common</module>
+		<module>server-extension-api</module>
+		<module>server-extension-common</module>
 		<module>gwt2</module>
 		<module>documentation</module>
 		<module>javadoc</module>
 	</modules>
 
 	<properties>
-		<geomajas-gwt2-client-version>2.1.0-SNAPSHOT</geomajas-gwt2-client-version>
+		<geomajas-gwt2-client-version>2.2.0-SNAPSHOT</geomajas-gwt2-client-version>
 		<gwt-exporter-version>2.4.0</gwt-exporter-version>
 		<version-gwt>2.5.1</version-gwt>
 	</properties>
@@ -106,6 +107,11 @@
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-javascript-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas.project</groupId>
+				<artifactId>geomajas-project-javascript-server-extension-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

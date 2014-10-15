@@ -20,7 +20,7 @@
 
 	<artifactId>geomajas-project-javascript-server-extension-api</artifactId>
 	<packaging>jar</packaging>
-	<name>Geomajas Project JavaScript Server Extension - API</name>
+	<name>Geomajas Project JavaScript - Server Extension API</name>
 	<description>Geomajas Project JavaScript Server Extension - API</description>
 
 	<dependencies>

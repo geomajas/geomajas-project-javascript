@@ -22,21 +22,30 @@
 	  <itemizedlist>
 		  <listitem>
 			  <para>
-				  The javascript Assembly dependency
+				  ZIP file
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  Assembly JAR file
+				  maven dependency
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  Assembly ZIP file
+				  JAR file
 			  </para>
 		  </listitem>
 	  </itemizedlist>
   </section>
+
+	<section>
+		<title>Usage of the zip file</title>
+
+		<para>
+			This package contains and index.html example with the needed js files.
+		</para>
+
+	</section>
 
 	<section>
 		<title>Usage of the dependency</title>
@@ -49,8 +58,8 @@
 		<programlisting>
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
-				<artifactId>geomajas-project-javascript-assembly</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
+				<artifactId>geomajas-project-javascript-gwt2-impl</artifactId>
+				<version><?eval ${project.version}?></version>
 			</dependency>
 		</programlisting>
 
@@ -69,15 +78,16 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.geomajas.project</groupId>
-									<artifactId>geomajas-project-javascript-assembly</artifactId>
-									<version>1.0.0-SNAPSHOT</version>
+									<artifactId>geomajas-project-javascript-gwt2-impl</artifactId>
+									<version><?eval ${project.version}?></version>
 									<type>jar</type>
 								</artifactItem>
 							</artifactItems>
 							<excludes>
 								**/WEB-INF/**,
 								**/META-INF/**,
-								**/org/**
+								**/org/**,
+								index.html
 							</excludes>
 							<outputDirectory>${basedir}/src/main/webapp</outputDirectory>
 						</configuration>
@@ -93,16 +103,7 @@
 
 		<para>
 			Copy the jar file to the WEB-INF/lib folder of your web project.
-			You only need to include the 'gm/gm.nocache.js' file in your page to make use of the api.
-		</para>
-
-	</section>
-
-	<section>
-		<title>Usage of the zip file</title>
-
-		<para>
-			This package contains and index.html example with the needed js files.
+			You only need to include the 'gm/gm.js' file in your page to make use of the api.
 		</para>
 
 	</section>
