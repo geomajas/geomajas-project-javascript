@@ -46,6 +46,12 @@
             <artifactId>geomajas-client-gwt2-plugin-tms</artifactId>
         </dependency>
 
+        <!-- Geomajas wms plugin dependency (client) -->
+        <dependency>
+            <groupId>org.geomajas.plugin</groupId>
+            <artifactId>geomajas-client-gwt2-plugin-tilebasedlayer</artifactId>
+        </dependency>
+
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
