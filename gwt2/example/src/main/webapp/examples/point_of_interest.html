@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+
+<!--
+          ~ icon artists
+          ~ Book: http://www.doublejdesign.co.uk/
+          -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <title>Gwt editing javascript - Showcase</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+    <script src="../js/jquery.modernizr.min.js"></script>
+
+    <script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
+    <script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+
+    <!-- EPSG transform dependencies -->
+    <script type="text/javascript" language="javascript" src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js"></script>
+    <!-- /EPSG transform dependencies -->
+
+</head>
+
+<body>
+
+<div id="page">
+
+    <header id="header" class="wrapper">
+
+        <div class="header_tagline">
+            <h3>Point of Interest</h3>
+            <h4>
+                This example demonstrates how to show JSON data on the map.<br>
+                Press the button to display the libraries near Ghent, Belgium.
+            </h4>
+        </div>
+
+    </header>
+
+    <section id="main">
+
+        <div class="main_inner wrapper clearfix">
+
+            <ul class="filter">
+                <li id="points">
+                    <a href="#">Points</a>
+                </li>
+            </ul>
+
+            <div class="columnsection">
+
+                <div class="column one_half">
+
+                    <div id="js-map-element">
+                        <!-- on load, the map is attached here -->
+                    </div>
+
+                </div>
+
+                <div class="column one_half">
+
+                    <h4>Log:</h4>
+                    <ul id="log"></ul>
+
+                </div>
+
+            </div>
+
+        </div><!-- END main inner -->
+
+    </section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+    var map;
+    var TMS_BASE_URL = "https://www.milieuinfo.be/orthos/";
+    var crs = "EPSG:31370"; //Belgium
+    var layerResolutions = [1024.0, 512.000, 256.000, 128.000, 64.000, 32.000, 16.000, 8.000, 4.000, 2.000, 1.000, 0.500, 0.250];
+    var mapResolutions = [256.000, 128.000, 64.000, 32.000, 16.000, 8.000, 4.000, 2.000, 1.000, 0.500, 0.250];
+    var markerContainer;
+    var maxBounds;
+
+    //See the TMS showcase for more information on displaying TMS layers
+    function onGeomajasLoad() {
+        var mapConfig = new gm.MapConfiguration();
+        mapConfig.setCrs(crs, "METRIC");
+        mapConfig.setResolutions(mapResolutions);
+        maxBounds = new gm.Bbox(22000.000000, 153000.000000, 237000.000000, 92000.000000);
+        mapConfig.setMaxBounds(maxBounds);
+        map = new gm.Map("js-map-element", mapConfig);
+        init();
+    }
+
+    function init() {
+        var tileConfig = new gm.layer.TileConfiguration(256, 256, new gm.Coordinate(18000.0, 152999.75));
+        var layerConfig = new gm.TmsLayerConfiguration();
+        layerConfig.setBaseUrl(TMS_BASE_URL);
+        layerConfig.setFileExtension(".jpg");
+        tileConfig.setResolutions(layerResolutions);
+        var tmsLayer = new gm.TmsLayer("tms-vlaanderen", layerConfig, tileConfig);
+        map.getLayersModel().addLayer(tmsLayer);
+        //Apply the bounds to view Ghent, Belgium
+        map.getViewPort().applyBounds(new gm.Bbox(98000, 188000, 11000, 11000));
+    }
+
+    //This is where we parse the JSON file and use the lat/long values to add markers on the map.
+    function parseJson(url) {
+        $.getJSON(url, function (data) {
+            $.each(data.Bibliotheek, function (key, val) {
+                addMarker(val['long'], val['lat']);
+            });
+        });
+    }
+
+    //See the Markers showcase for more information on displaying markers
+    function addMarker(long, lat) {
+        console.log('markerContainer');
+        console.log(markerContainer);
+        markerContainer = map.getContainerManager().addWorldWidgetContainer();
+        var oImg = document.createElement("img");
+        oImg.setAttribute('src', 'images/Books.png');
+        var marker = new gm.Marker(oImg, 16, 16);
+        markerContainer.addMarker(marker);
+        console.log('marker');
+        console.log(marker);
+        var markerCoordinate = transformEpsg(long, lat);
+        if (markerCoordinate != null) {
+            marker.setCoordinate(markerCoordinate);
+        }
+    }
+
+    //transform the JSON coordinates to usable x/y coordinates for the map.
+    function transformEpsg(long, lat) {
+        if (null != long && null != lat) {
+            //EPSG:31370
+            var epsg31370 = "+proj=lcc +lat_1=51.16666723333333 +lat_2=49.8333339 +lat_0=90 +lon_0=4.367486666666666 +x_0=150000.013 +y_0=5400088.438 +ellps=intl +towgs84=-106.869,52.2978,-103.724,0.3366,-0.457,1.8422,-1.2747 +units=m +no_defs";
+            var epsg4326 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+            //source projection is default html geo location projection EPSG:4326 or WGS84
+            var transformedProjection = proj4(epsg4326, epsg31370).forward([long, lat]);
+            return new gm.Coordinate(transformedProjection[0], transformedProjection[1]);
+        }
+        return null;
+    }
+
+    function log(txt) {
+        while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+            $('#log li:last-child').remove();
+        }
+
+        $('#log li').removeClass('first-log-item');
+        $("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+    }
+
+    $('#points').click(function() {
+        $('.filter li').removeClass('active');
+        log("points has been clicked. Libraries near Ghent are marked.");
+        parseJson('json/library.json');
+    });
+
+</script>
+
+</body>
+
+</html>
