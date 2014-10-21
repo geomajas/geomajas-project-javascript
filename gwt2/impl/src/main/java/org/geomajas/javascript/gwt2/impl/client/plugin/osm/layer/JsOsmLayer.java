@@ -14,7 +14,6 @@ package org.geomajas.javascript.gwt2.impl.client.plugin.osm.layer;
 import org.geomajas.geometry.Bbox;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.JsLayerImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.layer.tile.JsTileConfiguration;
-import org.geomajas.gwt2.plugin.tilebasedlayer.client.layer.OsmLayer;
 import org.geomajas.gwt2.plugin.tilebasedlayer.client.TileBasedLayerClient;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportConstructor;
