@@ -168,6 +168,29 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>${gwt2-client-version-cargo-maven2-plugin}</version>
+				<configuration>
+
+					<!-- Container configuration -->
+					<container>
+						<containerId>tomcat7x</containerId>
+						<type>remote</type>
+					</container>
+
+					<!-- Configuration to use with the container -->
+					<configuration>
+						<type>runtime</type>
+						<properties>
+							<cargo.remote.username>${dev.deploy.username}</cargo.remote.username>
+							<cargo.remote.password>${dev.deploy.password}</cargo.remote.password>
+							<cargo.remote.uri>${dev.deploy.uri}</cargo.remote.uri>
+						</properties>
+					</configuration>
+				</configuration>
+			</plugin>			
 
 		</plugins>
 	</build>
