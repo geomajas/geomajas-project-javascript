@@ -93,6 +93,7 @@
 		</dependency>
 
 		<!-- This is needed for pure javascript docs -->
+<!--
 		<dependency>
 			<groupId>com.sun</groupId>
 			<artifactId>tools</artifactId>
@@ -101,7 +102,7 @@
 			<optional>true</optional>
 			<systemPath>${java.home}/../lib/tools.jar</systemPath>
 		</dependency>
-
+-->
 	</dependencies>
 
 	<profiles>
@@ -121,6 +122,7 @@
 
 						<!-- The javadoc for the exporter will be in the same directory as the normal javadoc -->
 						<!-- It will have an index 'jsdoc.html' where the documentation is aggregated. -->
+<!--
 						<configuration>
 							<finalName>js</finalName>
 							<doclet>org.timepedia.exporter.doclet.JsDoclet</doclet>
@@ -131,7 +133,7 @@
 							</docletArtifact>
 							<destDir>${project.build.directory}/apidocs</destDir>
 						</configuration>
-
+-->
 						<executions>
 							<execution>
 								<id>javadoc-jar</id>
