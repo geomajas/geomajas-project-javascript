@@ -30,7 +30,7 @@
     <script src="../js/jquery.modernizr.min.js"></script>
 
     <script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
-    <script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+    <script type="text/javascript" language="javascript" src="../clientOnly/clientOnly.nocache.js"></script>
 
     <!-- EPSG transform dependencies -->
     <script type="text/javascript" language="javascript" src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js"></script>
@@ -47,9 +47,10 @@
         <div class="header_tagline">
             <h3>Point of Interest</h3>
             <h4>
-                This example demonstrates how to show JSON data on the map.<br>
+                This example demonstrates how to show JSON data on the map.<br />
                 Press the button to display the libraries near Ghent, Belgium.
             </h4>
+	    
         </div>
 
     </header>
@@ -61,6 +62,10 @@
             <ul class="filter">
                 <li id="points">
                     <a href="#">Points</a>
+                </li>
+
+                <li id="json">
+                    <a href="json/library.json">View Json</a>
                 </li>
             </ul>
 
