@@ -89,6 +89,10 @@ public interface JsMapPresenter extends Exportable {
 	 */
 	void setSize(int width, int height);
 
+	//-----------------------------------------------
+	// JsMapController as main map controller
+	//-----------------------------------------------
+
 	/**
 	 * Apply a new {@link org.geomajas.javascript.api.client.map.controller.JsMapController} on the map.
 	 * This controller will handle all mouse-events that are global for
@@ -110,4 +114,41 @@ public interface JsMapPresenter extends Exportable {
 	 */
 	JsMapController getMapController();
 
+	//-----------------------------------------------
+	// JsMapController as listener
+	//-----------------------------------------------
+
+	/**
+	 * Add a new listener to the map. These listeners passively listen to mouse events on the map, without actually
+	 * interfering with these events. It is up to the developer to make sure these listeners do not interfere with the
+	 * primary controller on the map. In this regard it is considered bad practice to let these listeners interfere with
+	 * the mouse events.
+	 *
+	 * @param mapListener
+	 *            The listener to try and remove again.
+	 * @return Returns true of removal was successful, false otherwise (i.e. if the listener could not be found).
+	 */
+	boolean addMapListener(JsMapController mapListener);
+
+	/**
+	 * Remove one of the currently active listeners on the map. These listeners passively listen to mouse events on the
+	 * map, without actually interfering with these events. It is up to the developer to make sure these listeners do
+	 * not interfere with the primary controller on the map. In this regard it is considered bad practice to let these
+	 * listeners interfere with the mouse events.
+	 *
+	 * @param mapListener
+	 *            The listener to try and remove again.
+	 * @return Returns true of removal was successful, false otherwise (i.e. if the listener could not be found).
+	 */
+	boolean removeMapListener(JsMapController mapListener);
+
+	/**
+	 * Get the currently active set of listeners on the map. These listeners passively listen to mouse events on the
+	 * map, without actually interfering with these events. It is up to the developer to make sure these listeners do
+	 * not interfere with the primary controller on the map. In this regard it is considered bad practice to let these
+	 * listeners interfere with the mouse events.
+	 *
+	 * @return Returns the full collection of currently active listeners.
+	 */
+	JsMapController[] getMapListeners();
 }
