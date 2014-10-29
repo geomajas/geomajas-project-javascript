@@ -24,6 +24,7 @@ import org.geomajas.javascript.api.client.map.controller.JsMapController;
 import org.geomajas.javascript.api.client.map.controller.JsMouseMoveHandler;
 import org.geomajas.javascript.api.client.map.controller.JsMouseOutHandler;
 import org.geomajas.javascript.api.client.map.controller.JsMouseOverHandler;
+import org.geomajas.javascript.api.client.map.controller.JsMouseWheelHandler;
 import org.geomajas.javascript.api.client.map.controller.JsUpHandler;
 import org.geomajas.javascript.gwt2.impl.client.JsGwtImpl;
 import org.timepedia.exporter.client.Export;
@@ -37,6 +38,7 @@ import org.timepedia.exporter.client.Exportable;
  * has 2 extra handlers executed on activation and deactivation of this controller on the map.
  *
  * @author Pieter De Graef
+ * @author Jan Venstermans
  * @since 1.0.0
  */
 @Api
@@ -51,6 +53,8 @@ public class JsMapControllerImpl implements JsMapController, Exportable {
 	private JsMouseOutHandler mouseOutHandler;
 
 	private JsMouseOverHandler mouseOverHandler;
+
+	private JsMouseWheelHandler mouseWheelHandler;
 
 	private JsDownHandler downHandler;
 
@@ -88,6 +92,11 @@ public class JsMapControllerImpl implements JsMapController, Exportable {
 	@Override
 	public void setMouseOverHandler(JsMouseOverHandler mouseOverHandler) {
 		this.mouseOverHandler = mouseOverHandler;
+	}
+
+	@Override
+	public void setMouseWheelHandler(JsMouseWheelHandler mouseWheelHandler) {
+		this.mouseWheelHandler = mouseWheelHandler;
 	}
 
 	@Override
@@ -137,6 +146,11 @@ public class JsMapControllerImpl implements JsMapController, Exportable {
 	@Override
 	public JsMouseOverHandler getMouseOverHandler() {
 		return mouseOverHandler;
+	}
+
+	@Override
+	public JsMouseWheelHandler getMouseWheelHandler() {
+		return mouseWheelHandler;
 	}
 
 	@Override
