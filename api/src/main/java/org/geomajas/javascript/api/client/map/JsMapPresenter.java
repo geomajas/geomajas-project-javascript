@@ -89,10 +89,6 @@ public interface JsMapPresenter extends Exportable {
 	 */
 	void setSize(int width, int height);
 
-	//-----------------------------------------------
-	// JsMapController as main map controller
-	//-----------------------------------------------
-
 	/**
 	 * Apply a new {@link org.geomajas.javascript.api.client.map.controller.JsMapController} on the map.
 	 * This controller will handle all mouse-events that are global for
@@ -113,10 +109,6 @@ public interface JsMapPresenter extends Exportable {
 	 * @return The map controller or <code>null</code> if there is none.
 	 */
 	JsMapController getMapController();
-
-	//-----------------------------------------------
-	// JsMapController as listener
-	//-----------------------------------------------
 
 	/**
 	 * Add a new listener to the map. These listeners passively listen to mouse events on the map, without actually

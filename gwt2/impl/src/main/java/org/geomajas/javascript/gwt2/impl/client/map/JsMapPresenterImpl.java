@@ -168,10 +168,6 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		return mapAsWidget;
 	}
 
-	//-----------------------------------------------
-	// JsMapController as main map controller
-	//-----------------------------------------------
-
 	@Override
 	public void setMapController(JsMapController controller) {
 		if (controller != null) {
@@ -187,10 +183,6 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		MapController controller = mapPresenter.getMapController();
 		return new JsMapControllerWrapperImpl(controller);
 	}
-
-	//-----------------------------------------------
-	// JsMapController as listener
-	//-----------------------------------------------
 
 	@Override
 	public boolean addMapListener(JsMapController mapListener) {
