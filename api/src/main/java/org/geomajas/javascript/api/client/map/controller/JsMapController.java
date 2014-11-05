@@ -43,6 +43,8 @@ public interface JsMapController extends Exportable {
 
 	void setMouseOverHandler(JsMouseOverHandler mouseOverHandler);
 
+	void setMouseWheelHandler(JsMouseWheelHandler mouseWheelHandler);
+
 	void setDownHandler(JsDownHandler downHandler);
 
 	void setUpHandler(JsUpHandler upHandler);
@@ -65,6 +67,8 @@ public interface JsMapController extends Exportable {
 
 	JsMouseOverHandler getMouseOverHandler();
 
+	JsMouseWheelHandler getMouseWheelHandler();
+
 	JsDownHandler getDownHandler();
 
 	JsUpHandler getUpHandler();
@@ -84,4 +88,5 @@ public interface JsMapController extends Exportable {
 	void setMapPresenter(JsMapPresenter map);
 
 	Coordinate getLocation(HumanInputEvent<?> event, String renderSpace);
+
 }

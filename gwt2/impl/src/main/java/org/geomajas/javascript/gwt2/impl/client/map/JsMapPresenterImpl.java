@@ -16,6 +16,7 @@ import com.google.gwt.event.dom.client.HumanInputEvent;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import org.geomajas.gwt2.client.GeomajasImpl;
@@ -255,6 +256,7 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 	 * JavaScript to GWT controller wrapper.
 	 *
 	 * @author Pieter De Graef
+	 * @author Jan Venstermans
 	 */
 	private class JsController extends AbstractMapController {
 
@@ -316,6 +318,13 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		public void onDoubleClick(DoubleClickEvent event) {
 			if (mapController.getDoubleClickHandler() != null) {
 				mapController.getDoubleClickHandler().onDoubleClick(event);
+			}
+		}
+
+		@Override
+		public void onMouseWheel(MouseWheelEvent event) {
+			if (mapController.getMouseWheelHandler() != null) {
+				mapController.getMouseWheelHandler().onMouseWheel(event);
 			}
 		}
 

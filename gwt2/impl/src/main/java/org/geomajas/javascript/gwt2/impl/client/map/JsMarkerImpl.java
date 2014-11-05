@@ -155,9 +155,6 @@ public class JsMarkerImpl extends AbstractTransformableWidget
 		// Put the widget to the bottom so the (possible) mouse move events are not lost on a 'higher' widget:
 		DOM.appendChild(asWidget().getParent().getElement(), asWidget().getElement());
 		select();
-
-		event.preventDefault();
-		event.stopPropagation();
 	}
 
 	@Override
