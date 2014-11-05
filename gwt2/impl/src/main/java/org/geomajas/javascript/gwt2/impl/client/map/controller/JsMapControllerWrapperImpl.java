@@ -18,6 +18,7 @@ import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import org.geomajas.geometry.Coordinate;
@@ -32,6 +33,7 @@ import org.geomajas.javascript.api.client.map.controller.JsDragHandler;
 import org.geomajas.javascript.api.client.map.controller.JsMouseMoveHandler;
 import org.geomajas.javascript.api.client.map.controller.JsMouseOutHandler;
 import org.geomajas.javascript.api.client.map.controller.JsMouseOverHandler;
+import org.geomajas.javascript.api.client.map.controller.JsMouseWheelHandler;
 import org.geomajas.javascript.api.client.map.controller.JsUpHandler;
 import org.geomajas.javascript.gwt2.impl.client.JsGwtImpl;
 import org.geomajas.javascript.gwt2.impl.client.map.JsMapPresenterImpl;
@@ -91,6 +93,12 @@ public class JsMapControllerWrapperImpl extends JsMapControllerImpl implements E
 
 			public void onMouseOver(MouseOverEvent event) {
 				mapController.onMouseOver(event);
+			}
+		});
+		setMouseWheelHandler(new JsMouseWheelHandler() {
+			@Override
+			public void onMouseWheel(MouseWheelEvent event) {
+				mapController.onMouseWheel(event);
 			}
 		});
 		setDownHandler(new JsDownHandler() {
