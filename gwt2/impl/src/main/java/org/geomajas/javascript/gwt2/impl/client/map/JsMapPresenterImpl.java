@@ -37,6 +37,10 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 import org.timepedia.exporter.client.NoExport;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Exports {@link org.geomajas.gwt2.client.map.MapPresenter}.
  *
@@ -146,8 +150,6 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		mapPresenter.setCursor(cursor);
 	}
 
-
-
 	@Override
 	public String getParentHtmlElementId() {
 		try {
@@ -183,6 +185,36 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 		return new JsMapControllerWrapperImpl(controller);
 	}
 
+	@Override
+	public boolean addMapListener(JsMapController mapListener) {
+		if (mapListener != null) {
+			mapListener.setMapPresenter(this);
+			return mapPresenter.addMapListener(new JsController(mapListener));
+		}
+		return false;
+	}
+
+	@Override
+	public boolean removeMapListener(JsMapController mapListener) {
+		if (mapListener != null) {
+			for (JsController jsController : getJsControllerMapListeners()) {
+				if (mapListener.equals(jsController.getWrappedJsMapController())) {
+					return mapPresenter.removeMapListener(jsController);
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public JsMapController[] getMapListeners() {
+		List<JsMapController> jsMapControllerList = new ArrayList<JsMapController>();
+		for (JsController jsController : getJsControllerMapListeners()) {
+			jsMapControllerList.add(jsController.getWrappedJsMapController());
+		}
+		return jsMapControllerList.toArray(new JsMapController[jsMapControllerList.size()]);
+	}
+
 	// ------------------------------------------------------------------------
 	// Other public methods:
 	// ------------------------------------------------------------------------
@@ -208,6 +240,16 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 
 	protected int getParentHeight() {
 		return parent.getElement().getClientHeight();
+	}
+
+	protected Collection<JsController> getJsControllerMapListeners() {
+		List<JsController> jsControllerList = new ArrayList<JsController>();
+		for (MapController mapController : mapPresenter.getMapListeners()) {
+			if (mapController instanceof JsController) {
+				jsControllerList.add(((JsController) mapController));
+			}
+		}
+		return jsControllerList;
 	}
 
 	/**
@@ -284,6 +326,10 @@ public final class JsMapPresenterImpl implements JsMapPresenter, Exportable {
 			if (mapController.getMouseWheelHandler() != null) {
 				mapController.getMouseWheelHandler().onMouseWheel(event);
 			}
+		}
+
+		public JsMapController getWrappedJsMapController() {
+			return mapController;
 		}
 	}
 
