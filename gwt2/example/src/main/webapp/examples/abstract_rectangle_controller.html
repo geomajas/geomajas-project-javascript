@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--
+		  ~ This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+		  ~
+		  ~ Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+		  ~
+		  ~ The program is available in open source according to the GNU Affero
+		  ~ General Public License. All contributions in this program are covered
+		  ~ by the Geomajas Contributors License Agreement. For full licensing
+		  ~ details, see LICENSE.txt in the project root.
+		  -->
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+	<title>Gwt editing javascript - Showcase</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300' rel='stylesheet' type='text/css'>
+
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<link href="../css/mqueries.css" rel="stylesheet" type="text/css" media="screen">
+
+	<script src="../js/jquery.modernizr.min.js"></script>
+
+	<script type="text/javascript">var isomorphicDir = "../showcase/sc/";</script>
+	<script type="text/javascript" language="javascript" src="../serverExtension/serverExtension.nocache.js"></script>
+
+</head>
+
+<body>
+
+<div id="page">
+
+	<header id="header" class="wrapper">
+
+		<div class="header_tagline">
+			<h3>Abstract rectangle controller</h3>
+			<h4>
+				Drag a rectangle over the map. <br>
+                Log will show details of rectangle as a custom action with the rectangle data.
+			</h4>
+		</div>
+
+	</header>
+
+	<section id="main">
+
+		<div class="main_inner wrapper clearfix">
+
+            <ul class="filter">
+                <li id="applyNavigation" class="active">
+                    <a href="#">Navigation</a>
+                </li>
+                <li id="applyRectangle">
+                    <a href="#">Custom rectangle controller</a>
+                </li>
+            </ul>
+
+			<div class="columnsection">
+
+				<div class="column one_half">
+
+					<div id="js-map-element">
+						<!-- on load, the map is attached here -->
+					</div>
+
+				</div>
+
+				<div class="column one_half">
+
+					<h4>Log:</h4>
+					<ul id="log"></ul>
+
+				</div>
+
+			</div>
+
+		</div><!-- END main inner -->
+
+	</section><!-- END #content -->
+
+</div><!-- END #page -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+
+	var map;
+    var rectangleController;
+
+	function onGeomajasLoad() {
+		map = new gm.Map("js-map-element");
+		gm.ServerExtension.initializeMap(map, "app", "mapMain");
+        rectangleController = new gm.controller.RectangleController();
+        rectangleController.setCallback(function(bboxHolder) {
+            var bbox = bboxHolder.getBbox();
+            log("Selected rectangle:" +
+                    "<br>crs: " + map.getViewPort().getCrs() +
+                    "<br>x: " + bbox.getX() + "  y: " + bbox.getY() +
+            "<br>width: " + bbox.getWidth() + "  height: " + bbox.getHeight());
+        });
+	}
+
+    function log(txt) {
+        while($('#log')[0].scrollHeight >= $('#js-map-element').height() - 100) {
+            $('#log li:last-child').remove();
+        }
+
+        $('#log li').removeClass('first-log-item');
+        $("#log").prepend("<li class='first-log-item log-item'>" + txt  + "</li>");
+    }
+
+    $('#applyNavigation').click(function() {
+        $('.filter li').removeClass('active');
+        $(this).addClass('active');
+        applyNavigationController();
+    });
+
+    $('#applyRectangle').click(function() {
+        $('.filter li').removeClass('active');
+        $(this).addClass('active');
+        applyRectangleController();
+    });
+
+    function applyNavigationController() {
+        map.setMapController(new gm.controller.NavigationController());
+        log("<strong>Navigation controller set</strong><br>");
+    }
+
+    function applyRectangleController() {
+        map.setMapController(rectangleController);
+        log("<strong>Custom rectangle controller set</strong><br>");
+    }
+
+</script>
+
+</body>
+
+</html>
