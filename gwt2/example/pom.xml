@@ -190,7 +190,7 @@
 						</properties>
 					</configuration>
 				</configuration>
-			</plugin>			
+			</plugin>
 
 		</plugins>
 	</build>
