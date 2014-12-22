@@ -108,17 +108,17 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${version-gwt}</version>
+				<version>${geomajas-javascript-version-gwt}</version>
 				<dependencies>
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-user</artifactId>
-						<version>${version-gwt}</version>
+						<version>${geomajas-javascript-version-gwt}</version>
 					</dependency>
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-dev</artifactId>
-						<version>${version-gwt}</version>
+						<version>${geomajas-javascript-version-gwt}</version>
 					</dependency>
 				</dependencies>
 				<configuration>

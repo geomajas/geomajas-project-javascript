@@ -20,7 +20,6 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-
 	<name>Geomajas Project JavaScript - All</name>
 	<description>Geomajas Project JavaScript - All</description>
 
@@ -66,9 +65,18 @@
 	</modules>
 
 	<properties>
-		<geomajas-gwt2-client-version>2.2.0-SNAPSHOT</geomajas-gwt2-client-version>
-		<gwt-exporter-version>2.4.0</gwt-exporter-version>
-		<version-gwt>2.5.1</version-gwt>
+		<!-- geomajas versions -->
+		<geomajas-javascript-version-geomajas-client-gwt2>2.2.0</geomajas-javascript-version-geomajas-client-gwt2>
+		<!-- gwt versions -->
+		<geomajas-javascript-version-gwt>2.5.1</geomajas-javascript-version-gwt>
+		<geomajas-javascript-version-gwt-exporter>2.4.0</geomajas-javascript-version-gwt-exporter>
+		<!-- maven plugins -->
+		<geomajas-javascript-version-maven-jetty-plugin>6.1.20</geomajas-javascript-version-maven-jetty-plugin>
+		<geomajas-javascript-version-cargo-maven2-plugin>1.2.1</geomajas-javascript-version-cargo-maven2-plugin>
+		<geomajas-javascript-version-maven-javadoc-plugin>2.9.1</geomajas-javascript-version-maven-javadoc-plugin>
+		<!-- test versions -->
+		<geomajas-javascript-version-mockito>1.9.5</geomajas-javascript-version-mockito>
+		<geomajas-javascript-version-gwtmockito>1.1.2</geomajas-javascript-version-gwtmockito>
 	</properties>
 
 	<dependencyManagement>
@@ -76,24 +84,25 @@
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-client-gwt2</artifactId>
-				<version>${geomajas-gwt2-client-version}</version>
+				<version>${geomajas-javascript-version-geomajas-client-gwt2}</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
 
 			<!-- geomajas plugin dependencies-->
-			<dependency>
-				<groupId>org.geomajas.plugin</groupId>
-				<artifactId>geomajas-client-gwt2-plugin-wms</artifactId>
-				<version>${geomajas-gwt2-client-version}</version>
-			</dependency>
+			<!--<dependency>-->
+				<!--<groupId>org.geomajas.plugin</groupId>-->
+				<!--<artifactId>geomajas-client-gwt2-plugin-wms</artifactId>-->
+				<!--<version>${geomajas-javascript-version-geomajas-client-gwt2}</version>-->
+			<!--</dependency>-->
 
-			<dependency>
-				<groupId>org.geomajas.plugin</groupId>
-				<artifactId>geomajas-client-gwt2-plugin-tms</artifactId>
-				<version>${geomajas-gwt2-client-version}</version>
-			</dependency>
+			<!--<dependency>-->
+				<!--<groupId>org.geomajas.plugin</groupId>-->
+				<!--<artifactId>geomajas-client-gwt2-plugin-tms</artifactId>-->
+				<!--<version>${geomajas-javascript-version-geomajas-client-gwt2}</version>-->
+			<!--</dependency>-->
 
+			<!-- Artifacts within this project (exclude documentation) -->
 			<dependency>
 				<groupId>org.geomajas.project</groupId>
 				<artifactId>geomajas-project-javascript-api</artifactId>
@@ -145,7 +154,7 @@
 			<dependency>
 				<groupId>org.timepedia.exporter</groupId>
 				<artifactId>gwtexporter</artifactId>
-				<version>${gwt-exporter-version}</version>
+				<version>${geomajas-javascript-version-gwt-exporter}</version>
 			</dependency>
 
 			 <!-- test dependencies-->
@@ -153,13 +162,13 @@
 			<dependency>
 				<groupId>com.google.gwt.gwtmockito</groupId>
 				<artifactId>gwtmockito</artifactId>
-				<version>1.1.2</version>
+				<version>${geomajas-javascript-version-gwtmockito}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-all</artifactId>
-				<version>1.9.5</version>
+				<version>${geomajas-javascript-version-mockito}</version>
 			</dependency>
 
 		</dependencies>
