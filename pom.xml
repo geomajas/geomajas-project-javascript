@@ -89,18 +89,12 @@
 				<type>pom</type>
 			</dependency>
 
-			<!-- geomajas plugin dependencies-->
-			<!--<dependency>-->
-				<!--<groupId>org.geomajas.plugin</groupId>-->
-				<!--<artifactId>geomajas-client-gwt2-plugin-wms</artifactId>-->
-				<!--<version>${geomajas-javascript-version-geomajas-client-gwt2}</version>-->
-			<!--</dependency>-->
-
-			<!--<dependency>-->
-				<!--<groupId>org.geomajas.plugin</groupId>-->
-				<!--<artifactId>geomajas-client-gwt2-plugin-tms</artifactId>-->
-				<!--<version>${geomajas-javascript-version-geomajas-client-gwt2}</version>-->
-			<!--</dependency>-->
+			<dependency>
+				<groupId>org.geomajas</groupId>
+				<artifactId>geomajas-client-gwt2-server-extension</artifactId>
+				<version>${geomajas-javascript-version-geomajas-client-gwt2}</version>
+				<classifier>sources</classifier>
+			</dependency>
 
 			<!-- Artifacts within this project (exclude documentation) -->
 			<dependency>

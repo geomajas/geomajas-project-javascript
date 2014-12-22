@@ -12,7 +12,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>geomajas-project-javascript-gwt2-example</artifactId>
+	<artifactId>geomajas-project-javascript-gwt2-server-extension-example</artifactId>
 	<packaging>war</packaging>
 
 	<name>Geomajas Project JavaScript GWT2 - Example</name>
@@ -27,7 +27,30 @@
 		<!-- Geomajas dependencies -->
 		<dependency>
 			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-javascript-gwt2-server-extension-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas.project</groupId>
 			<artifactId>geomajas-project-javascript-gwt2-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-common-gwt-command</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-common-gwt-command</artifactId>
+			<classifier>sources</classifier>
+			<version>${geomajas-javascript-version-geomajas-client-gwt2}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-gwt2-server-extension</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-gwt2-server-extension</artifactId>
+			<classifier>sources</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas</groupId>
@@ -127,7 +150,7 @@
 				</dependencies>
 				<configuration>
 					<modules>
-						<module>org.geomajas.javascript.gwt2.example.ClientOnly</module>
+						<module>org.geomajas.javascript.gwt2.example.ServerExtension</module>
 						<module>org.geomajas.javascript.gwt2.example.Showcase</module>
 					</modules>
 					<disableCastChecking>true</disableCastChecking>
