@@ -26,16 +26,6 @@
 	<description>Geomajas Project JavaScript GWT2 - Implementation</description>
 
 	<dependencies>
-		<!-- Geomajas dependeNncies -->
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-client-gwt2-impl</artifactId>
-		</dependency>
-		<!-- FIXME: this is needed for command, don't know why (OM) -->
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-client-common-gwt-command</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.geomajas.project</groupId>
 			<artifactId>geomajas-project-javascript-api</artifactId>
@@ -45,7 +35,17 @@
 			<artifactId>geomajas-project-javascript-common</artifactId>
 		</dependency>
 
-
+		<!-- Geomajas dependencies -->
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-client-gwt2-impl</artifactId>
+		</dependency>
+		<!-- TODO: can be removes if geometry-core builds with sources -->
+		<dependency>
+			<groupId>org.geomajas.project</groupId>
+			<artifactId>geomajas-project-geometry-core</artifactId>
+			<classifier>sources</classifier>
+		</dependency>
 
 		<!-- Geomajas wms plugin dependency (client) -->
 		<dependency>
@@ -83,41 +83,16 @@
 		</dependency>
 
 		<!--test dependencies -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-impl</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.geomajas</groupId>
-			<artifactId>geomajas-testdata</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework</groupId>-->
+			<!--<artifactId>spring-test</artifactId>-->
+			<!--<scope>test</scope>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>junit</groupId>-->
+			<!--<artifactId>junit</artifactId>-->
+			<!--<scope>test</scope>-->
+		<!--</dependency>-->
 	</dependencies>
 
 	<build>

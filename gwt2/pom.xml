@@ -37,6 +37,7 @@
 			</activation>
 			<modules>
 				<module>example</module>
+				<module>server-extension-example</module>
 			</modules>
 		</profile>
 	</profiles>

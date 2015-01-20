@@ -11,9 +11,7 @@
   -->
 
 <module>
-	<!--<inherits name="org.geomajas.GeomajasDto"/>-->
-	<!-- FIXME: this dependency is needed. I don't know why. (OM) -->
-	<inherits name="org.geomajas.gwt.GeomajasCommonGwtCommand"/>
+	<inherits name="org.geomajas.Geometry" />
     <inherits name="org.geomajas.gwt2.GeomajasClientImpl" />
   	<inherits name="org.geomajas.javascript.api.JavascriptApi" />
     <inherits name="org.geomajas.gwt2.plugin.tilebasedlayer.GeomajasTileBasedLayerPlugin" />
