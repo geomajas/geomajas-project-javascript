@@ -16,7 +16,7 @@
 
 	<groupId>org.geomajas.project</groupId>
 	<artifactId>geomajas-project-javascript-all</artifactId>
-	<version>1.0.0-M1</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Geomajas Project JavaScript - All</name>
