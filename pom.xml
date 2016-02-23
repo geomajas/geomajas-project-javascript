@@ -23,6 +23,13 @@
 	<name>Geomajas Project JavaScript - All</name>
 	<description>Geomajas Project JavaScript - All</description>
 
+	<scm>
+		<connection>scm:git:git@github.com:geomajas/geomajas-project-javascript.git</connection>
+		<developerConnection>scm:git:git@github.com:geomajas/geomajas-project-javascript.git</developerConnection>
+		<url>https://github.com/geomajas/geomajas-project-javascript.git</url>
+	</scm>
+
+
 	<developers>
 		<developer>
 			<id>oliverm</id>
